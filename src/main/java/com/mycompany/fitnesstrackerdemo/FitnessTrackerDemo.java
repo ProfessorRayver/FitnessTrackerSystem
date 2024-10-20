@@ -11,6 +11,6 @@ package com.mycompany.fitnesstrackerdemo;
 public class FitnessTrackerDemo {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        System.out.println("demo practice");
     }
 }
