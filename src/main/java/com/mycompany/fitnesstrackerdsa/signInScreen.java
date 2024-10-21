@@ -18,10 +18,10 @@ import javax.swing.JTextField;
 public class signInScreen extends JFrame {
     
 private JLabel lblWelcome, lblUser, lblPassword;
-   private JTextField txtFldUsername, txtFldPassword;
+   private JTextField txtFldUsername;
    private JButton signIn, registerIn;
    private JPanel bgButton;
-
+private JPasswordField txtPasswordFld;
         
     signInScreen(){
 
@@ -54,9 +54,9 @@ private JLabel lblWelcome, lblUser, lblPassword;
         lblPassword.setFont(new Font("Courier", Font.PLAIN, 20));
         add(lblPassword);
         
-        txtFldPassword = new JTextField();
-        txtFldPassword.setBounds(300, 300, 300, 50);
-        add(txtFldPassword);
+        txtPasswordFld = new JPasswordField();
+        txtPasswordFld.setBounds(300, 300, 300, 50);
+        add(txtPasswordFld);
         
         //ADD BUTTONS
         
