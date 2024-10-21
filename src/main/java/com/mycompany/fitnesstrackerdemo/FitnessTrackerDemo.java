@@ -1,5 +1,7 @@
 package com.mycompany.fitnesstrackerdemo;
 
+
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
@@ -23,14 +25,17 @@ public class FitnessTrackerDemo
     String[] ArmDay = {"Bicep Curls", "Tricep Pushdowns", "Hammer Curls", "Skull Crushers", "Concentration Curls", "Overhead Tricep Extension", "Preacher Curls", "Tricep Dips", "Reverse Curls", "Close-Grip Bench Press"};
 
     
+    
     //JFrames and LinkedList declarations
     LinkedList <String> values;
-    JButton  btnClear, btnChoose;
+    JButton  btnClear, btnChoose, btnNextPage1;
     JTextArea input1;
     JScrollPane output1;
     JList list1;        
     JLabel lb1;
     JComboBox<String> selection;
+    
+    
     
     
     //Number Values declarations
@@ -39,7 +44,10 @@ public class FitnessTrackerDemo
     int burneCalories = 0;
     int totalWorkOutHour = 0;
 
+    
     public FitnessTrackerDemo() {
+        
+        
         setSize(800, 600);
         setLayout(null);
         setDefaultCloseOperation(FitnessTrackerDemo.EXIT_ON_CLOSE);
@@ -48,13 +56,13 @@ public class FitnessTrackerDemo
         
         //JComboBox and Labels
         selection = new JComboBox<>(workout);
-        selection.setBounds(300, 50, 200, 50);
+        selection.setBounds(400, 100, 150, 50);
         add(selection);
 
+        
         lb1 = new JLabel("Choose a workout");
-        lb1.setBounds(150, 50, 130, 50);
+        lb1.setBounds(400, 50, 150, 50);
         add(lb1);
-
 
         
         //Buttons
@@ -66,26 +74,34 @@ public class FitnessTrackerDemo
         btnChoose.setBounds(400, 450, 100, 50);
         add(btnChoose);
 
+        
+        btnNextPage1 = new JButton("Next");
+        btnNextPage1.setBounds(550, 50, 100 ,30);
+        add(btnNextPage1);
        
+        
         //TextArea and JPanels
         
         input1 = new JTextArea ();
-        input1.setBounds(100, 150, 100, 50);
+        input1.setBounds(100, 100, 200, 50);
         input1.setEditable(true);
         add(input1);
         
+        
         output1 = new JScrollPane ();
-        output1.setBounds(400, 450, 100, 50);
+        output1.setBounds(100, 200, 500, 250);
         add(output1);
         
-             
+        
+        
+        
         
         //Declarations of the actions
         
         btnClear.addActionListener(this);
         btnChoose.addActionListener(this);
-        
-        
+        btnNextPage1.addActionListener(this);
+   
         setVisible(true);
     }
 
@@ -95,9 +111,13 @@ public class FitnessTrackerDemo
     }
 
     
+    
+    
+    
     //Logics
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        
     }
 }
