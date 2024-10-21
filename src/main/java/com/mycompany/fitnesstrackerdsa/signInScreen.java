@@ -24,7 +24,11 @@ private JLabel lblWelcome, lblUser, lblPassword;
 
         
     signInScreen(){
-        setSize(800, 800);
+
+        //ADD JOPTIONPANE
+        JOptionPane.showMessageDialog(this, "Welcome to StudFit Tracker!", "MESSAGE", JOptionPane.INFORMATION_MESSAGE);
+        
+        setSize(800, 650);
         setLayout(null);
         setVisible(true);
         setLocationRelativeTo(null);
