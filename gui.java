@@ -13,81 +13,120 @@ import java.awt.event.ActionEvent;
  *
  * @author centy
  */
-public class gui extends JFrame {
+public class gui extends JFrame implements ActionListener {
     
+//    COMPONENT DECLARATIONS
     
-    private JLabel head, idlbl, namelbl, workoutlbl, meallbl;
-    private JButton calculate;
+    private JLabel head, idlbl, namelbl, workoutlbl, meallbl, breakfast, lunch, dinner;
+    private JButton review,homepage;
     private JTextArea txt, txtname, txtcalculate;
-    private JComboBox mealopt, workoutopt;
+    private JComboBox <String> cbreakfast, clunch, cdinner, workoutopt;
     private String[] workout ={"squat","pull-ups","weightlifting"};
-    private String[] meals = {"vegetables","meat","herbs","fungus"};
+    private String[] lunchopt = {"Pork Sinigang", "Adobo"};
+    private String[] breakfastopt ={"Egg Whites", "Pandesal", "Oatmeal", "Tinapa", "Bacon", "Nuggets", "Chicken Breast", 
+    "Tuyo", "Avocados", "Bananas", "Hard-Boiled Eggs", "Kamote", "Pancakes", "Oatmeal", "Scrambled Eggs", "Cereal", "Toast with Jam","pandesal","oatmeal","sinigang","adobo","caldereta","canned tuna"};
+    private String[] dinneropt = {"Adobo", "Caldereta", "Chicken Breast", "CannedTuna"};
     
     
     
     gui(){
-    
-        setSize(600,600);
+//        FRAME
+        setSize(850,850);
         setLayout(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         
-//       adding functions
-
+//        ADDING GUI/COMPONENTS FOR THE JFRAME
+         
          head = new JLabel("welcome to fitness tracker", SwingConstants.CENTER);
          head.setBounds(0, 50, 600, 20);
          add(head);
          
-         idlbl = new JLabel ("id: ");
+         idlbl = new JLabel ("ID: ");
          idlbl.setBounds(50, 100, 100, 30);
          add(idlbl);
          
          txt = new JTextArea();
-         txt.setBounds(80, 100, 80, 30);
+         txt.setBounds(120, 100, 150, 30);
          add(txt);
          
-         namelbl = new JLabel("name: ");
-         namelbl.setBounds(50, 150, 80, 30);
+         namelbl = new JLabel("NAME: ");
+         namelbl.setBounds(50, 150, 100, 30);
          add(namelbl);
          
          txtname = new JTextArea();
-         txtname.setBounds(100, 150, 80, 30);
+         txtname.setBounds(120, 150, 150, 30);
          add(txtname);
          
-         workoutlbl = new JLabel("workout: ");
+         workoutlbl = new JLabel("WORKOUT: ");
          workoutlbl.setBounds(50, 200, 100, 30);
          add(workoutlbl);
+         
          
          workoutopt = new JComboBox(workout);
          workoutopt.setBounds(120, 200, 100, 30);
          add(workoutopt);
          
-         meallbl = new JLabel("meals: ");
-         meallbl.setBounds(50, 250, 100, 30);
+         meallbl = new JLabel("MEALS: ");
+         meallbl.setBounds(50, 270, 100, 30);
          add(meallbl);
          
-         mealopt = new JComboBox(meals);
-         mealopt.setBounds(110, 250, 100, 30);
-         add(mealopt);
+         breakfast = new JLabel("BREAKFAST");
+         breakfast.setBounds(120, 240, 100, 30);
+         add(breakfast);
          
-         calculate = new JButton("calculate");
-         calculate.setBounds(100, 300, 100, 30);
-         add(calculate);
+         cbreakfast = new JComboBox(breakfastopt);
+         cbreakfast.setBounds(120, 270, 120, 30);
+         add(cbreakfast);
+         
+         lunch = new JLabel("LUNCH");
+         lunch.setBounds(250, 240, 100, 30);
+         add(lunch);
+         
+         clunch = new JComboBox(lunchopt);
+         clunch.setBounds(250, 270, 100, 30);
+         add(clunch);
+         
+         dinner = new JLabel("DINNER");
+         dinner.setBounds(360, 240, 100, 30);
+         add(dinner);
+         
+         cdinner = new JComboBox(dinneropt);
+         cdinner.setBounds(360, 270, 100, 30);
+         add(cdinner);
+         
+         review = new JButton("REVIEW");
+         review.setBounds(120, 350, 120, 30);
+         add(review);
+         
+         homepage = new JButton("HOMEPAGE");
+         homepage.setBounds(20, 60, 100, 15);
+         add(homepage);
          
          txtcalculate = new JTextArea();
-         txtcalculate.setBounds(100, 350, 450, 200);
+         txtcalculate.setBounds(50, 400, 475, 225);
          txtcalculate.setEditable(false);
          add(txtcalculate);
          
          
          
+//        ADDING FUNCTIONS AND CALCULATIONS OUTPUTS
+         review.addActionListener(this); 
          
-         
-         
-   
+    }
 
-
-       
+    @Override
+    public void actionPerformed(ActionEvent e) {
+       if(e.getSource() == review){
+           txtcalculate.setText("ID: "+ txt +"\n"+
+                                "NAME: " + txtname +"\n"+
+                                "WORKOUT: " + workoutopt.getSelectedItem()+"\n"+
+                                "BREAKFAST: " + cbreakfast.getSelectedItem() +"\n"+
+                                "LUNCH: " + clunch.getSelectedItem() + "\n" + 
+                                "DINNER: " + cdinner.getSelectedItem());
+            } 
         
-    
+//        to be continued
+        
     }
     
 }
