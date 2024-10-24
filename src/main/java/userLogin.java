@@ -42,7 +42,7 @@ public class userLogin extends JFrame implements ActionListener {
         lblUser.setBounds(50, 200, 800, 50);
         lblUser.setFont(new Font("Courier", Font.PLAIN, 20));
         add(lblUser);
-        
+            
         txtFldUsername = new JTextField();
         txtFldUsername.setBounds(300, 200, 300, 50);
         add(txtFldUsername);
@@ -59,9 +59,11 @@ public class userLogin extends JFrame implements ActionListener {
         //ADD BUTTONS
         
         signIn = new JButton("Sign In");
+        signIn.addActionListener(this);
         
         
         registerIn = new JButton("Register");
+        registerIn.addActionListener(this);
         
         
         bgButton = new JPanel();
@@ -72,46 +74,21 @@ public class userLogin extends JFrame implements ActionListener {
         
         add(bgButton);
         
-        signIn.addActionListener(new ActionListener() {
-        public void ActionPerformed(ActionEvent e) {
-            String username = txtFldUsername.getText();
-            String password = txtFldPassword.getText();
-            
-            System.out.println("Sign in Button Clicked");
-            System.err.println("Username"+ username);
-            System.err.println("Password"+ password);
-        
-    }
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-            }
-    });
-        
-        registerIn.addActionListener(new ActionListener() {
-            public void ActionPerformed(ActionEvent e) {
-                System.out.println("Register Button Clicked");
-        
-    }
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-            }
-        });
         revalidate();
         repaint();
     }
-                public static void main(String[] args) {
-        userLogin GUI = new userLogin();
-}
-
-    @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-       
+            Object clickedButton = e.getSource();
+            if(clickedButton == signIn) {
+                System.out.println("Sign In Successful");
+            }else if(clickedButton == registerIn){
+                System.out.println("Register Successful");
+            }
     }
 }
+   
+       
+     
+
 
                 
