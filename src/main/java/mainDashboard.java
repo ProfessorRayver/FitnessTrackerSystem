@@ -3,16 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-/**
- *
- * @author CLIENT
- */
-import java.awt.Font;
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+    import java.awt.Dimension;
+    import java.awt.Font;
+    import javax.swing.ImageIcon;
+    import javax.swing.JButton;
+    import javax.swing.JFrame;
+    import javax.swing.JLabel;
+    import javax.swing.JPanel;
+    import javax.swing.SwingConstants;
 
 
 
@@ -39,7 +37,8 @@ public class mainDashboard extends JFrame {
         titleDash.setBounds(0, 50, 800, 30);
         titleDash.setFont(new Font("Tahoma", Font.BOLD, 20));
         add(titleDash);
-
+     
+        // buttons
         btnWorkout = new JButton("My Workout");
         btnWorkout.setBounds(100, 150, 160, 30);
         add(btnWorkout);
@@ -51,11 +50,13 @@ public class mainDashboard extends JFrame {
         btnProgress = new JButton("View My Progress");
         btnProgress.setBounds(500, 150, 160, 30);
         add(btnProgress);
+        
+        // for the picture
+        ImageIcon ImageIcon = new ImageIcon("C:\\Users\\CLIENT\\Documents\\NetBeansProjects\\project\\src\\main\\java\\Image\\PUP HealthTrackerBuddy.png");
+        imgLabel = new JLabel(ImageIcon);
+        imgLabel.setPreferredSize(new Dimension(600, 400));
+        imgLabel.setBounds( 10, 220, imgLabel.getPreferredSize().width, imgLabel.getPreferredSize().height);
+        add(imgLabel);
     }
-
-    // main method to run the application
-    public static void main(String[] args) {
-        mainDashboard dashboard = new mainDashboard();
-        dashboard.setVisible(true);
     }
-}
+   
