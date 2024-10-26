@@ -17,9 +17,11 @@ public class fitnessGoals extends JFrame implements ActionListener {
     private JLabel lblGetStarted, lblIntro;
     private JTextArea txtAreaWeight; 
     private JButton btnNext, btnConfirm;
-    public JTextField txtFldWeightUnits;
-    private JComboBox<String> cmbUnits;
-    private String[] weightUnits = {"lbs/Pounds", "kg/Kilogram"};
+    public JTextField txtFldWeightUnits, txtFldHeightUnits;
+    private JComboBox<String> cmbHeightUnits;
+    private JComboBox<String> cmbWeightUnits;
+    private String[] heightUnits = {"Meter (m)"};
+    private String[] weightUnits = {"Pounds (lbs)"};
   
     
     
@@ -39,7 +41,7 @@ public class fitnessGoals extends JFrame implements ActionListener {
         add(lblGetStarted);
         
         
-        lblIntro = new JLabel("Let us know your weight first!");
+        lblIntro = new JLabel("Please enter your weight and height to calculate your BMI");
         lblIntro.setBounds(0, 110, 800, 30);
         lblIntro.setHorizontalAlignment(SwingConstants.CENTER);
         lblIntro.setFont(new Font("Courier", Font.PLAIN, 20));
@@ -52,19 +54,29 @@ public class fitnessGoals extends JFrame implements ActionListener {
        txtFldWeightUnits.setFont(new Font("Courier", Font.PLAIN, 20));
        add(txtFldWeightUnits);
        
-       cmbUnits = new JComboBox<String>(weightUnits);
-       cmbUnits.setBounds(390, 200, 200, 50);
-       cmbUnits.setFont(new Font("Courier", Font.PLAIN, 20));
-       add(cmbUnits);
+       cmbWeightUnits = new JComboBox<String>(weightUnits);
+       cmbWeightUnits.setBounds(390, 200, 200, 50);
+       cmbWeightUnits.setFont(new Font("Courier", Font.PLAIN, 20));
+       add(cmbWeightUnits);
        
+       txtFldHeightUnits = new JTextField();
+       txtFldHeightUnits.setBounds(80, 280, 280, 50);
+       txtFldHeightUnits.setFont(new Font("Courier", Font.PLAIN, 20));
+       add(txtFldHeightUnits);
+       
+       cmbHeightUnits = new JComboBox<String>(heightUnits);
+       cmbHeightUnits.setBounds(390, 280, 200, 50);
+       cmbHeightUnits.setFont(new Font("Courier", Font.PLAIN, 20));
+       add(cmbHeightUnits);
+               
        txtAreaWeight = new JTextArea();
-       txtAreaWeight.setBounds(80, 280, 510, 200);
+       txtAreaWeight.setBounds(80, 360, 510, 200);
        txtAreaWeight.setFont(new Font("Courier", Font.PLAIN, 20));
        txtAreaWeight.setEditable(false);
        add(txtAreaWeight);
        
-       btnConfirm = new JButton("Confirm Weight");
-       btnConfirm.setBounds(80, 520, 200, 40);
+       btnConfirm = new JButton("Confirm Input");
+       btnConfirm.setBounds(80, 600, 200, 40);
        btnConfirm.setFont(new Font("Courier", Font.PLAIN, 20));
        add(btnConfirm);
                
@@ -85,11 +97,24 @@ public class fitnessGoals extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btnConfirm){
             String weight = txtFldWeightUnits.getText();
+            String height = txtFldHeightUnits.getText();
+          
            try{
-             int intWeight = Integer.parseInt(weight);
-             if(intWeight > 0){
-                txtAreaWeight.setText(intWeight + " "+ cmbUnits.getSelectedItem());
+            double doubleWeight = Double.parseDouble(weight);
+            double doubleHeight = Double.parseDouble(height);
+            
+             if(doubleWeight > 0 && doubleHeight > 0){
+                 
+            //CALCULATIONS FOR BMI   
+            double doubleSqrdHeight = doubleHeight*doubleHeight;
+            double doubleBmi = doubleWeight/doubleSqrdHeight;
+            
+                txtAreaWeight.setText(doubleWeight + " "+ cmbWeightUnits.getSelectedItem() + "\n" +
+                                      doubleHeight + " "+ cmbHeightUnits.getSelectedItem() + "\n" +
+                                      "Your BMI is: " + doubleBmi);
+                    
                 txtFldWeightUnits.setText("");
+                txtFldHeightUnits.setText("");
             }else{
                  txtFldWeightUnits.setText("");
                 JOptionPane.showMessageDialog(this, "Invalid input or statement is blank", "ERROR",JOptionPane.ERROR_MESSAGE);
@@ -98,8 +123,11 @@ public class fitnessGoals extends JFrame implements ActionListener {
              txtFldWeightUnits.setText("");
                 JOptionPane.showMessageDialog(this, "Invalid input or statement is blank", "ERROR",JOptionPane.ERROR_MESSAGE);
          }
+        }if(e.getSource() == btnNext){
+            
         }
     }
+
     
             
     public static void main(String[] args){
@@ -108,5 +136,3 @@ public class fitnessGoals extends JFrame implements ActionListener {
         
          }
     }
-
-
