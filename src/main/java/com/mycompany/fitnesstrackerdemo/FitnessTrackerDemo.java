@@ -229,6 +229,15 @@ public class FitnessTrackerDemo extends JFrame implements ActionListener {
 
             calorieBreakdown.append("\nTotal Calories Burned: ").append(totalCalories);
             calorieResult.setText(calorieBreakdown.toString());
+            
+        }
+        
+            if(e.getSource() == btnNextPage1){
+            new trackMeal();
+            setVisible(true);
+            this.dispose();
+           
+        }
         }
     }
-}
+
