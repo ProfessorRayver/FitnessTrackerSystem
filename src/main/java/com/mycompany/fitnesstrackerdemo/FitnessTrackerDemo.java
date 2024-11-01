@@ -1,5 +1,11 @@
 package com.mycompany.fitnesstrackerdemo;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
@@ -7,6 +13,23 @@ import javax.swing.*;
 
 public class FitnessTrackerDemo extends JFrame implements ActionListener {
 
+//    PreparedStatement pst;
+//    Connection con;
+//    ResultSet rs;
+//
+//    public void con() {
+//        String url = "jdbc:mysql://localhost:3306/fitnessdatabase";
+//        String username = "root";
+//        String password = "admin123";
+//        
+//     try {
+//            con = DriverManager.getConnection(url, username, password);
+//            System.out.println("Database connected successfully!");
+//        } catch (SQLException ex) {
+//            Logger.getLogger(workOutTracker.class.getName()).log(Level.SEVERE, null, ex);
+//            JOptionPane.showMessageDialog(this, "Database connection failed.", "Error", JOptionPane.ERROR_MESSAGE);
+//        }
+//    }
     // Strings declarations
     String[] workout = {"Cardio", "Leg Day", "Chest day", "Back day", "Arm day"};
 
@@ -41,6 +64,8 @@ public class FitnessTrackerDemo extends JFrame implements ActionListener {
     DefaultListModel<String> listModel;
 
     public FitnessTrackerDemo() {
+        
+//         con();
         // Set up the JFrame
         setSize(600, 750);
         setLayout(null);
@@ -236,8 +261,32 @@ public class FitnessTrackerDemo extends JFrame implements ActionListener {
             new trackMeal();
             setVisible(true);
             this.dispose();
-           
-        }
-        }
+            
+//          testing of database
+//          
+//            if (e.getSource() == btnSubmit) {
+//        String workoutcalories = calorieResult.getText();
+//        
+//
+//        try {
+//            pst = con.prepareStatement("INSERT INTO appointment (workoutcalories) VALUES (?)");
+//            pst.setString(1, workoutcalories);
+//           
+//
+//            int k = pst.executeUpdate();
+//            if (k == 1) {
+//                JOptionPane.showMessageDialog(null, "Added", null, JOptionPane.INFORMATION_MESSAGE);
+//            } else {
+//                JOptionPane.showMessageDialog(null, "ERROR", null, JOptionPane.ERROR_MESSAGE);
+//            }
+//        } catch (Exception ex) {
+//            JOptionPane.showMessageDialog(null, "ERROR", null, JOptionPane.ERROR_MESSAGE);
+//            ex.printStackTrace();
+//        }
+//    }
     }
+}
+}
+
+    
 
