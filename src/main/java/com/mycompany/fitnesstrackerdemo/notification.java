@@ -15,12 +15,13 @@ public class notification extends JFrame implements ActionListener {
     private JComboBox<String> reminderCombo;
     private JCheckBox workoutNotificationCheck;
     private  JCheckBox mealLoggingNotificationCheck;
-
+    private JButton btnHomePage, startButton; // kulang sa start function
+    
     public notification() {
         setSize(600, 600);
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+        setLocationRelativeTo(null);
         
         JLabel goalLabel = new JLabel("Fitness Goal:");
         fitnessGoal = new JTextField();
@@ -34,6 +35,11 @@ public class notification extends JFrame implements ActionListener {
         mealLoggingNotificationCheck = new JCheckBox("Send notifications for missed meal logging");
         JButton startButton = new JButton("Start Tracking");
 
+        
+        btnHomePage = new JButton("Home");
+        btnHomePage.setBounds(500, 20, 80, 30);
+        add(btnHomePage);
+    
        
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(5, 2));
@@ -45,12 +51,19 @@ public class notification extends JFrame implements ActionListener {
         panel.add(workoutNotificationCheck);
         panel.add(mealLoggingNotificationCheck);
         panel.add(startButton);
-
+        panel.setBounds(50, 50, 500, 250);
         add(panel);
+        
         startButton.addActionListener(this);
+        btnHomePage.addActionListener(this);
     }
 
     public void actionPerformed(ActionEvent e) {
+         if(e.getSource() == btnHomePage){
+            new mainDashboard();
+            setVisible(true);
+            this.dispose();
+            
         String goal = fitnessGoal.getText();
         String reminderFrequency = reminderCombo.getSelectedItem().toString();
         boolean sendWorkoutNotifications = workoutNotificationCheck.isSelected();
@@ -62,7 +75,7 @@ public class notification extends JFrame implements ActionListener {
         System.out.println("Send workout notifications: " + sendWorkoutNotifications);
         System.out.println("Send meal logging notifications: " + sendMealLoggingNotifications);
     }
-
+    }
     public static void main(String[] args) {
         notification frame = new notification();
         frame.setVisible(true);

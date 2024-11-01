@@ -35,7 +35,7 @@ public class trackMeal extends JFrame implements ActionListener{
     private String[] dinnerFoods = {"Adobo", "Caldereta", "Chicken Breast", "CannedTuna"};
     private String[] snacksFoods = {"Biscuits"};
     private JComboBox <String> cmbBreakFastFoods, cmbLunchFoods, cmbDinnerFoods, cmbSnacksFoods;
-    private JButton btnAddBf, btnAddLunch, btnAddDinner, btnAddSnacks;
+    private JButton btnAddBf, btnAddLunch, btnAddDinner, btnAddSnacks, btnHomePage;
     private JTextArea txaSummary;
 //    private JScrollPane scroll;
 //    private LinkedList <String> ll;
@@ -113,6 +113,10 @@ public class trackMeal extends JFrame implements ActionListener{
     txaSummary.setBounds(30, 220, 450, 300);
     txaSummary.setEditable(false);
     add(txaSummary);
+    
+    btnHomePage = new JButton("Home");
+    btnHomePage.setBounds(500, 20, 80, 30);
+    add(btnHomePage);
 //    list = new JList<>(listmodel);
 //    scroll = new JScrollPane(list);
 //    scroll.setBounds(30, 220, 450, 300);
@@ -122,21 +126,26 @@ public class trackMeal extends JFrame implements ActionListener{
     
   
     //add ActionListener
-        
+    btnHomePage.addActionListener(this);
         
 
     setVisible(true);
     }
-
+    
     @Override
     public void actionPerformed(ActionEvent e) {
-        //if(e.getSource() == )
+       if(e.getSource() == btnHomePage){
+            new mainDashboard();
+            setVisible(true);
+            this.dispose();
+        
         
     }
-    
+    }
          public static void main(String[] args) {
         trackMeal trackMeal = new trackMeal();
         trackMeal.setVisible(true);
     }
 }
+
     

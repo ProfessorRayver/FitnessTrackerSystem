@@ -30,6 +30,8 @@ public class FitnessTrackerDemo extends JFrame implements ActionListener {
 //            JOptionPane.showMessageDialog(this, "Database connection failed.", "Error", JOptionPane.ERROR_MESSAGE);
 //        }
 //    }
+    
+    
     // Strings declarations
     String[] workout = {"Cardio", "Leg Day", "Chest day", "Back day", "Arm day"};
 
@@ -84,7 +86,7 @@ public class FitnessTrackerDemo extends JFrame implements ActionListener {
         add(lb2);
 
         // Buttons
-        btnNextPage1 = new JButton("Home page");
+        btnNextPage1 = new JButton("Home");
         btnNextPage1.setBounds(400, 600, 100, 30);
         add(btnNextPage1);
 
@@ -258,7 +260,7 @@ public class FitnessTrackerDemo extends JFrame implements ActionListener {
         }
         
             if(e.getSource() == btnNextPage1){
-            new trackMeal();
+            new mainDashboard();
             setVisible(true);
             this.dispose();
             

@@ -6,6 +6,8 @@ package com.mycompany.fitnesstrackerdemo;
 
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,7 +22,7 @@ import javax.swing.SwingConstants;
  *
  * @author User
  */
-public class mainDashboard extends JFrame {
+public class mainDashboard extends JFrame implements ActionListener {
     // constructor
     private JLabel titleDash, imgLabel;
     private JButton btnWorkout, btnMeals, btnProgress, btnNotifications;
@@ -35,7 +37,7 @@ public class mainDashboard extends JFrame {
         setLocationRelativeTo(null);
 
        // for the picture
-        ImageIcon ImageIcon = new ImageIcon("\\C:\\Users\\colad\\Downloads\\PUP HealthTrackerBuddy.png\\"); //KINDLY CHANGE FILE PATH DIRECTORY
+        ImageIcon ImageIcon = new ImageIcon("C:\\Users\\rromp\\OneDrive\\Pictures\\Camera imports\\New folder\\asd\\cake\\PUP HealthTrackerBuddy.png"); //KINDLY CHANGE FILE PATH DIRECTORY
         imgLabel = new JLabel(ImageIcon);
         imgLabel.setBounds(0, 0, 800, 330);
         add(imgLabel);
@@ -56,7 +58,7 @@ public class mainDashboard extends JFrame {
         btnNotifications = new JButton("Notifications");
         
         pnButton = new JPanel();
-        pnButton.setLayout(new GridLayout(1, 4, 50, 20));
+        pnButton.setLayout(new GridLayout(1, 4, 30, 20));
         pnButton.setBounds(90, 430, 600, 60);
         pnButton.add(btnWorkout);
         pnButton.add(btnMeals);
@@ -69,13 +71,42 @@ public class mainDashboard extends JFrame {
         
         revalidate();
         repaint();
+        
+                btnWorkout.addActionListener(this);
+                btnMeals.addActionListener(this);
+                btnProgress.addActionListener(this);
+                btnNotifications.addActionListener(this);
     }
+    
+    
         
            public static void main(String[] args) {
         mainDashboard mainDashboard = new mainDashboard();
         mainDashboard.setVisible(true);
+        
+        
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+     if (e.getSource() == btnWorkout) {
+            new FitnessTrackerDemo(); 
+            dispose();
+        } else if (e.getSource() == btnMeals) {
+            new trackMeal();
+            dispose();
+        } else if (e.getSource() == btnProgress) {
+            new fitnessGoals(); 
+            dispose();
+        } else if (e.getSource() == btnNotifications) {
+            new notification(); 
+            dispose();
+        }
+    }
+            
+            
 }
+
     
 
    
