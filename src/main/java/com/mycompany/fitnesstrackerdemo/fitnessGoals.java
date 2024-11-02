@@ -124,7 +124,9 @@ public class fitnessGoals extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Invalid input or statement is blank", "ERROR",JOptionPane.ERROR_MESSAGE);
          }
         }if(e.getSource() == btnNext){
-            
+            //ENTER THE NEW GUI IN THIS LINE
+            //setVisible(true);
+            //this.dispose();
         }
     }
 
