@@ -32,7 +32,7 @@ public class FitnessTrackerDemo extends JFrame implements ActionListener {
 //    }
     
     
-    // Strings declarations
+    // Strings declarations (workouts)
     String[] workout = {"Cardio", "Leg Day", "Chest day", "Back day", "Arm day"};
 
     String[] cardio = {"Running", "Jump Rope", "Cycling", "Swimming", "Stair Climbing", "Dancing"};
@@ -62,8 +62,8 @@ public class FitnessTrackerDemo extends JFrame implements ActionListener {
     JLabel lb1, lb2;
     JComboBox<String> selection;
     JTextField setsInput;
-    LinkedHashMap<String, Integer> selectedExercisesMap = new LinkedHashMap<>();
     DefaultListModel<String> listModel;
+    LinkedHashMap<String, JTextField> exerciseSetsMap = new LinkedHashMap<>();
 
     public FitnessTrackerDemo() {
         
@@ -141,129 +141,39 @@ public class FitnessTrackerDemo extends JFrame implements ActionListener {
         frame.setVisible(true);
     }
 
-    // ActionEvent handling logic
     @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnChoose) {
-            String selectedWorkout = (String) selection.getSelectedItem();
-            String[] selectedExercises;
+public void actionPerformed(ActionEvent e) {
+    if (e.getSource() == btnChoose) {
+        String selectedWorkout = (String) selection.getSelectedItem();
+        String[] selectedExercises;
 
-            // Determine which workout is selected
-            switch (selectedWorkout) {
-                case "Cardio":
-                    selectedExercises = cardio;
-                    break;
-                case "Leg Day":
-                    selectedExercises = legDay;
-                    break;
-                case "Chest day":
-                    selectedExercises = chestDay;
-                    break;
-                case "Back day":
-                    selectedExercises = backDay;
-                    break;
-                case "Arm day":
-                    selectedExercises = armDay;
-                    break;
-                default:
-                    selectedExercises = new String[]{};
-                    break;
-            }
-
-            // Add exercises to list
-            listModel = new DefaultListModel<>();
-            for (String exercise : selectedExercises) {
-                listModel.addElement(exercise);
-            }
-
-            list1 = new JList<>(listModel);
-            list1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-            output1.setViewportView(list1);
-
-        } else if (e.getSource() == btnClear) {
-            listModel.clear();
-            calorieResult.setText("");
-            selectedExercisesMap.clear();
-
-        } else if (e.getSource() == btnSelect) {
-            int[] selectedIndices = list1.getSelectedIndices();
-            String setsText = setsInput.getText();
-            int sets;
-
-            try {
-                // Convert input to integer for sets
-                sets = Integer.parseInt(setsText);
-            } catch (NumberFormatException ex) {
-                calorieResult.setText("Please enter a valid number of sets.");
-                return;
-            }
-
-            String selectedWorkout = (String) selection.getSelectedItem();
-
-            // Add calories for the selected exercises based on workout
-            switch (selectedWorkout) {
-                case "Cardio":
-                    for (int index : selectedIndices) {
-                        String exercise = cardio[index];
-                        int caloriesBurned = cardioCalories[index] * sets;
-                        selectedExercisesMap.put(exercise + " (selected)", caloriesBurned);
-                        listModel.set(index, exercise + " (selected)"); // Mark as selected in the list
-                    }
-                    break;
-                case "Leg Day":
-                    for (int index : selectedIndices) {
-                        String exercise = legDay[index];
-                        int caloriesBurned = legDayCalories[index] * sets;
-                        selectedExercisesMap.put(exercise + " (selected)", caloriesBurned);
-                        listModel.set(index, exercise + " (selected)"); // Mark as selected in the list
-                    }
-                    break;
-                case "Chest day":
-                    for (int index : selectedIndices) {
-                        String exercise = chestDay[index];
-                        int caloriesBurned = chestDayCalories[index] * sets;
-                        selectedExercisesMap.put(exercise + " (selected)", caloriesBurned);
-                        listModel.set(index, exercise + " (selected)"); // Mark as selected in the list
-                    }
-                    break;
-                case "Back day":
-                    for (int index : selectedIndices) {
-                        String exercise = backDay[index];
-                        int caloriesBurned = backDayCalories[index] * sets;
-                        selectedExercisesMap.put(exercise + " (selected)", caloriesBurned);
-                        listModel.set(index, exercise + " (selected)"); // Mark as selected in the list
-                    }
-                    break;
-                case "Arm day":
-                    for (int index : selectedIndices) {
-                        String exercise = armDay[index];
-                        int caloriesBurned = armDayCalories[index] * sets;
-                        selectedExercisesMap.put(exercise + " (selected)", caloriesBurned);
-                        listModel.set(index, exercise + " (selected)"); // Mark as selected in the list
-                    }
-                    break;
-            }
-
-        } else if (e.getSource() == btnCalculate) {
-            int totalCalories = 0;
-            StringBuilder calorieBreakdown = new StringBuilder();
-
-            for (String exercise : selectedExercisesMap.keySet()) {
-                int calories = selectedExercisesMap.get(exercise);
-                totalCalories += calories;
-                calorieBreakdown.append(exercise).append(": ").append(calories).append(" calories\n");
-            }
-
-            calorieBreakdown.append("\nTotal Calories Burned: ").append(totalCalories);
-            calorieResult.setText(calorieBreakdown.toString());
-            
+        // what workout is selected
+        switch (selectedWorkout) {
+            case "Cardio":
+                selectedExercises = cardio;
+                break;
+            case "Leg Day":
+                selectedExercises = legDay;
+                break;
+            case "Chest day":
+                selectedExercises = chestDay;
+                break;
+            case "Back day":
+                selectedExercises = backDay;
+                break;
+            case "Arm day":
+                selectedExercises = armDay;
+                break;
+            default:
+                selectedExercises = new String[]{};
+                break;
         }
-        
-            if(e.getSource() == btnNextPage1){
-            new mainDashboard();
-            setVisible(true);
-            this.dispose();
-            
+    }
+    
+}
+
+}
+
 //          testing of database
 //          
 //            if (e.getSource() == btnSubmit) {
@@ -286,9 +196,7 @@ public class FitnessTrackerDemo extends JFrame implements ActionListener {
 //            ex.printStackTrace();
 //        }
 //    }
-    }
-}
-}
+    
 
     
 
