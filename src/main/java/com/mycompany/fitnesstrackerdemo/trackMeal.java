@@ -15,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -27,15 +28,12 @@ import javax.swing.SwingConstants;
  */
 public class trackMeal extends JFrame implements ActionListener{
     //contructor
-    private JLabel lblTitle, lblInput, lblBreakfast, lblLunch, lblDinner, lblSnacks;
+    
+    private JLabel lblTitle, lblInput, lblMeals;
     private JTextField txtInput;
-    private String[] breakFastFoods = {"Egg Whites", "Pandesal", "Oatmeal", "Tinapa", "Bacon", "Nuggets", "Chicken Breast", 
-    "Tuyo", "Avocados", "Bananas", "Hard-Boiled Eggs", "Kamote", "Pancakes", "Oatmeal", "Scrambled Eggs", "Cereal", "Toast with Jam",}; 
-    private String[] lunchFoods = {"Pork Sinigang", "Adobo"};
-    private String[] dinnerFoods = {"Adobo", "Caldereta", "Chicken Breast", "CannedTuna"};
-    private String[] snacksFoods = {"Biscuits"};
-    private JComboBox <String> cmbBreakFastFoods, cmbLunchFoods, cmbDinnerFoods, cmbSnacksFoods;
-    private JButton btnAddBf, btnAddLunch, btnAddDinner, btnAddSnacks, btnHomePage;
+    private String[] meals = {"Breakfast", "Lunch", "Dinner", "Snacks(Optional)"};
+    private JComboBox <String> cmbMeals;
+    private JButton btnSave, btnClear, btnAdd, btnBack, btnAddNew;
     private JTextArea txaSummary;
 //    private JScrollPane scroll;
 //    private LinkedList <String> ll;
@@ -62,61 +60,48 @@ public class trackMeal extends JFrame implements ActionListener{
     
     lblInput = new JLabel("Log Your Meals for Today:", SwingConstants.CENTER);
     lblInput.setBounds(0, 80, 600, 30);
-    lblInput.setFont(new Font("Tahoma", Font.PLAIN, 15));
+    lblInput.setFont(new Font("Tahoma", Font.BOLD, 15));
     add(lblInput);
     
-    lblBreakfast = new JLabel("Breakfast:");
-    lblBreakfast.setBounds(30, 120, 80, 30);
-    lblBreakfast.setFont(new Font("Korinna BT", Font.BOLD, 12)); 
-    add(lblBreakfast);
- 
-    cmbBreakFastFoods = new JComboBox<>(breakFastFoods);
-    cmbBreakFastFoods.setBounds(95, 120, 120, 30);
-    cmbBreakFastFoods.setEditable(true);
-    add(cmbBreakFastFoods);
+    lblMeals = new JLabel("Meal Name:");
+    lblMeals.setBounds(30, 150, 100, 30);
+    add(lblMeals);
     
-    btnAddBf = new JButton();
-    btnAddBf.setBounds(100, 150, 80, 30);
+    txtInput = new JTextField();
+    txtInput.setBounds(105, 150, 125, 30);
+    add(txtInput);
+            
+    cmbMeals = new JComboBox<>(meals);
+    cmbMeals.setBounds(235, 150, 110, 30);
+    add(cmbMeals);
     
-    
-    lblLunch = new JLabel("Lunch:");
-    lblLunch.setBounds(230, 120, 80, 30);
-    lblLunch.setFont(new Font("Korinna BT", Font.BOLD, 12)); 
-    add(lblLunch);
- 
-    cmbLunchFoods = new JComboBox<>(lunchFoods);
-    cmbLunchFoods.setBounds(275, 120, 120, 30);
-    cmbLunchFoods.setEditable(true);
-    add(cmbLunchFoods);
-    
-    lblDinner = new JLabel("Dinner:");
-    lblDinner.setBounds(410, 120, 80, 30);
-    lblDinner.setFont(new Font("Korinna BT", Font.BOLD, 12)); 
-    add(lblDinner);
-    
-    cmbDinnerFoods = new JComboBox<>(dinnerFoods);
-    cmbDinnerFoods.setBounds(455, 120, 120, 30);
-    cmbDinnerFoods.setEditable(true);
-    add(cmbDinnerFoods);
-    
-    lblSnacks = new JLabel("Snacks(Optional):");
-    lblSnacks.setBounds(350, 170, 110, 30);
-    lblSnacks.setFont(new Font("Korinna BT", Font.BOLD, 12));
-    add(lblSnacks);
-      
-    cmbSnacksFoods = new JComboBox<>(snacksFoods);
-    cmbSnacksFoods.setBounds(455, 170, 120, 30);
-    cmbSnacksFoods.setEditable(true);
-    add(cmbSnacksFoods);
-    
+    btnAddNew = new JButton("Add New");
+    btnAddNew.setBounds(493, 395, 85, 30); 
+    add(btnAddNew);
+     
     txaSummary = new JTextArea();
     txaSummary.setBounds(30, 220, 450, 300);
     txaSummary.setEditable(false);
     add(txaSummary);
     
-    btnHomePage = new JButton("Home");
-    btnHomePage.setBounds(500, 20, 80, 30);
-    add(btnHomePage);
+    btnSave = new JButton("Save");
+    btnSave.setBounds(493, 245, 85, 30);
+    add(btnSave);
+    
+    btnClear = new JButton("Clear");
+    btnClear.setBounds(493, 320, 85, 30);
+    add(btnClear);
+    
+    btnAdd = new JButton("Add");
+    btnAdd.setBounds(350, 150, 80, 30);  
+    add(btnAdd);
+    
+    btnBack = new JButton("Back");
+    btnBack.setBounds(493, 470, 85, 30);
+    add(btnBack);
+    
+    
+    
 //    list = new JList<>(listmodel);
 //    scroll = new JScrollPane(list);
 //    scroll.setBounds(30, 220, 450, 300);
@@ -126,26 +111,43 @@ public class trackMeal extends JFrame implements ActionListener{
     
   
     //add ActionListener
-    btnHomePage.addActionListener(this);
-        
-
-    setVisible(true);
-    }
+    btnAddNew.addActionListener(this);
     
+    btnClear.addActionListener(this);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-       if(e.getSource() == btnHomePage){
-            new mainDashboard();
-            setVisible(true);
-            this.dispose();
+        if(e.getSource() == btnAddNew){
+            String newMeal = JOptionPane.showInputDialog(this, "Enter New Meal", "New Meal", JOptionPane.INFORMATION_MESSAGE);
+            
+            if(newMeal.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Please Enter New Meal!", "Error!", JOptionPane.ERROR_MESSAGE);
+            }
+//        }else if(e.getSource() == btnAdd){
+//            String input = txtInput.getText();
+//            if(!input.isEmpty()){
+//                int nutrionalInfo = totalCarbs + totalFats + totalProtein;
+//                String formattedText = String.format("Date: %s\n" + "Calories Consumed: %d\n\n" +
+//                        "Carbohydrates: %.2f%%\n " + "Protein: %.2f%%", date, totalCalories, 
+//                        (nutrionalInfo > 0 ? (totalCarbs * 100.0 / nutrionalInfo) : 0),
+//                        (nutrionalInfo > 0 ? (totalFats * 100.0 / nutrionalInfo) : 0),
+//                        (nutrionalInfo > 0 ? (totalProtein * 100.0 / nutrionalInfo) : 0));
+//                
+//                txaSummary.setText(formattedText);
+//            }else{
+//                JOptionPane.showMessageDialog(this, "Please Input Meal!", "Error!", JOptionPane.ERROR_MESSAGE);
+//            }
+//            
+        }else if(e.getSource() == btnClear){
+            txaSummary.setText("");
+        }
         
-        
     }
+       public static void main(String[] args) {
+        trackMeal tm = new trackMeal();
+        tm.setVisible(true);
     }
-         public static void main(String[] args) {
-        trackMeal trackMeal = new trackMeal();
-        trackMeal.setVisible(true);
-    }
+    
 }
-
     
