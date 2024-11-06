@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 
@@ -23,7 +24,8 @@ public class mainDashboard extends JFrame {
     // constructor
     private JLabel titleDash, imgLabel;
     private JButton btnWorkout, btnMeals, btnProgress, btnNotifications;
-    private JPanel pnButton;
+    private JPanel pnButton, panelNotifications;
+    private JScrollPane scrollPaneNotifications;
 
     mainDashboard() {
 
@@ -34,7 +36,7 @@ public class mainDashboard extends JFrame {
         setLocationRelativeTo(null);
 
        // for the picture
-        ImageIcon ImageIcon = new ImageIcon("\\C:\\Users\\colad\\Downloads\\PUP HealthTrackerBuddy.png\\"); //KINDLY CHANGE FILE PATH DIRECTORY
+        ImageIcon ImageIcon = new ImageIcon("C:\\Users\\CLIENT\\Documents\\NetBeansProjects\\project\\src\\main\\java\\Image\\PUP HealthTrackerBuddy.png\\"); //KINDLY CHANGE FILE PATH DIRECTORY
         imgLabel = new JLabel(ImageIcon);
         imgLabel.setBounds(0, 0, 800, 330);
         add(imgLabel);
@@ -64,10 +66,22 @@ public class mainDashboard extends JFrame {
         
         add(pnButton);
         
+        panelNotifications = new JPanel();
+        panelNotifications.setLayout(new GridLayout(10, 1));
+        
+        scrollPaneNotifications = new JScrollPane(panelNotifications);
+        scrollPaneNotifications.setBounds(80, 540, 600, 200);
+        scrollPaneNotifications.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        add(scrollPaneNotifications);
+        
         setVisible(true);
         
         revalidate();
         repaint();
     }
+        
+           public static void main(String[] args) {
+        mainDashboard mainDashboard = new mainDashboard();
+        mainDashboard.setVisible(true);
+    }
 }
-   
