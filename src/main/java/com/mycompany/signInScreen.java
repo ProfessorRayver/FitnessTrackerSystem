@@ -2,10 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.fitnesstrackerdemo;
+package com.mycompany.fitnesstrackapp;
 
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,11 +14,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
 /**
  *
  * @author colad
  */
-public class signInScreen extends JFrame {
+public class signInScreen extends JFrame implements ActionListener{
     
 private JLabel lblWelcome, lblUser, lblPassword;
    private JTextField txtFldUsername;
@@ -78,12 +80,36 @@ private JPasswordField txtPasswordFld;
         
         revalidate();
         repaint();
+        
+        signIn.addActionListener(this);
     }
-    
-     public static void main(String[] args) {
+    public static void main(String[] args) {
         signInScreen signInScreen = new signInScreen();
         signInScreen.setVisible(true);
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == signIn){
+            String userID = txtFldUsername.getText();
+            String pass = txtPasswordFld.getText();
+            if(!userID.isEmpty() || !pass.isEmpty()){
+            if(userID.equalsIgnoreCase("group7") && pass.equalsIgnoreCase("admin123")){
+                JOptionPane.showMessageDialog(this, "Login Sucessfully!", "Success!", JOptionPane.INFORMATION_MESSAGE);
+                new mainDashboard();
+                setVisible(true);
+                dispose();
+            }else{
+                JOptionPane.showMessageDialog(this, "Wrong User and Pass!", "Failed!", JOptionPane.ERROR_MESSAGE);
+                txtFldUsername.setText("");
+                txtPasswordFld.setText("");
+            }
+            }else{
+                JOptionPane.showMessageDialog(this, "Please Input User and Pass!", "Error!!", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+     
 }
-       
+       //to be continue with Database
      

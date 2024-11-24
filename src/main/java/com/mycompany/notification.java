@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.fitnesstrackerdemo;
+package com.mycompany.fitnesstrackapp;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -68,3 +68,4 @@ public class notification extends JFrame implements ActionListener {
         frame.setVisible(true);
     }
 }
+//Salazar
