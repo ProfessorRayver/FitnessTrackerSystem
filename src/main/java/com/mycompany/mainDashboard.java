@@ -27,7 +27,7 @@ import javax.swing.SwingConstants;
 public class mainDashboard extends JFrame implements ActionListener {
     // constructor
     private JLabel titleDash, imgLabel;
-    private JButton btnWorkout, btnMeals, btnProgress, btnNotifications;
+    private JButton btnWorkout, btnMeals, btnProgress, btnNotifications, btnProfile;
     private JPanel pnButton, panelNotifications;
     private JScrollPane scrollPaneNotifications;
 
@@ -39,8 +39,14 @@ public class mainDashboard extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        //btn
+        
+        btnProfile = new JButton("View Profile");
+        btnProfile.setBounds(650, 80, 120, 40);
+        add(btnProfile);
+        
        // for the picture
-        ImageIcon ImageIcon = new ImageIcon("C:\\Users\\rromp\\OneDrive\\Pictures\\Camera imports\\New folder\\asd\\cake"); //KINDLY CHANGE FILE PATH DIRECTORY
+        ImageIcon ImageIcon = new ImageIcon("C:\\Users\\rromp\\OneDrive\\Documents\\NetBeansProjects\\FitnessTrackerSystem\\FitnessTackerSystem50%\\src\\main\\java\\com\\mycompany\\fitnesstrackapp\\PUP HealthTrackerBuddy (1).png"); //KINDLY CHANGE FILE PATH DIRECTORY
         imgLabel = new JLabel(ImageIcon);
         imgLabel.setBounds(0, 0, 800, 330);
         add(imgLabel);
@@ -51,6 +57,8 @@ public class mainDashboard extends JFrame implements ActionListener {
         titleDash.setFont(new Font("Tahoma", Font.BOLD, 20));
         add(titleDash);
      
+       
+        
         // buttons
         btnWorkout = new JButton("My Workout");
        
@@ -90,14 +98,6 @@ public class mainDashboard extends JFrame implements ActionListener {
                 btnProgress.addActionListener(this);
                 btnNotifications.addActionListener(this);
     }
-    
-    
-        
-           
-        
-        
-    
-
     @Override
 public void actionPerformed(ActionEvent e) {
     if (e.getSource() == btnMeals) {
@@ -111,7 +111,6 @@ public void actionPerformed(ActionEvent e) {
     } else if (e.getSource() == btnNotifications) {
         JOptionPane.showMessageDialog(this, "You completed your Workout! Good job!", "Notifications", JOptionPane.INFORMATION_MESSAGE);
         dispose();
-        new notification().setVisible(true);
     }
 }
 

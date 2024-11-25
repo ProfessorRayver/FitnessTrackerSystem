@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.fitnesstrackerdemo;
+package com.mycompany.fitnesstrackapp;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -21,7 +21,7 @@ public class fitnessGoals extends JFrame implements ActionListener {
     private JComboBox<String> cmbHeightUnits;
     private JComboBox<String> cmbWeightUnits;
     private String[] heightUnits = {"Meter (m)"};
-    private String[] weightUnits = {"Pounds (lbs)"};
+    private String[] weightUnits = {"Kilogram (kg)"};
   
     
     
@@ -87,6 +87,7 @@ public class fitnessGoals extends JFrame implements ActionListener {
       
         
         btnConfirm.addActionListener(this);
+        btnNext.addActionListener(this);
         
         
         setVisible(true);
@@ -111,7 +112,9 @@ public class fitnessGoals extends JFrame implements ActionListener {
             
                 txtAreaWeight.setText(doubleWeight + " "+ cmbWeightUnits.getSelectedItem() + "\n" +
                                       doubleHeight + " "+ cmbHeightUnits.getSelectedItem() + "\n" +
-                                      "Your BMI is: " + doubleBmi);
+                                      "Your BMI is: " + Math.round(doubleBmi) + "\n" +
+                                      "BMI Category is: " + bmiCategory(doubleBmi));
+                
                     
                 txtFldWeightUnits.setText("");
                 txtFldHeightUnits.setText("");
@@ -124,13 +127,27 @@ public class fitnessGoals extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Invalid input or statement is blank", "ERROR",JOptionPane.ERROR_MESSAGE);
          }
         }if(e.getSource() == btnNext){
-            
+            new mainDashboard();
+            setVisible(true);
+            this.dispose();
+           
         }
     }
-
-    
-    public static void main(String[] args) {
-        fitnessGoals fitnessGoals = new fitnessGoals();
-        fitnessGoals.setVisible(true);
+   
+    public static void main(String[] args){
+        
+         new fitnessGoals();
+        
+         }
+    public static String bmiCategory(double doublebmi){
+        if(doublebmi < 18.5) {
+            return "Underweight";
+        } else if (doublebmi >= 18.5 && doublebmi < 24.9) {
+            return "Normal weight";
+        } else if (doublebmi >= 25 && doublebmi < 29.9) {
+            return "Overweight";
+        } else {
+            return "Obesity";
+            }
+        }
     }
-}
