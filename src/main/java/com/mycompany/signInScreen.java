@@ -39,6 +39,10 @@ private JPasswordField txtPasswordFld;
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         
         //ADD CONTENTS
+        
+        // USERNAME = group7
+        // PASSWORD = admin123
+        
         lblWelcome = new JLabel("WELCOME");
         lblWelcome.setBounds(270, 50, 800, 50);
         lblWelcome.setFont(new Font("Courier", Font.PLAIN, 45));
@@ -53,6 +57,7 @@ private JPasswordField txtPasswordFld;
         txtFldUsername.setBounds(300, 200, 300, 50);
         add(txtFldUsername);
         
+        
         lblPassword = new JLabel("Password:");
         lblPassword.setBounds(50, 300, 800, 50);
         lblPassword.setFont(new Font("Courier", Font.PLAIN, 20));
@@ -65,11 +70,7 @@ private JPasswordField txtPasswordFld;
         //ADD BUTTONS
         
         signIn = new JButton("Sign In");
-        
-        
         registerIn = new JButton("Register");
-        
-        
         bgButton = new JPanel();
         bgButton.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         bgButton.setBounds(270, 400, 250, 100);
@@ -82,6 +83,7 @@ private JPasswordField txtPasswordFld;
         repaint();
         
         signIn.addActionListener(this);
+        registerIn.addActionListener(this);
     }
     public static void main(String[] args) {
         signInScreen signInScreen = new signInScreen();
@@ -107,7 +109,13 @@ private JPasswordField txtPasswordFld;
             }else{
                 JOptionPane.showMessageDialog(this, "Please Input User and Pass!", "Error!!", JOptionPane.ERROR_MESSAGE);
             }
+            
         }
+        else if(e.getSource() == registerIn){
+            new registerForm();
+            dispose();
+        }
+                
     }
      
 }

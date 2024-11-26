@@ -215,7 +215,7 @@ public class trackMeal extends JFrame implements ActionListener{
 //            Logger.getLogger(fitnesstrackerdb.class.getName()).log(Level.SEVERE, null, e);
 //        }
 //    }
-          //to be continue with database    
+              
         //main
        public static void main(String[] args) {
         trackMeal tm = new trackMeal();
@@ -223,4 +223,4 @@ public class trackMeal extends JFrame implements ActionListener{
     }
     
 }
-    //Barnuevo
+    
