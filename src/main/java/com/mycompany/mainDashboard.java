@@ -43,7 +43,7 @@ public class mainDashboard extends JFrame implements ActionListener {
         add(btnProfile);
         
        // for the picture
-        ImageIcon ImageIcon = new ImageIcon("C:\\Users\\rromp\\OneDrive\\Documents\\NetBeansProjects\\FitnessTrackerSystem\\FitnessTackerSystem50%\\src\\main\\java\\com\\mycompany\\fitnesstrackapp\\PUP HealthTrackerBuddy (1).png"); //KINDLY CHANGE FILE PATH DIRECTORY
+        ImageIcon ImageIcon = new ImageIcon("C:\\Users\\colad\\OneDrive\\Documents\\NetBeansProjects\\PRACTIVEMOTO\\src\\main\\java\\com\\mycompany\\PUP HealthTrackerBuddy (1).png"); //KINDLY CHANGE FILE PATH DIRECTORY
         imgLabel = new JLabel(ImageIcon);
         imgLabel.setBounds(0, 0, 800, 330);
         add(imgLabel);
@@ -113,7 +113,7 @@ public class mainDashboard extends JFrame implements ActionListener {
 
         } else if (e.getSource() == btnWorkoutPlan) {
             dispose();
-            new workoutPlan().setVisible(true);
+            new signup().setVisible(true);
         
         } else if (e.getSource() == btnNotifications) {
             JOptionPane.showMessageDialog(this, "You completed your Workout! Good job!", "Notifications", JOptionPane.INFORMATION_MESSAGE);
