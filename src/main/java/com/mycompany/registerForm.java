@@ -1,4 +1,5 @@
 package com.mycompany.fitnesstrackapp;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
@@ -6,8 +7,8 @@ import java.awt.event.ActionListener;
 
 public class registerForm extends JFrame implements ActionListener{
     
-    private String[] types = {"Endomorph", "Mesomorph", "Ectomorph"};
-    private JComboBox<String> bodytpes;
+    
+   
     private JLabel lblTypes, lblSignUp, lblUser, lblPass, lblConfirmPass;
     private JTextField txtUsername;
     private JPasswordField txtPass, txtConfirmPass;
@@ -26,15 +27,6 @@ public class registerForm extends JFrame implements ActionListener{
          lblSignUp.setFont(new Font("AvantGarde", Font.BOLD, 22));
          add(lblSignUp);
          
-//         lblTypes = new JLabel("Body Types:");
-//         lblTypes.setBounds(150, 150, 100, 30);
-//         lblTypes.setFont(new Font("Arial", Font.BOLD, 15));
-//         add(lblTypes);
-         
-//         bodytpes = new JComboBox<>(types);
-//         bodytpes.setBounds(250, 150, 140, 30);
-//         bodytpes.setEditable(false);
-//         add(bodytpes);
          
          lblUser = new JLabel("Username:");
          lblUser.setBounds(150, 200, 100, 30);
