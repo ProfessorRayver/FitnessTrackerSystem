@@ -1,8 +1,7 @@
 package com.mycompany.fitnesstrackapp;
+
 import java.awt.Font;
 import javax.swing.*; 
-import java.awt.*;
-import static java.awt.SystemColor.text;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -37,39 +36,39 @@ import java.awt.event.ActionListener;
   signup(){
 //     FRAME
 
-      setSize(600,600);
+      setSize(800, 800);
       setDefaultCloseOperation(EXIT_ON_CLOSE);
       setLayout(null);
+      setLocationRelativeTo(null);
       
 //     adding components
 
       head = new JLabel("Welcome to FITNESS TRACKER",SwingConstants.CENTER);
-      head.setBounds(0,50 , 600, 20);
+      head.setFont(new Font("Courier", Font.PLAIN, 20));
+      head.setBounds(0, 60, 800, 20);
       add(head);
       
       text =  new JTextArea();
       text.setEditable(false);
       
       otp1 = new JScrollPane(text);
-      otp1.setBounds(20, 100,300 , 250);
+      otp1.setBounds(20, 100, 400 , 300);
       add(otp1);
       
       lowintensity = new JButton("LOW INTENSITY" );
-      lowintensity.setBounds(350, 100, 200, 40);
+      lowintensity.setBounds(450, 100, 200, 40);
       add(lowintensity);
       
       midintensity =  new JButton("MID INTENSITY" );
-      midintensity.setBounds(350, 150, 200, 40);
+      midintensity.setBounds(450, 150, 200, 40);
       add(midintensity);
       
-      highintensity =  new JButton("HIGH INTESNITY" );
-      highintensity.setBounds(350, 200, 200, 40);
+      highintensity =  new JButton("HIGH INTENSITY" );
+      highintensity.setBounds(450, 200, 200, 40);
       add(highintensity);
       
-
-      
       confirm = new JButton("CONFIRM");
-      confirm.setBounds(350, 310, 125, 40);
+      confirm.setBounds(450, 310, 125, 40);
       add(confirm);
    
 //      ACTION LISTENER
