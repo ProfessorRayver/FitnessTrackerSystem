@@ -27,9 +27,9 @@ import javax.swing.SwingConstants;
 public class mainDashboard extends JFrame implements ActionListener {
     // constructor
     private JLabel titleDash, imgLabel;
-    private JButton btnWorkout, btnMeals, btnProgress, btnNotifications;
+    private JButton btnWorkout, btnMeals, btnProgress, btnNotifications, btnProfile, btnworkoutPlan;
     private JPanel pnButton, panelNotifications;
-    private JScrollPane scrollPaneNotifications;
+    //private JScrollPane scrollPaneNotifications;
 
     mainDashboard() {
 
@@ -39,44 +39,57 @@ public class mainDashboard extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        //btn
+        
+        btnProfile = new JButton("View Profile");
+        btnProfile.setBounds(660, 10, 120, 40);
+        add(btnProfile);
+        
        // for the picture
-        ImageIcon ImageIcon = new ImageIcon("C:\\Users\\CLIENT\\Documents\\NetBeansProjects\\FitnessTrackerSystem\\FitnessTrackerSystem\\src\\main\\java\\com\\mycompany\\fitnesstrackerdemo\\Image\\PUP HealthTrackerBuddy.png"); //KINDLY CHANGE FILE PATH DIRECTORY
+        ImageIcon ImageIcon = new ImageIcon("C:\\Users\\CLIENT\\Documents\\NetBeansProjects\\FitnessTrackerSystem\\FitnessTrackerSystem\\src\\main\\java\\com\\mycompany\\fitnesstrackerdemo\\Image\\image2\\PUP HealthTrackerBuddy (1).png"); //KINDLY CHANGE FILE PATH DIRECTORY
         imgLabel = new JLabel(ImageIcon);
         imgLabel.setBounds(0, 0, 800, 330);
         add(imgLabel);
         
         // components
-        titleDash = new JLabel("Welcome! Fitness Tracker Dashboard", SwingConstants.CENTER);
+        titleDash = new JLabel("WELCOME TO WORKOUT PLAN!", SwingConstants.CENTER);
         titleDash.setBounds(0, 360, 800, 30);
         titleDash.setFont(new Font("Tahoma", Font.BOLD, 20));
         add(titleDash);
      
+       
+        
         // buttons
         btnWorkout = new JButton("My Workout");
+        btnWorkout.setBounds(200, 450, 140, 40);
+        add(btnWorkout);
        
         btnMeals = new JButton("My Meals");
+        btnMeals.setBounds(350, 450, 140, 40);
+        add(btnMeals);
         
-        btnProgress = new JButton("View Progress");
+        btnworkoutPlan = new JButton("Workout Plan");
+        btnworkoutPlan.setBounds(500, 450, 140, 40);
+        add(btnworkoutPlan);
         
         btnNotifications = new JButton("Notifications");
+        btnNotifications.setBounds(230, 550, 140, 40);
+        add(btnNotifications);
         
-        pnButton = new JPanel();
-        pnButton.setLayout(new GridLayout(1, 4, 30, 20));
-        pnButton.setBounds(90, 430, 600, 60);
-        pnButton.add(btnWorkout);
-        pnButton.add(btnMeals);
-        pnButton.add(btnProgress);
-        pnButton.add(btnNotifications);
+        btnProgress = new JButton("View Progress");
+        btnProgress.setBounds(450, 550, 140, 40);
+        add(btnProgress);
         
-        add(pnButton);
+      
+
             
-        panelNotifications = new JPanel();
-        panelNotifications.setLayout(new GridLayout(10, 1));
+        //panelNotifications = new JPanel();
+       // panelNotifications.setLayout(new GridLayout(21, 1));
         
-        scrollPaneNotifications = new JScrollPane(panelNotifications);
-        scrollPaneNotifications.setBounds(80, 540, 600, 200);
-        scrollPaneNotifications.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        add(scrollPaneNotifications);
+        //scrollPaneNotifications = new JScrollPane(panelNotifications);
+        //scrollPaneNotifications.setBounds(80, 540, 600, 200);
+        //scrollPaneNotifications.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        //add(scrollPaneNotifications);
         
         
         
@@ -89,35 +102,27 @@ public class mainDashboard extends JFrame implements ActionListener {
                 btnMeals.addActionListener(this);
                 btnProgress.addActionListener(this);
                 btnNotifications.addActionListener(this);
+                btnworkoutPlan.addActionListener(this);
+                btnProfile.addActionListener(this);
     }
-    
-    
-        
-           public static void main(String[] args) {
+    @Override
+public void actionPerformed(ActionEvent e) {
+    if (e.getSource() == btnMeals) {
+        dispose();
+        new trackMeal().setVisible(true); 
+
+    } else if (e.getSource() == btnWorkout) {
+        dispose();
+        new trackWorkout().setVisible(true);
+
+    } else if (e.getSource() == btnNotifications) {
+        JOptionPane.showMessageDialog(this, "You completed your Workout! Good job!", "Notifications", JOptionPane.INFORMATION_MESSAGE);
+        dispose();
+    } 
+}
+
+    public static void main(String[] args) {
         mainDashboard mainDashboard = new mainDashboard();
         mainDashboard.setVisible(true);
-        
-        
     }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-     if (e.getSource() == btnWorkout) {
-            new FitnessTrackerDemo(); 
-            dispose();
-        } else if (e.getSource() == btnMeals) {
-            new trackMeal();
-            dispose();
-        } else if (e.getSource() == btnProgress) {
-            new fitnessGoals(); 
-            dispose();
-        } else if (e.getSource() == btnNotifications) {
-            JOptionPane.showMessageDialog(this, "You completed your Workout! Goodjob!", "Notifications", JOptionPane.INFORMATION_MESSAGE);
-            new notification(); 
-           
-            dispose();
-        }
-    }
-            
-            
 }
