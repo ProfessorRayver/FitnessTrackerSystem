@@ -65,6 +65,7 @@ public class trackWorkout extends JFrame implements ActionListener {
         revalidate();
         repaint();
 
+        //Labels.
         titlelb = new JLabel("Please select workout & intensity first:");
         titlelb.setBounds(150, 20, 250, 30);
         add(titlelb);
@@ -77,17 +78,21 @@ public class trackWorkout extends JFrame implements ActionListener {
         intenslb.setBounds(20, 130, 150, 30);
         add(intenslb);
 
+        //List.
         listModel = new DefaultListModel<>();
         exerciseList = new JList<>(listModel);
         displayScrollPane = new JScrollPane(exerciseList);
         displayScrollPane.setBounds(20, 200, 200, 220);
         add(displayScrollPane);
 
+        //Display.
         resultTxt = new JTextArea();
         resultTxt.setBounds(250, 200, 200, 220);
         resultTxt.setEditable(false);
         add(resultTxt);
 
+        //Buttons.
+        
         choosebtn = new JButton("Choose");
         choosebtn.setBounds(350, 90, 100, 30);
         add(choosebtn);
@@ -100,6 +105,7 @@ public class trackWorkout extends JFrame implements ActionListener {
         enterbtn.setBounds(250, 500, 100, 30);
         add(enterbtn);
 
+        //Combo boxes.
         categcb = new JComboBox<>(category);
         categcb.setBounds(170, 80, 150, 30);
         add(categcb);
@@ -108,6 +114,7 @@ public class trackWorkout extends JFrame implements ActionListener {
         intenscb.setBounds(170, 130, 150, 30);
         add(intenscb);
 
+        //Buttons.
         calqbtn = new JButton("Calculate");
         calqbtn.setBounds(250, 450, 100, 30);
         add(calqbtn);
@@ -217,10 +224,8 @@ public class trackWorkout extends JFrame implements ActionListener {
             if (exercises[i].equals(chosenEx)) {
                 return calorieArray[i][intensityIndex];
             }
-        }
-        return 0; // Default case if exercise not found
+        } return 0;
     }
-
     public static void main(String[] args) {
         trackWorkout workOut = new trackWorkout();
         workOut.setVisible(true);
