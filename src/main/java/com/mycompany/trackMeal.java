@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.fitnesstrackapp;
+package com.mycompany;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -26,7 +26,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Queue;
 import java.util.logging.Level;
@@ -160,17 +163,17 @@ public class trackMeal extends JFrame implements ActionListener{
             listModel.clear();
             if(!Qname.isEmpty()){
                 for(String food : Qname){
+                         
                     listModel.addElement("User ID: "); //to follow
                     listModel.addElement("Name: ");
-                    listModel.addElement("Date: " ); 
-                    listModel.addElement("Calories Consumed: ");
-                    listModel.addElement("Calories Target: ");
+                    listModel.addElement("Date: "  ); 
+                    listModel.addElement("Meal Name: " + food);
+                    listModel.addElement("Meal Time: " + cmbMeals.getSelectedItem());
+                    listModel.addElement("Calories: "); 
                     listModel.addElement("Carbohydrates: ");
                     listModel.addElement("Fat: ");
                     listModel.addElement("Protein: ");
-                    listModel.addElement("Meal Name: " + food);
-                    listModel.addElement("Meal Time: " + cmbMeals.getSelectedItem());
-                    listModel.addElement("");
+                    listModel.addElement("-------------------------------------------------------------------------------------");
             }
             }else{
                 JOptionPane.showMessageDialog(this, "No Meal in the List", "Info", JOptionPane.INFORMATION_MESSAGE);
@@ -189,32 +192,37 @@ public class trackMeal extends JFrame implements ActionListener{
             }
 
 }
-//            try{
-//                
-//                pst = con.prepareStatement("insert into fitnesstrackerdb (id, mealname, calories) values (?,?,?,?)");
-//                pst.setString(1, mealname);
-//                
-//                int k = pst.executeUpdate();
-//                
-//                
-//            }catch(Exception ex){
-//                ex.printStackTrace();
-//            }
+            try{
+           //     String insert = "INSERT INTO mealdb (id, mealname, ) VALUES ('"+user+"','"+pass+"')";
+                String url = "jdbc:mysql://localhost:3306/fitnesstrackerdb"; // Update with your database URL
+                String dbUsername = "root"; // Replace with your database username
+                String dbPassword = "admin123"; // Replace with your database password
+                Connection con;
+                
+             //  pst = con.prepareStatement("insert into fitnesstrackerdb (id, mealname, calories, ) values (?,?,?,?)");
+             //  pst.setString(1, mealname);
+                
+                int k = pst.executeUpdate();
+                
+                
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
 }
         
     
-//    public void con(){
-//        String url = "jdbc:mysql://locahost:3306/fitnesstrackerdb";
-//        String user = "root";
-//        String pass = "admin123";
-//        
-//        try{
-//            con = (Connection) DriverManager.getConnection(url, user, pass);
-//            
-//        }catch(SQLException ex){
-//            Logger.getLogger(fitnesstrackerdb.class.getName()).log(Level.SEVERE, null, e);
-//        }
-//    }
+    public void con(){
+        String url = "jdbc:mysql://locahost:3306/fitnesstrackerdb";
+        String user = "root";
+        String pass = "admin123";
+        
+        try{
+            con = (Connection) DriverManager.getConnection(url, user, pass);
+            
+        }catch(SQLException ex){
+          // Logger.getLogger(fitnesstrackerdb.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
               
         //main
        public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package com.mycompany.fitnesstrackapp;
+package com.mycompany;
 
 /**
  *
@@ -8,9 +8,12 @@ package com.mycompany.fitnesstrackapp;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class trackWorkout extends JFrame implements ActionListener {
-
 
     private JLabel titlelb, categlb, intenslb;
     private JTextArea resultTxt;
@@ -19,6 +22,7 @@ public class trackWorkout extends JFrame implements ActionListener {
     private JScrollPane displayScrollPane;
     private JList<String> exerciseList;
     private DefaultListModel<String> listModel;
+    private int caloriesBurned;
 
     // listing of workout
     String[] category = {"chest", "back", "legs", "arms", "cardio"};
@@ -29,31 +33,36 @@ public class trackWorkout extends JFrame implements ActionListener {
     String[] armEx = {"Bicep Curls", "Tricep Pushdowns", "Hammer Curls", "Skull Crushers"};
     String[] cardioEx = {"Running", "Cycling", "Jump Rope", "Stair Climbing"};
 
-    //specific calories burned that depends on the users intensity
-    double[][] chestCalories = 
-    {{4, 6, 8}, //bench press
-        {5, 7, 9}, //pushups
-        {4, 6, 8}}; // chestfly
-    double[][] backCalories = 
-    {{4, 6, 8}, // lat pulldown
-        {5, 7, 9}, // pull ups
-        {6, 8, 10}, // barbell row
-        {5, 7, 9}}; // deadlifts
-    double[][] legCalories = 
-    {{6, 8, 10}, //squats
-        {5, 7, 9}, //lunges
-        {6, 8, 10}, //leg press
-        {4, 6, 8}}; // calf raises
-    double[][] armCalories = 
-    {{5, 7, 9},  //bicep curl
-        {4, 6, 8}, // tricep pushdown
-        {5, 7, 9}, // hammer curls
-        {6, 8, 10}}; //skull crush
-    double[][] cardioCalories = 
-    {{8, 10, 12}, //running
-        {10, 12, 14}, //cycling
-        {12, 15, 18}, //jumping rope
-        {10, 12, 14}}; // stair climb
+    // specific calories burned that depends on the user's intensity
+    int[][] chestCalories = {
+            {4, 6, 8}, // bench press
+            {5, 7, 9}, // pushups
+            {4, 6, 8}  // chest fly
+    };
+    int[][] backCalories = {
+            {4, 6, 8}, // lat pulldown
+            {5, 7, 9}, // pull ups
+            {6, 8, 10}, // barbell row
+            {5, 7, 9}  // deadlifts
+    };
+    int[][] legCalories = {
+            {6, 8, 10}, // squats
+            {5, 7, 9}, // lunges
+            {6, 8, 10}, // leg press
+            {4, 6, 8}  // calf raises
+    };
+    int[][] armCalories = {
+            {5, 7, 9},  // bicep curl
+            {4, 6, 8}, // tricep pushdown
+            {5, 7, 9}, // hammer curls
+            {6, 8, 10} // skull crushers
+    };
+    int[][] cardioCalories = {
+            {8, 10, 12}, // running
+            {10, 12, 14}, // cycling
+            {12, 15, 18}, // jumping rope
+            {10, 12, 14}  // stair climbing
+    };
 
     String chosenEx = null;
 
@@ -65,7 +74,7 @@ public class trackWorkout extends JFrame implements ActionListener {
         revalidate();
         repaint();
 
-        //Labels.
+        // Labels.
         titlelb = new JLabel("Please select workout & intensity first:");
         titlelb.setBounds(150, 20, 250, 30);
         add(titlelb);
@@ -78,21 +87,21 @@ public class trackWorkout extends JFrame implements ActionListener {
         intenslb.setBounds(20, 130, 150, 30);
         add(intenslb);
 
-        //List.
+        // List.
         listModel = new DefaultListModel<>();
         exerciseList = new JList<>(listModel);
         displayScrollPane = new JScrollPane(exerciseList);
         displayScrollPane.setBounds(20, 200, 200, 220);
         add(displayScrollPane);
 
-        //Display.
+        // Display.
         resultTxt = new JTextArea();
         resultTxt.setBounds(250, 200, 200, 220);
         resultTxt.setEditable(false);
         add(resultTxt);
 
-        //Buttons.
-        
+        // Buttons.
+
         choosebtn = new JButton("Choose");
         choosebtn.setBounds(350, 90, 100, 30);
         add(choosebtn);
@@ -105,7 +114,7 @@ public class trackWorkout extends JFrame implements ActionListener {
         enterbtn.setBounds(250, 500, 100, 30);
         add(enterbtn);
 
-        //Combo boxes.
+        // Combo boxes.
         categcb = new JComboBox<>(category);
         categcb.setBounds(170, 80, 150, 30);
         add(categcb);
@@ -114,7 +123,7 @@ public class trackWorkout extends JFrame implements ActionListener {
         intenscb.setBounds(170, 130, 150, 30);
         add(intenscb);
 
-        //Buttons.
+        // Buttons.
         calqbtn = new JButton("Calculate");
         calqbtn.setBounds(250, 450, 100, 30);
         add(calqbtn);
@@ -122,14 +131,11 @@ public class trackWorkout extends JFrame implements ActionListener {
         home = new JButton("Home");
         home.setBounds(20, 40, 100, 30);
         add(home);
-        
+
         submit = new JButton("Submit");
         submit.setBounds(50, 500, 100, 30);
-        add(submit); 
-        
-       // revalidate();
-        //repaint();
-        
+        add(submit);
+
         submit.addActionListener(this);
         home.addActionListener(this);
         choosebtn.addActionListener(this);
@@ -151,6 +157,8 @@ public class trackWorkout extends JFrame implements ActionListener {
         } else if (e.getSource() == home) {
             new mainDashboard();
             dispose();
+        } else if (e.getSource() == submit) {
+            submitToDatabase();
         }
     }
 
@@ -196,7 +204,7 @@ public class trackWorkout extends JFrame implements ActionListener {
         int categoryIndex = categcb.getSelectedIndex();
         int intensityIndex = intenscb.getSelectedIndex();
 
-        double caloriesBurned = 0;
+         caloriesBurned = 0;
 
         switch (categoryIndex) {
             case 0: //chest
@@ -219,13 +227,39 @@ public class trackWorkout extends JFrame implements ActionListener {
         resultTxt.setText("Selected: " + chosenEx + "\nCalories Burned: " + caloriesBurned + " kcal");
     }
 
-    private double getCalories(String[] exercises, double[][] calorieArray, int intensityIndex) {
+    private int getCalories(String[] exercises, int[][] calorieArray, int intensityIndex) {
         for (int i = 0; i < exercises.length; i++) {
             if (exercises[i].equals(chosenEx)) {
                 return calorieArray[i][intensityIndex];
             }
-        } return 0;
+        }
+        return 0;
     }
+
+    private void submitToDatabase() {
+        if (chosenEx == null || resultTxt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please calculate the calories before submitting.");
+            return;
+        }
+
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/fitnesstrackerdb", "root", "admin123");
+             PreparedStatement ps = conn.prepareStatement("INSERT INTO workout_log (selected, calories_burned) VALUES (?, ?)")) {
+
+            int categoryIndex = categcb.getSelectedIndex();
+            int intensityIndex = intenscb.getSelectedIndex();
+            int cc = caloriesBurned;
+            
+
+            ps.setString(1, chosenEx);
+            ps.setInt(2, caloriesBurned);
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Data submitted successfully!");
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
+        }
+    }
+
     public static void main(String[] args) {
         trackWorkout workOut = new trackWorkout();
         workOut.setVisible(true);

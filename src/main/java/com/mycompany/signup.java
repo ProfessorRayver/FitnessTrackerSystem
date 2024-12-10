@@ -1,9 +1,15 @@
-package com.mycompany.fitnesstrackapp;
+package com.mycompany;
 
 import java.awt.Font;
 import javax.swing.*; 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
     public class signup extends JFrame implements ActionListener{
 
@@ -69,7 +75,8 @@ import java.awt.event.ActionListener;
       
       confirm = new JButton("CONFIRM");
       confirm.setBounds(450, 310, 125, 40);
-      add(confirm);
+       add(confirm);
+    
    
 //      ACTION LISTENER
      lowintensity.addActionListener(this);
@@ -91,36 +98,25 @@ import java.awt.event.ActionListener;
     @Override
     public void actionPerformed(ActionEvent e) {
       if(e.getSource()== lowintensity){
-          
+         
        text.setText("");
-            
-            for(String str : low ){
+               for(String str : low ){
                 text.append(str + "\n");
-            
-            }
-      }else if (e.getSource()== midintensity){
-          text.setText("");
-            
+            }       
+         }else if (e.getSource()== midintensity){
+            text.setText("");
             for(String str : mid ){
                 text.append(str + "\n");
-    
-    }
-  
+            }
         }else if(e.getSource()== highintensity){
-        text.setText("");
-            
-            for(String str : high){
+             for(String str : high ){
                 text.append(str + "\n");
-        
-                  }
-        } else if (e.getSource()== confirm){
-        new mainDashboard();
-        dispose();
-        }
+          
+        } 
         
     }
-
     }
+}
 
    
 
