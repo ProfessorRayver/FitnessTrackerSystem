@@ -120,8 +120,8 @@ public class mainDashboard extends JFrame implements ActionListener {
             dispose();
         
         } else if (e.getSource() == btnProgress) {
-            JOptionPane.showMessageDialog(this, "To be done with Data base", "Note:", JOptionPane.INFORMATION_MESSAGE);
             dispose();
+            new viewProgress().setVisible(true);
          } 
         }
 
