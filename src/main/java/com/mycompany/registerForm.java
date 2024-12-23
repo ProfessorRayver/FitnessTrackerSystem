@@ -133,9 +133,7 @@ public class registerForm extends JFrame implements ActionListener {
 //            PreparedStatement pst = con.prepareStatement("INSERT INTO users (userid, userpass) VALUES (?, ?)");
 //            pst.setString(1, username);
 //            pst.setString(2, password);
-           
-            
-            
+          
             
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
