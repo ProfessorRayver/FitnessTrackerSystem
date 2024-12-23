@@ -129,7 +129,7 @@ public class registerForm extends JFrame implements ActionListener {
         String dbPassword = "admin123"; // Replace with your database password
 
         try (Connection con = DriverManager.getConnection(url, dbUsername, dbPassword)) {
-            // SQL query to insert user into the 'users' table
+//             SQL query to insert user into the 'users' table
 //            PreparedStatement pst = con.prepareStatement("INSERT INTO users (userid, userpass) VALUES (?, ?)");
 //            pst.setString(1, username);
 //            pst.setString(2, password);

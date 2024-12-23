@@ -77,14 +77,6 @@ public class mainDashboard extends JFrame implements ActionListener {
         btnProgress.setBounds(350, 600, 140, 40);
         add(btnProgress);
         
-        //panelNotifications = new JPanel();
-       // panelNotifications.setLayout(new GridLayout(21, 1));
-        
-        //scrollPaneNotifications = new JScrollPane(panelNotifications);
-        //scrollPaneNotifications.setBounds(80, 540, 600, 200);
-        //scrollPaneNotifications.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        //add(scrollPaneNotifications);
-        
         setVisible(true);
         
         revalidate();
@@ -99,27 +91,27 @@ public class mainDashboard extends JFrame implements ActionListener {
     }
     @Override
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == btnMeals) {
+            if (e.getSource() == btnMeals) { // to access meal tracker
             dispose();
             new trackMeal().setVisible(true); 
         
-        } else if (e.getSource() == btnWorkout) {
+        } else if (e.getSource() == btnWorkout) { // to access workout tracker
             dispose();
             new trackWorkout().setVisible(true);
 
-        } else if (e.getSource() == btnProfile) {
+        } else if (e.getSource() == btnProfile) { // to access users profile
             dispose();
             new SignOut().setVisible(true);
 
-        } else if (e.getSource() == btnWorkoutPlan) {
+        } else if (e.getSource() == btnWorkoutPlan) { // to access users workout plan
             dispose();
             new signup().setVisible(true);
         
-        } else if (e.getSource() == btnNotifications) {
+        } else if (e.getSource() == btnNotifications) { // to get notifications of what to do
             JOptionPane.showMessageDialog(this, "You completed your Workout! Good job!", "Notifications", JOptionPane.INFORMATION_MESSAGE);
             dispose();
         
-        } else if (e.getSource() == btnProgress) {
+        } else if (e.getSource() == btnProgress) { // to access the overall progress of the user
             dispose();
             new viewProgress().setVisible(true);
          } 

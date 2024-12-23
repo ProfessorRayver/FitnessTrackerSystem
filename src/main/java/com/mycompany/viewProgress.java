@@ -23,9 +23,6 @@ public class viewProgress extends JFrame implements ActionListener{
     JTable tblWorkout;
     JButton btnBack;
     
-    
-    
-    
     viewProgress(){
         
         setSize(800, 800);
@@ -39,11 +36,13 @@ public class viewProgress extends JFrame implements ActionListener{
         lblTitle.setFont(new Font("Courier", Font.PLAIN, 30));
         add(lblTitle);
         
+        
+        //inserting the category of exercises on the table
         String[][] rows = {};
         String[] workoutColumn = {"Arms", "Back", "Legs", "Chest", "Cardio"};
         
+        // table declaration
         tblWorkout = new JTable(rows, workoutColumn);
-        
         
         scrpn = new JScrollPane(tblWorkout);
         scrpn.setBounds(30, 140, 450, 350);

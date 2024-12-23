@@ -90,10 +90,10 @@ public class signInScreen extends JFrame implements ActionListener {
                     dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, "Wrong Username or Password!", "Failed!", JOptionPane.ERROR_MESSAGE);
-                    txtFldUsername.setText("");
+                    txtFldUsername.setText(""); // to show warning about wrong info
                     txtPasswordFld.setText("");
                 }
-            } else {
+            } else {                                // warning msg if no info is given by the user
                 JOptionPane.showMessageDialog(this, "Please Input Username and Password!", "Error!", JOptionPane.ERROR_MESSAGE);
             }
         } else if(e.getSource() == registerIn){
