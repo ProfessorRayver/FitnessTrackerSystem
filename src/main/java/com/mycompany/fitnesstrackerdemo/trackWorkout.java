@@ -148,16 +148,16 @@ public class trackWorkout extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == choosebtn) {
             loadExercises();
-        } else if (e.getSource() == enterbtn) {
+        } else if (e.getSource() == enterbtn) { // button to select an exercise.
             selectExercise();
-        } else if (e.getSource() == clearbtn) {
+        } else if (e.getSource() == clearbtn) { // button to clear info.
             clearSelections();
-        } else if (e.getSource() == calqbtn) {
+        } else if (e.getSource() == calqbtn) { // button to show the calories burned on each workout.
             calculateCalories();
-        } else if (e.getSource() == home) {
+        } else if (e.getSource() == home) {    // button to go back at the homepage
             new mainDashboard();
             dispose();
-        } else if (e.getSource() == submit) {
+        } else if (e.getSource() == submit) { // button to submit info to database
             submitToDatabase();
         }
     }
@@ -180,14 +180,14 @@ public class trackWorkout extends JFrame implements ActionListener {
 
     private void selectExercise() {
         chosenEx = exerciseList.getSelectedValue();
-        if (chosenEx != null) {
+        if (chosenEx != null) {     //to show the selected exercise.
             resultTxt.setText("Selected: " + chosenEx);
-        } else {
+        } else {            // warning to choose first before entering.
             JOptionPane.showMessageDialog(null, "Please select an exercise first.");
         }
     }
 
-    private void clearSelections() {
+    private void clearSelections() { // to clear the info
         listModel.clear();
         resultTxt.setText("");
         chosenEx = null;
@@ -195,19 +195,21 @@ public class trackWorkout extends JFrame implements ActionListener {
         intenscb.setSelectedIndex(0);
     }
 
-    private void calculateCalories() {
+    private void calculateCalories() { // warning msg
         if (chosenEx == null) {
             JOptionPane.showMessageDialog(null, "Please select an exercise first.");
             return;
         }
-
+        //int declaration
         int categoryIndex = categcb.getSelectedIndex();
         int intensityIndex = intenscb.getSelectedIndex();
 
          caloriesBurned = 0;
 
+            //switch method for selected exercise, and show the calories burned assigned on each intensity.
+            
         switch (categoryIndex) {
-            case 0: //chest
+            case 0: //chest 
                 caloriesBurned = getCalories(chestEx, chestCalories, intensityIndex);
                 break;
             case 1: //back
@@ -223,7 +225,7 @@ public class trackWorkout extends JFrame implements ActionListener {
                 caloriesBurned = getCalories(cardioEx, cardioCalories, intensityIndex);
                 break;
         }
-
+                //displaying text
         resultTxt.setText("Selected: " + chosenEx + "\nCalories Burned: " + caloriesBurned + " kcal");
     }
 
