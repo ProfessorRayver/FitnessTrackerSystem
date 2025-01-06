@@ -105,7 +105,7 @@ public class mainDashboard extends JFrame implements ActionListener {
 
         } else if (e.getSource() == btnWorkoutPlan) { // to access users workout plan
             dispose();
-            new signup().setVisible(true);
+            new viewWorkoutPlan().setVisible(true);
         
         } else if (e.getSource() == btnNotifications) { // to get notifications of what to do
             JOptionPane.showMessageDialog(this, "You completed your Workout! Good job!", "Notifications", JOptionPane.INFORMATION_MESSAGE);
