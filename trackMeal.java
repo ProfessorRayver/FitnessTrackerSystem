@@ -91,7 +91,7 @@ public class trackMeal extends JFrame implements ActionListener{
     add(cmbMeals);
     
     btnAddNew = new JButton("Add New");
-    btnAddNew.setBounds(493, 395, 85, 30); 
+    btnAddNew.setBounds(493, 350, 85, 30); 
     add(btnAddNew);
      
     list = new JList<>(listModel);
@@ -99,10 +99,8 @@ public class trackMeal extends JFrame implements ActionListener{
     scroll.setBounds(30, 220, 450, 300);
     add(scroll);
     
-    
-    
     btnClear = new JButton("Clear");
-    btnClear.setBounds(493, 320, 85, 30);
+    btnClear.setBounds(493, 250, 85, 30);
     add(btnClear);
     
     btnAdd = new JButton("Add");
@@ -110,7 +108,7 @@ public class trackMeal extends JFrame implements ActionListener{
     add(btnAdd);
     
     btnBack = new JButton("Back");
-    btnBack.setBounds(493, 470, 85, 30);
+    btnBack.setBounds(493, 450, 85, 30);
     add(btnBack);
   
   
@@ -128,55 +126,78 @@ public class trackMeal extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btnAdd){
             String input = txtInput.getText().trim();
-    if (!input.isEmpty()) {
-        try (Connection conn = connectToDatabase()) {
-            String query = "SELECT * FROM mealtbl WHERE mealname = ?";
-            PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setString(1, input);
-            ResultSet rs = stmt.executeQuery();
+            String mealTime = cmbMeals.getSelectedItem().toString();
 
-            if (rs.next()) {
-                // Retrieve meal details
-                String mealTime = rs.getString("mealtime");
-                String carbs = rs.getString("carbohydrates");
-                String fat = rs.getString("fat");
-                String protein = rs.getString("protein");
+            if (!input.isEmpty()) {
+                try (Connection conn = connectToDatabase()) {
+                    String query = "SELECT * FROM mealtbl WHERE mealname = ?";
+                    PreparedStatement stmt = conn.prepareStatement(query);
+                    stmt.setString(1, input);
+                    ResultSet rs = stmt.executeQuery();
 
-                // Display meal details
-                listModel.addElement("Meal Name: " + input);
-                listModel.addElement("Meal Time: " + mealTime);
-                listModel.addElement("Carbohydrates: " + carbs + "g");
-                listModel.addElement("Fat: " + fat + "g");
-                listModel.addElement("Protein: " + protein + "g");
-                listModel.addElement("--------------------");
+                    if (rs.next()) {
+                        // If meal exists
+                        double carbs = rs.getDouble("carbohydrates");
+                        double fat = rs.getDouble("fat");
+                        double protein = rs.getDouble("protein");
 
-                JOptionPane.showMessageDialog(this, "Meal Found and Added to List:\n" +
-                        "Carbohydrates: " + carbs + "\nFat: " + fat + "\nProtein: " + protein);
+                        listModel.addElement("Meal: " + input + " | Meal Time: " + mealTime +
+                                " | Carbs: " + carbs + "g | Fat: " + fat + "g | Protein: " + protein + "g");
+
+                        JOptionPane.showMessageDialog(this, "Meal added to the list!");
+                    } else {
+                        // If meal not find or does not exist in my databse
+                        int choice = JOptionPane.showConfirmDialog(this, "Meal not found. Would you like to add it?", "Meal Not Found", JOptionPane.YES_NO_OPTION);
+
+                        if (choice == JOptionPane.YES_OPTION) {
+                            String carbs = JOptionPane.showInputDialog(this, "Enter Carbohydrates (g):", "Add New Meal", JOptionPane.INFORMATION_MESSAGE);
+                            String fat = JOptionPane.showInputDialog(this, "Enter Fat (g):", "Add New Meal", JOptionPane.INFORMATION_MESSAGE);
+                            String protein = JOptionPane.showInputDialog(this, "Enter Protein (g):", "Add New Meal", JOptionPane.INFORMATION_MESSAGE);
+
+                            if (carbs != null && fat != null && protein != null && !carbs.trim().isEmpty() && !fat.trim().isEmpty() && !protein.trim().isEmpty()) {
+                                try {
+                                    double carbsValue = Double.parseDouble(carbs);
+                                    double fatValue = Double.parseDouble(fat);
+                                    double proteinValue = Double.parseDouble(protein);
+
+                                    String insertQuery = "INSERT INTO mealtbl (mealname, carbohydrates, fat, protein) VALUES (?, ?, ?, ?)";
+                                    PreparedStatement insertStmt = conn.prepareStatement(insertQuery);
+                                    insertStmt.setString(1, input);
+                                    insertStmt.setDouble(2, carbsValue);
+                                    insertStmt.setDouble(3, fatValue);
+                                    insertStmt.setDouble(4, proteinValue);
+                                    insertStmt.executeUpdate();
+
+                                    listModel.addElement("Meal: " + input + " | Meal Time: " + mealTime +
+                                            " | Carbs: " + carbsValue + "g | Fat: " + fatValue + "g | Protein: " + proteinValue + "g");
+
+                                    JOptionPane.showMessageDialog(this, "New meal added successfully!");
+                                } catch (NumberFormatException ex) {
+                                    JOptionPane.showMessageDialog(this, "Invalid nutrient values! Please enter valid numbers.", "Error", JOptionPane.ERROR_MESSAGE);
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(this, "Please provide all nutrient values.", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }
+                    }
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+                txtInput.setText("");
             } else {
-                // Add meal name to the queue
-                Qname.add(input);
-                JOptionPane.showMessageDialog(this, "Meal Added to the Queue: " + input);
+                JOptionPane.showMessageDialog(this, "Please input a meal name.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        txtInput.setText("");
-    } else {
-        JOptionPane.showMessageDialog(this, "Please input a meal name.", "Error!", JOptionPane.ERROR_MESSAGE);
-    }
     
 
-//          //clear button
+          //clear button
         }else if(e.getSource() == btnClear){
             listModel.clear();
             //back button
         }else if(e.getSource() == btnBack){
             new mainDashboard();
             setVisible(true);
-            this.dispose();
-            
-        //save to database
-        
+            this.dispose();       
 
             // new
         }else if(e.getSource() == btnAddNew){
