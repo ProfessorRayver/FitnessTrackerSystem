@@ -51,18 +51,13 @@ public class viewWorkoutPlan extends JFrame implements ActionListener {
         scPane = new JScrollPane(text);
         scPane.setBounds(30, 150,350 , 500);
         add(scPane);
-        
-        //listModel = new DefaultListModel<>();
-        //list = new JList<>(listModel);
-        //scrllpn = new JScrollPane(list);
-        //scrllpn.setBounds(30, 150, 350, 500);
-        //add(scrllpn);
-
+       
         btnBack = new JButton("Back");
         btnBack.setBounds(410, 620, 120, 30);
         add(btnBack);
 
         btnBack.addActionListener(this);
+        
         workoutplancon();
         getworkoutPlan();
         setVisible(true);
