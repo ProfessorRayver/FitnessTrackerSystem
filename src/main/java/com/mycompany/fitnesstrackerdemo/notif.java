@@ -1,79 +1,64 @@
 package com.mycompany;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
-public class notif {
+public class notif extends JFrame {
+    private JTextArea notificationLog;
+    private JButton btnBack;
+    private final int activeUser = 1;  // Simulated user ID
+    private ArrayList<String> notifications = new ArrayList<>();
 
-    private List<Workout> workouts;
-    private List<Meal> meals;
-    private int currentProgress; 
-    private int fitnessGoal; 
+    notif() {
+        initializeWindow();
+        loadSampleNotifications();
+        setVisible(true);
+    }
 
-    public void checkAndNotify() {
-        Date currentDate = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(currentDate);
+    // GUI Setup
+    private void initializeWindow() {
+        setTitle("User Notifications");
+        setSize(450, 275);
+        setLayout(null);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Check for missed workouts
-        for (Workout workout : workouts) {
-            if (isMissed(workout.getScheduledTime(), calendar)) {
-                JOptionPane.showMessageDialog(null, "You missed a workout!", "Workout Reminder", JOptionPane.WARNING_MESSAGE); 
+        notificationLog = new JTextArea();
+        notificationLog.setBounds(30, 40, 370, 100);
+        notificationLog.setEditable(false);
+        add(notificationLog);
+
+        btnBack = new JButton("Back");
+        btnBack.setBounds(120, 175, 200, 40);
+        add(btnBack);
+
+        btnBack.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new mainDashboard().setVisible(true);  // Assuming mainDashboard class exists
             }
+        });
+    }
+
+    // Simulate Fetching Notifications (Locally)
+    private void loadSampleNotifications() {
+        // Correcting how notifications are added
+        notifications.add("\n▶ Time to start your workout! \n" + "▶ Drink water and stay hydrated. \n"  + "▶ Don’t forget to stretch after today’s session.");
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("MMM dd, yyyy - HH:mm");
+
+        for (String note : notifications) {
+            String currentTime = format.format(LocalDateTime.now());
+            notificationLog.append(currentTime + " ➤ " + note + "\n");
         }
-
-        // Check for missed meals
-        for (Meal meal : meals) {
-            if (isMissed(meal.getScheduledTime(), calendar)) {
-                JOptionPane.showMessageDialog(null, "You missed a meal!", "Meal Reminder", JOptionPane.WARNING_MESSAGE);
-            }
-        }
-        int goal = 0;
-
-        // Check for progress towards goals
-        if (isCloseToGoal(currentProgress, goal)) {
-            JOptionPane.showMessageDialog(null, "You're close to your fitness goal!", "Progress Update", JOptionPane.INFORMATION_MESSAGE);
-        }
     }
 
-    private boolean isMissed(Date scheduledTime, Calendar currentDate) {
-        return currentDate.after(scheduledTime); 
-    }
-
-    private boolean isCloseToGoal(int currentProgress, int goal) {
-        if (currentProgress >= goal * 0.9) { 
-            return true;
-        }
-        return false;
-    }
-
-    public static void main(String[] args) {
-    }
-}
-
-class Workout {
-    private Date scheduledTime;
-  
-    public Workout(Date scheduledTime) {
-        this.scheduledTime = scheduledTime;
-    }
-
-    public Date getScheduledTime() {
-        return scheduledTime;
-    }
-}
-
-class Meal {
-    private Date scheduledTime;
-   
-    public Meal(Date scheduledTime) {
-        this.scheduledTime = scheduledTime;
-    }
-
-    public Date getScheduledTime() {
-        return scheduledTime;
-    }
+    // Main Method
+  public static void main(String[] args) {
+    new notif();
+ }
 }

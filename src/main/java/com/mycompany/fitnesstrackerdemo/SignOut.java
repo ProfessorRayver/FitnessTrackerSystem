@@ -15,7 +15,7 @@ import javax.swing.*;
 public class SignOut extends JFrame implements ActionListener {
 
     private JScrollPane scrollpane;
-    private JButton btnSignOut, btnBack;
+    private JButton btnSignOut, btnBack, btnView;
     private JLabel UserProfile, lbName, lbBmi, lbIntensity;
 
     public SignOut() {
@@ -33,13 +33,20 @@ public class SignOut extends JFrame implements ActionListener {
 //        scrollpane.setBounds(50, 100, 300, 220);
 //        add(scrollpane);
 
+        //button for sign outing account
         btnSignOut = new JButton("SignOut");
         btnSignOut.setBounds(400, 100, 120, 30);
         add(btnSignOut);
 
+        //button for back maindashboard
         btnBack = new JButton("Back");
         btnBack.setBounds(400, 150, 120, 30);
         add(btnBack);
+        
+        
+        btnView = new JButton("View");
+        btnView.setBounds(400, 200, 120, 30);
+        add(btnView);
         
         lbName = new JLabel("Name:");
         lbName.setBounds(50, 100, 200, 30);
@@ -57,7 +64,7 @@ public class SignOut extends JFrame implements ActionListener {
         
         btnSignOut.addActionListener(this);
         btnBack.addActionListener(this);
-
+        btnView.addActionListener(this);
         setVisible(true);
     }
 
@@ -69,6 +76,11 @@ public class SignOut extends JFrame implements ActionListener {
         } else if (e.getSource() == btnBack) {
             new mainDashboard().setVisible(true);
             dispose();
+            
+            } else if (e.getSource() == btnView) {
+            dispose();
+            new viewWorkoutPlan().setVisible(true);
+        
 
         }
     }

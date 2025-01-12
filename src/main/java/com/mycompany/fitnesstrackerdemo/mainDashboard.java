@@ -97,19 +97,19 @@ public class mainDashboard extends JFrame implements ActionListener {
         
         } else if (e.getSource() == btnWorkout) { // to access workout tracker
             dispose();
-            new trackWorkout().setVisible(true);
-
+            new workoutPlan().setVisible(true);
+            
         } else if (e.getSource() == btnProfile) { // to access users profile
             dispose();
             new SignOut().setVisible(true);
 
         } else if (e.getSource() == btnWorkoutPlan) { // to access users workout plan
             dispose();
-            new viewWorkoutPlan().setVisible(true);
+            new workoutPlan().setVisible(true);
         
         } else if (e.getSource() == btnNotifications) { // to get notifications of what to do
-            JOptionPane.showMessageDialog(this, "You completed your Workout! Good job!", "Notifications", JOptionPane.INFORMATION_MESSAGE);
             dispose();
+            new notif().setVisible(true);
         
         } else if (e.getSource() == btnProgress) { // to access the overall progress of the user
             dispose();
