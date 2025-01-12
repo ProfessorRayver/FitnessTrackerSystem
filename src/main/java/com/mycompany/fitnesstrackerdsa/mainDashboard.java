@@ -1,0 +1,116 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.fitnesstrackerdemo;
+
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
+/**
+ *
+ * @author User
+ */
+public class mainDashboard extends JFrame implements ActionListener {
+    private JLabel lblDashBoard, imgLbl;
+    private JButton btnWorkout, btnMeals, btnProgress, btnNotifications, btnProfile, btnWorkoutPlan;
+
+    mainDashboard() {
+
+        // INITIALIZATION OF JFRAME
+        setSize(800, 800);
+        setLayout(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        
+        // ADDING JFRAME COMPONENTS
+        lblDashBoard = new JLabel("WELCOME TO WORKOUT PLAN!", SwingConstants.CENTER);
+        lblDashBoard.setBounds(0, 360, 800, 30);
+        lblDashBoard.setFont(new Font("Tahoma", Font.BOLD, 20));
+        add(lblDashBoard);
+        
+        ImageIcon ImageIcon = new ImageIcon("C:\\Users\\colad\\OneDrive\\Documents\\NetBeansProjects\\PRACTIVEMOTO\\src\\main\\java\\com\\mycompany\\PUP HealthTrackerBuddy (1).png"); //KINDLY CHANGE FILE PATH DIRECTORY
+        imgLbl = new JLabel(ImageIcon);
+        imgLbl.setBounds(0, 0, 800, 330);
+        add(imgLbl);
+        
+        btnProfile = new JButton("View Profile");
+        btnProfile.setBounds(660, 10, 120, 40);
+        add(btnProfile);
+     
+        btnWorkout = new JButton("My Workout");
+        btnWorkout.setBounds(350, 400, 140, 40);
+        add(btnWorkout);
+       
+        btnMeals = new JButton("My Meals");
+        btnMeals.setBounds(350, 450, 140, 40);
+        add(btnMeals);
+        
+        btnWorkoutPlan = new JButton("Workout Plan");
+        btnWorkoutPlan.setBounds(350, 500, 140, 40);
+        add(btnWorkoutPlan);
+        
+        btnNotifications = new JButton("Notifications");
+        btnNotifications.setBounds(350, 550, 140, 40);
+        add(btnNotifications);
+        
+        btnProgress = new JButton("View Progress");
+        btnProgress.setBounds(350, 600, 140, 40);
+        add(btnProgress);
+        
+        setVisible(true);
+        
+        revalidate();
+        repaint();
+        
+        // ADDING ACTIONLISTENERS FOR INTERACTABLES
+        
+                btnWorkout.addActionListener(this);
+                btnMeals.addActionListener(this);
+                btnProgress.addActionListener(this);
+                btnNotifications.addActionListener(this);
+                btnWorkoutPlan.addActionListener(this);
+                btnProfile.addActionListener(this);
+    }
+    @Override
+        public void actionPerformed(ActionEvent e) {
+            // METHOD FOR DISPOSING AND INITIALIZING OTHER sJAVA CLASSES
+        if (e.getSource() == btnMeals) { 
+            dispose();
+            new trackMeal().setVisible(true); 
+        
+        } else if (e.getSource() == btnWorkout) { 
+            dispose();
+            new workoutPlan().setVisible(true);
+            
+        } else if (e.getSource() == btnProfile) { 
+            dispose();
+            new SignOut().setVisible(true);
+
+        } else if (e.getSource() == btnWorkoutPlan) { 
+            dispose();
+            new workoutPlan().setVisible(true);
+        
+        } else if (e.getSource() == btnNotifications) { 
+            dispose();
+            new notif().setVisible(true);
+        
+        } else if (e.getSource() == btnProgress) {
+            dispose();
+            new viewProgress().setVisible(true);
+         } 
+        }
+
+        // METHOD CALLING FOR INITIALIZATION
+    public static void main(String[] args) {
+        mainDashboard mainDashboard = new mainDashboard();
+        mainDashboard.setVisible(true);
+    }
+}
