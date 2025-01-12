@@ -20,12 +20,12 @@ public class viewWorkoutPlan extends JFrame implements ActionListener {
     private JLabel lblActiveWorkoutPlan, lblCurrentWorkOutPlan;
     private JList<String> list;
     private JButton btnBack;
-    private JScrollPane scrllpn;
+    private JScrollPane scPane;
     private DefaultListModel<String> listModel;
     private Connection con;
     private String value;
     private JTextArea text;
-    // Database connection detail
+    // DATABASE CONNECTION DETAIL
 
     viewWorkoutPlan() {
         
@@ -34,7 +34,7 @@ public class viewWorkoutPlan extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        // Adding components
+        // ADDING COMPONENTS
         lblCurrentWorkOutPlan = new JLabel("Current Workout Plan");
         lblCurrentWorkOutPlan.setBounds(30, 40, 800, 30);
         lblCurrentWorkOutPlan.setFont(new Font("Courier", Font.PLAIN, 30));
@@ -48,9 +48,10 @@ public class viewWorkoutPlan extends JFrame implements ActionListener {
         text =  new JTextArea();
         text.setEditable(false);
       
-        scrllpn = new JScrollPane(text);
-        scrllpn.setBounds(30, 150,350 , 500);
-        add(scrllpn);
+        scPane = new JScrollPane(text);
+        scPane.setBounds(30, 150,350 , 500);
+        add(scPane);
+        
         //listModel = new DefaultListModel<>();
         //list = new JList<>(listModel);
         //scrllpn = new JScrollPane(list);
@@ -113,7 +114,6 @@ public class viewWorkoutPlan extends JFrame implements ActionListener {
         }
         }
 }
-    
-
+ 
 
 
