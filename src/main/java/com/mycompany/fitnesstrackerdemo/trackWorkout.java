@@ -15,9 +15,9 @@ import java.sql.SQLException;
 
 public class trackWorkout extends JFrame implements ActionListener {
 
-    private JLabel titlelb, categlb, intenslb;
-    private JTextArea resultTxt;
-    private JButton enterbtn, clearbtn, choosebtn, calqbtn, home, submit;
+    private JLabel lbtitle, lbCategory, lbIntensity;
+    private JTextArea txtResults;
+    private JButton btnEnter, btnClear, btnChoose, btnCalculate, btnHome, btnSubmit;
     private JComboBox<String> categcb, intenscb;
     private JScrollPane displayScrollPane;
     private JList<String> exerciseList;
@@ -74,45 +74,60 @@ public class trackWorkout extends JFrame implements ActionListener {
         revalidate();
         repaint();
 
-        // Labels.
-        titlelb = new JLabel("Please select workout & intensity first:");
-        titlelb.setBounds(150, 20, 250, 30);
-        add(titlelb);
+        // LABELS.
+        lbtitle = new JLabel("Please select workout & intensity first:");
+        lbtitle.setBounds(150, 20, 250, 30);
+        add(lbtitle);
 
-        categlb = new JLabel("Workout Categories:");
-        categlb.setBounds(20, 80, 150, 30);
-        add(categlb);
+        lbCategory = new JLabel("Workout Categories:");
+        lbCategory.setBounds(20, 80, 150, 30);
+        add(lbCategory);
 
-        intenslb = new JLabel("Intensities:");
-        intenslb.setBounds(20, 130, 150, 30);
-        add(intenslb);
+        lbIntensity = new JLabel("Intensities:");
+        lbIntensity.setBounds(20, 130, 150, 30);
+        add(lbIntensity);
+        
+        
+        
+        // BUTTONS.
 
-        // List.
+        btnChoose = new JButton("Choose");
+        btnChoose.setBounds(350, 90, 100, 30);
+        add(btnChoose);
+
+        btnClear = new JButton("Clear");
+        btnClear.setBounds(50, 450, 100, 30);
+        add(btnClear);
+
+        btnEnter = new JButton("Select");
+        btnEnter.setBounds(250, 500, 100, 30);
+        add(btnEnter);
+        
+        btnCalculate = new JButton("Calculate");
+        btnCalculate.setBounds(250, 450, 100, 30);
+        add(btnCalculate);
+
+        btnHome = new JButton("Home");
+        btnHome.setBounds(20, 40, 100, 30);
+        add(btnHome);
+
+        btnSubmit = new JButton("Submit");
+        btnSubmit.setBounds(50, 500, 100, 30);
+        add(btnSubmit);
+        
+
+        // TEXTAREA / LIST.
         listModel = new DefaultListModel<>();
         exerciseList = new JList<>(listModel);
         displayScrollPane = new JScrollPane(exerciseList);
         displayScrollPane.setBounds(20, 200, 200, 220);
         add(displayScrollPane);
 
-        // Display.
-        resultTxt = new JTextArea();
-        resultTxt.setBounds(250, 200, 200, 220);
-        resultTxt.setEditable(false);
-        add(resultTxt);
+        txtResults = new JTextArea();
+        txtResults.setBounds(250, 200, 200, 220);
+        txtResults.setEditable(false);
+        add(txtResults);
 
-        // Buttons.
-
-        choosebtn = new JButton("Choose");
-        choosebtn.setBounds(350, 90, 100, 30);
-        add(choosebtn);
-
-        clearbtn = new JButton("Clear");
-        clearbtn.setBounds(50, 450, 100, 30);
-        add(clearbtn);
-
-        enterbtn = new JButton("Select");
-        enterbtn.setBounds(250, 500, 100, 30);
-        add(enterbtn);
 
         // Combo boxes.
         categcb = new JComboBox<>(category);
@@ -123,51 +138,41 @@ public class trackWorkout extends JFrame implements ActionListener {
         intenscb.setBounds(170, 130, 150, 30);
         add(intenscb);
 
-        // Buttons.
-        calqbtn = new JButton("Calculate");
-        calqbtn.setBounds(250, 450, 100, 30);
-        add(calqbtn);
-
-        home = new JButton("Home");
-        home.setBounds(20, 40, 100, 30);
-        add(home);
-
-        submit = new JButton("Submit");
-        submit.setBounds(50, 500, 100, 30);
-        add(submit);
-
-        submit.addActionListener(this);
-        home.addActionListener(this);
-        choosebtn.addActionListener(this);
-        enterbtn.addActionListener(this);
-        clearbtn.addActionListener(this);
-        calqbtn.addActionListener(this);
+        
+        //      ACTION LISTENER
+        btnSubmit.addActionListener(this);
+        btnHome.addActionListener(this);
+        btnChoose.addActionListener(this);
+        btnEnter.addActionListener(this);
+        btnClear.addActionListener(this);
+        btnCalculate.addActionListener(this);
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == choosebtn) {
-            loadExercises();
-        } else if (e.getSource() == enterbtn) { // button to select an exercise.
-            selectExercise();
-        } else if (e.getSource() == clearbtn) { // button to clear info.
-            clearSelections();
-        } else if (e.getSource() == calqbtn) { // button to show the calories burned on each workout.
-            calculateCalories();
-        } else if (e.getSource() == home) {    // button to go back at the homepage
-            new mainDashboard();
+   public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnChoose) { 
+            loadExercises(); // LOADS THE EXERCISES BASED ON SELECTED CATEGORY
+        } else if (e.getSource() == btnEnter) { 
+            selectExercise(); // SELECT AN EXERCISE FROM THE LIST
+        } else if (e.getSource() == btnClear) { 
+            clearSelections(); // CLEAR THE SELECTED ITEMS
+        } else if (e.getSource() == btnCalculate) { 
+            calculateCalories(); // CALCULATES THE CALORIES BURNED
+        } else if (e.getSource() == btnHome) {    
+            new mainDashboard(); // NAVIGATES BACK TO THE HOME PAGE
             dispose();
-        } else if (e.getSource() == submit) { // button to submit info to database
-            submitToDatabase();
+        } else if (e.getSource() == btnSubmit) { 
+            submitToDatabase(); // SUBMITS THE SELECTED WORKOUT AND CALORIES TO THE DATABASE
         }
     }
 
-    private void loadExercises() {
-        listModel.clear();
+    private void loadExercises() { 
+        listModel.clear(); // CLEARS THE LIST OF EXERCISES
         chosenEx = null;
-        resultTxt.setText("");
-        int categoryIndex = categcb.getSelectedIndex();
+        txtResults.setText(""); // CLEARS THE RESULTS TEXT AREA
+        int categoryIndex = categcb.getSelectedIndex(); // GETS THE SELECTED CATEGORY
 
+        // LOADS EXERCISES BASED ON THE SELECTED CATEGORY
         String[] exercises;
         if (categoryIndex == 0) exercises = chestEx;
         else if (categoryIndex == 1) exercises = backEx;
@@ -175,96 +180,91 @@ public class trackWorkout extends JFrame implements ActionListener {
         else if (categoryIndex == 3) exercises = armEx;
         else exercises = cardioEx;
 
-        for (String ex : exercises) listModel.addElement(ex);
+        for (String ex : exercises) listModel.addElement(ex); // POPULATES THE LIST
     }
 
     private void selectExercise() {
-        chosenEx = exerciseList.getSelectedValue();
-        if (chosenEx != null) {     //to show the selected exercise.
-            resultTxt.setText("Selected: " + chosenEx);
-        } else {            // warning to choose first before entering.
-            JOptionPane.showMessageDialog(null, "Please select an exercise first.");
+        chosenEx = exerciseList.getSelectedValue(); // GETS THE SELECTED EXERCISE
+        if (chosenEx != null) {     
+            txtResults.setText("Selected: " + chosenEx); // DISPLAYS THE SELECTED EXERCISE
+        } else {            
+            JOptionPane.showMessageDialog(null, "Please select an exercise first."); // PROMPTS IF NOTHING IS SELECTED
         }
     }
 
-    private void clearSelections() { // to clear the info
-        listModel.clear();
-        resultTxt.setText("");
-        chosenEx = null;
-        categcb.setSelectedIndex(0);
-        intenscb.setSelectedIndex(0);
+    private void clearSelections() { 
+        listModel.clear(); // CLEARS THE LIST
+        txtResults.setText(""); // CLEARS THE RESULTS AREA
+        chosenEx = null; // RESETS THE SELECTED EXERCISE
+        categcb.setSelectedIndex(0); // RESETS THE CATEGORY COMBO BOX
+        intenscb.setSelectedIndex(0); // RESETS THE INTENSITY COMBO BOX
     }
 
-    private void calculateCalories() { // warning msg
-        if (chosenEx == null) {
+    private void calculateCalories() { 
+        if (chosenEx == null) { // CHECKS IF AN EXERCISE IS SELECTED
             JOptionPane.showMessageDialog(null, "Please select an exercise first.");
             return;
         }
-        //int declaration
-        int categoryIndex = categcb.getSelectedIndex();
-        int intensityIndex = intenscb.getSelectedIndex();
 
-         caloriesBurned = 0;
+        int categoryIndex = categcb.getSelectedIndex(); // GETS THE CATEGORY INDEX
+        int intensityIndex = intenscb.getSelectedIndex(); // GETS THE INTENSITY INDEX
 
-            //switch method for selected exercise, and show the calories burned assigned on each intensity.
-            
+        caloriesBurned = 0; // INITIALIZES THE CALORIES VARIABLE
+
+        // DETERMINES THE CALORIES BASED ON THE SELECTED CATEGORY AND EXERCISE
         switch (categoryIndex) {
-            case 0: //chest 
+            case 0: 
                 caloriesBurned = getCalories(chestEx, chestCalories, intensityIndex);
                 break;
-            case 1: //back
+            case 1: 
                 caloriesBurned = getCalories(backEx, backCalories, intensityIndex);
                 break;
-            case 2: //legs
+            case 2: 
                 caloriesBurned = getCalories(legEx, legCalories, intensityIndex);
                 break;
-            case 3: //arms
+            case 3: 
                 caloriesBurned = getCalories(armEx, armCalories, intensityIndex);
                 break;
-            case 4: //cardio
+            case 4: 
                 caloriesBurned = getCalories(cardioEx, cardioCalories, intensityIndex);
                 break;
         }
-                //displaying text
-        resultTxt.setText("Selected: " + chosenEx + "\nCalories Burned: " + caloriesBurned + " kcal");
+
+        // DISPLAYS THE RESULT
+        txtResults.setText("Selected: " + chosenEx + "\nCalories Burned: " + caloriesBurned + " kcal");
     }
 
     private int getCalories(String[] exercises, int[][] calorieArray, int intensityIndex) {
         for (int i = 0; i < exercises.length; i++) {
-            if (exercises[i].equals(chosenEx)) {
-                return calorieArray[i][intensityIndex];
+            if (exercises[i].equals(chosenEx)) { // FINDS THE MATCHING EXERCISE
+                return calorieArray[i][intensityIndex]; // RETURNS THE CALORIES BASED ON INTENSITY
             }
         }
-        return 0;
+        return 0; // RETURNS 0 IF NO MATCH FOUND
     }
 
     private void submitToDatabase() {
-        if (chosenEx == null || resultTxt.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please calculate the calories before submitting.");
+        if (chosenEx == null || txtResults.getText().isEmpty()) { 
+            JOptionPane.showMessageDialog(null, "Please calculate the calories before submitting."); // PROMPTS TO CALCULATE FIRST
             return;
         }
 
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/fitnesstrackerdb", "root", "admin123");
              PreparedStatement ps = conn.prepareStatement("INSERT INTO workout_log (selected, calories_burned) VALUES (?, ?)")) {
 
-            int categoryIndex = categcb.getSelectedIndex();
-            int intensityIndex = intenscb.getSelectedIndex();
-            int cc = caloriesBurned;
-            
+            ps.setString(1, chosenEx); // INSERTS THE SELECTED EXERCISE
+            ps.setInt(2, caloriesBurned); // INSERTS THE CALORIES BURNED
+            ps.executeUpdate(); // EXECUTES THE QUERY
+            JOptionPane.showMessageDialog(null, "Data submitted successfully!"); // CONFIRMATION MESSAGE
 
-            ps.setString(1, chosenEx);
-            ps.setInt(2, caloriesBurned);
-            ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Data submitted successfully!");
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
+        } catch (SQLException ex) { 
+            JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage()); // HANDLES DATABASE ERRORS
         }
     }
 
     public static void main(String[] args) {
-        trackWorkout workOut = new trackWorkout();
+        trackWorkout workOut = new trackWorkout(); // CREATES AND DISPLAYS THE GUI
         workOut.setVisible(true);
     }
 }
-//Reyes Rayver
+// Reyes Rayver

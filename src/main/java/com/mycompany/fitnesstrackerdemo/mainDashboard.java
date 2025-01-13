@@ -17,103 +17,107 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
-/**
- *
- * @author User
- */
 public class mainDashboard extends JFrame implements ActionListener {
-    // constructor
-    private JLabel titleDash, imgLabel;
-    private JButton btnWorkout, btnMeals, btnProgress, btnNotifications, btnProfile, btnWorkoutPlan;
-//    private JPanel pnButton, panelNotifications;
-    //private JScrollPane scrollPaneNotifications;
+    
+   private JLabel lblDashBoard, imgLbl;
+   private JButton btnWorkout, btnNewPlan, btnMeals, btnProgress, btnReminders, btnProfile, btnWorkoutPlan;
+
 
     mainDashboard() {
 
-        // frame
+       // INITIALIZATION OF JFRAME
         setSize(800, 800);
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        //btn
+        
+        // ADDING JFRAME COMPONENTS
+        lblDashBoard = new JLabel("WELCOME TO WORKOUT PLAN!", SwingConstants.CENTER);
+        lblDashBoard.setBounds(0, 360, 800, 30);
+        lblDashBoard.setFont(new Font("Tahoma", Font.BOLD, 20));
+        add(lblDashBoard);
+        
+        ImageIcon ImageIcon = new ImageIcon("C:\\Users\\rromp\\OneDrive\\Documents\\NetBeansProjects\\FitnessTrackerSystem\\FitnessTrackerSystem(finals)\\src\\main\\java\\com\\mycompany\\PUP HealthTrackerBuddy (1).png"); //KINDLY CHANGE FILE PATH DIRECTORY
+        imgLbl = new JLabel(ImageIcon);
+        imgLbl.setBounds(0, 0, 800, 330);
+        add(imgLbl);
         
         btnProfile = new JButton("View Profile");
         btnProfile.setBounds(660, 10, 120, 40);
         add(btnProfile);
-        
-       // for the picture
-        ImageIcon ImageIcon = new ImageIcon("C:\\Users\\colad\\OneDrive\\Documents\\NetBeansProjects\\PRACTIVEMOTO\\src\\main\\java\\com\\mycompany\\PUP HealthTrackerBuddy (1).png"); //KINDLY CHANGE FILE PATH DIRECTORY
-        imgLabel = new JLabel(ImageIcon);
-        imgLabel.setBounds(0, 0, 800, 330);
-        add(imgLabel);
-        
-        // components
-        titleDash = new JLabel("WELCOME TO WORKOUT PLAN!", SwingConstants.CENTER);
-        titleDash.setBounds(0, 360, 800, 30);
-        titleDash.setFont(new Font("Tahoma", Font.BOLD, 20));
-        add(titleDash);
      
-       
-        
-        // buttons
-        btnWorkout = new JButton("My Workout");
+        btnWorkout = new JButton("Track Workout");
         btnWorkout.setBounds(350, 400, 140, 40);
         add(btnWorkout);
        
-        btnMeals = new JButton("My Meals");
+        btnMeals = new JButton("Track Meals");
         btnMeals.setBounds(350, 450, 140, 40);
         add(btnMeals);
         
-        btnWorkoutPlan = new JButton("Workout Plan");
-        btnWorkoutPlan.setBounds(350, 500, 140, 40);
-        add(btnWorkoutPlan);
+        btnNewPlan = new JButton("Create New Plan");
+        btnNewPlan.setBounds(350, 500, 140, 40);
+        add(btnNewPlan);
         
-        btnNotifications = new JButton("Notifications");
-        btnNotifications.setBounds(350, 550, 140, 40);
-        add(btnNotifications);
+        btnReminders = new JButton("Reminders");
+        btnReminders.setBounds(350, 550, 140, 40);
+        add(btnReminders);
         
         btnProgress = new JButton("View Progress");
         btnProgress.setBounds(350, 600, 140, 40);
         add(btnProgress);
+        
+        
+        btnWorkoutPlan = new JButton("View Workout Plan");
+        btnWorkoutPlan.setBounds(350, 650, 140, 40);
+        add(btnWorkoutPlan);
+        
         
         setVisible(true);
         
         revalidate();
         repaint();
         
+        // ADDING ACTIONLISTENERS FOR INTERACTABLES
+        
                 btnWorkout.addActionListener(this);
                 btnMeals.addActionListener(this);
                 btnProgress.addActionListener(this);
-                btnNotifications.addActionListener(this);
+                btnReminders.addActionListener(this);
                 btnWorkoutPlan.addActionListener(this);
                 btnProfile.addActionListener(this);
+                btnNewPlan.addActionListener(this);
     }
     @Override
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == btnMeals) { // to access meal tracker
+            if (e.getSource() == btnMeals) { //TO ACCESS MEAL TRACKER
             dispose();
             new trackMeal().setVisible(true); 
         
-        } else if (e.getSource() == btnWorkout) { // to access workout tracker
+        } else if (e.getSource() == btnWorkout) { //TO ACCESS WORKOUT TRACKER
             dispose();
-            new workoutPlan().setVisible(true);
+            new trackWorkout().setVisible(true);
             
-        } else if (e.getSource() == btnProfile) { // to access users profile
+        } else if (e.getSource() == btnProfile) { //TO ACCESS USERS PROFILE
             dispose();
-            new SignOut().setVisible(true);
+            new userProfile().setVisible(true);
 
-        } else if (e.getSource() == btnWorkoutPlan) { // to access users workout plan
+        } else if (e.getSource() == btnWorkoutPlan) { //TO ACCESS USERS WORKOUT PLAN
             dispose();
-            new workoutPlan().setVisible(true);
+            new viewWorkoutPlan().setVisible(true);
         
-        } else if (e.getSource() == btnNotifications) { // to get notifications of what to do
+        } else if (e.getSource() == btnReminders) { //TO GET NOTIFICATION OF WHAT TO DO
             dispose();
             new notif().setVisible(true);
         
-        } else if (e.getSource() == btnProgress) { // to access the overall progress of the user
+        } else if (e.getSource() == btnNewPlan) { //TO GET NOTIFICATION OF WHAT TO DO
+            dispose();
+            new workoutPlan().setVisible(true);   
+            
+        } else if (e.getSource() == btnProgress) { //TO ACCESS THE OVERALL PROGRESS OF THE USER
             dispose();
             new viewProgress().setVisible(true);
+            
          } 
         }
 

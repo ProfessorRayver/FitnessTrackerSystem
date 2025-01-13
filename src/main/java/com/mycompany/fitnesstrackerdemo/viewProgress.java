@@ -9,33 +9,38 @@ import java.sql.*;
 
 public class viewProgress extends JFrame implements ActionListener {
     JLabel lblTitle;
-    JScrollPane scrpn;
+    JScrollPane scPane;
     JTable tblWorkout;
     JButton btnBack;
     DefaultTableModel model;
 
     viewProgress() {
-        setSize(800, 800);
+        setSize(680, 650);
         setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        // Title Label
-        lblTitle = new JLabel("View Progress");
-        lblTitle.setBounds(30, 60, 800, 35);
+        // TITLE LABEL
+        lblTitle = new JLabel("View Workout Progress");
+        lblTitle.setBounds(150, 60, 800, 35);
         lblTitle.setFont(new Font("Courier", Font.PLAIN, 30));
         add(lblTitle);
 
-        // Table setup
+        // TABLE SETUP
         String[] workoutColumn = {"Workout", "Calories Burned"};
-        model = new DefaultTableModel(workoutColumn, 0); // Table model with columns
+        model = new DefaultTableModel(workoutColumn, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // All cells are not editable
+            }
+        };
+
         tblWorkout = new JTable(model);
+        scPane = new JScrollPane(tblWorkout);
+        scPane.setBounds(30, 140, 600, 350);
+        add(scPane);
 
-        scrpn = new JScrollPane(tblWorkout);
-        scrpn.setBounds(30, 140, 600, 350);
-        add(scrpn);
-
-        // Back button
+        // BACK BUTTON
         btnBack = new JButton("Back");
         btnBack.setBounds(500, 520, 120, 30);
         add(btnBack);
@@ -56,10 +61,10 @@ public class viewProgress extends JFrame implements ActionListener {
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT selected, calories_burned FROM workout_log")) {
 
-            // Clear table for new rows
+            // CLEAR TABLE FOR NEW ROWS
             model.setRowCount(0);
 
-            // Loop add rows to the table
+            // LOOP ADD ROWS TO THE TABLE
             while (rs.next()) {
                 String workout = rs.getString("selected");
                 int calories = rs.getInt("calories_burned");

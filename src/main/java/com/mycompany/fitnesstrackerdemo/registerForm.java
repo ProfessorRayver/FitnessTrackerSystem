@@ -101,10 +101,10 @@ public class registerForm extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnBack) {
+        if (e.getSource() == btnBack) { //REDIRECT TO SIGNIN PAGE
             new signInScreen();
             dispose();
-        } else if (e.getSource() == btnCreate) {
+        } else if (e.getSource() == btnCreate) { // GET AND STORES THE INPUT
             String user = txtUsername.getText();
             String pass = new String(txtPass.getPassword());
             String confirmPass = new String(txtConfirmPass.getPassword());
@@ -114,13 +114,12 @@ public class registerForm extends JFrame implements ActionListener {
 
             if (user.isEmpty() || pass.isEmpty() || confirmPass.isEmpty() || name.isEmpty() || ageText.isEmpty() || sex.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-                
+                return; // WARNING IF THERE IS NO / INCOMPLETE INPUT
             }
 
             int age;
             try {
-                age = Integer.parseInt(ageText);
+                    age = Integer.parseInt(ageText);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Invalid age. Please enter a number.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;

@@ -40,15 +40,18 @@ public class signInScreen extends JFrame implements ActionListener {
         lblUser.setFont(new Font("Courier", Font.PLAIN, 20));
         add(lblUser);
 
-        txtFldUsername = new JTextField();
-        txtFldUsername.setBounds(300, 200, 300, 50);
-        add(txtFldUsername);
-
+        
         lblPassword = new JLabel("Password:");
         lblPassword.setBounds(50, 300, 800, 50);
         lblPassword.setFont(new Font("Courier", Font.PLAIN, 20));
         add(lblPassword);
 
+        
+        txtFldUsername = new JTextField();
+        txtFldUsername.setBounds(300, 200, 300, 50);
+        add(txtFldUsername);
+
+      
         txtPasswordFld = new JPasswordField();
         txtPasswordFld.setBounds(300, 300, 300, 50);
         add(txtPasswordFld);
@@ -67,6 +70,8 @@ public class signInScreen extends JFrame implements ActionListener {
         revalidate();
         repaint();
 
+        
+        //      ACTION LISTENER
         signIn.addActionListener(this);
         registerIn.addActionListener(this);
     }
@@ -107,9 +112,9 @@ public class signInScreen extends JFrame implements ActionListener {
     // Method to validate user login from the database
     private boolean validateLogin(String username, String password) {
         boolean isValid = false;
-        String url = "jdbc:mysql://localhost:3306/fitnesstrackerdb"; // Update with your database name
-        String dbUsername = "root"; // Replace with your database username
-        String dbPassword = "admin123"; // Replace with your database password
+        String url = "jdbc:mysql://localhost:3306/fitnesstrackerdb"; 
+        String dbUsername = "root"; 
+        String dbPassword = "admin123"; 
 
         try {
             Connection con = DriverManager.getConnection(url, dbUsername, dbPassword);

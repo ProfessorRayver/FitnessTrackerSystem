@@ -20,21 +20,21 @@ public class viewWorkoutPlan extends JFrame implements ActionListener {
     private JLabel lblActiveWorkoutPlan, lblCurrentWorkOutPlan;
     private JList<String> list;
     private JButton btnBack;
-    private JScrollPane scrllpn;
+    private JScrollPane scPane;
     private DefaultListModel<String> listModel;
     private Connection con;
     private String value;
     private JTextArea text;
-    // Database connection detail
+    // DATABASE CONNECTION DETAIL
 
     viewWorkoutPlan() {
         
-        setSize(800, 800);
+        setSize(600, 800);
         setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        // Adding components
+        // ADDING COMPONENTS
         lblCurrentWorkOutPlan = new JLabel("Current Workout Plan");
         lblCurrentWorkOutPlan.setBounds(30, 40, 800, 30);
         lblCurrentWorkOutPlan.setFont(new Font("Courier", Font.PLAIN, 30));
@@ -48,20 +48,16 @@ public class viewWorkoutPlan extends JFrame implements ActionListener {
         text =  new JTextArea();
         text.setEditable(false);
       
-        scrllpn = new JScrollPane(text);
-        scrllpn.setBounds(30, 150,350 , 500);
-        add(scrllpn);
-        //listModel = new DefaultListModel<>();
-        //list = new JList<>(listModel);
-        //scrllpn = new JScrollPane(list);
-        //scrllpn.setBounds(30, 150, 350, 500);
-        //add(scrllpn);
-
+        scPane = new JScrollPane(text);
+        scPane.setBounds(30, 150,350 , 500);
+        add(scPane);
+       
         btnBack = new JButton("Back");
         btnBack.setBounds(410, 620, 120, 30);
         add(btnBack);
 
         btnBack.addActionListener(this);
+        
         workoutplancon();
         getworkoutPlan();
         setVisible(true);
@@ -113,4 +109,5 @@ public class viewWorkoutPlan extends JFrame implements ActionListener {
         }
         }
 }
-    
+ 
+

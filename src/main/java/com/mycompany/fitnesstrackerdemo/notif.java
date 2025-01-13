@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class notif extends JFrame {
     private JTextArea notificationLog;
     private JButton btnBack;
-    private final int activeUser = 1;  // Simulated user ID
     private ArrayList<String> notifications = new ArrayList<>();
 
     notif() {
@@ -27,11 +26,13 @@ public class notif extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        //TEXT AREA FOR NOTIFICATION
         notificationLog = new JTextArea();
         notificationLog.setBounds(30, 40, 370, 100);
         notificationLog.setEditable(false);
         add(notificationLog);
 
+        //BUTTONS FOR BACK
         btnBack = new JButton("Back");
         btnBack.setBounds(120, 175, 200, 40);
         add(btnBack);
@@ -40,14 +41,13 @@ public class notif extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new mainDashboard().setVisible(true);  // Assuming mainDashboard class exists
+                new mainDashboard().setVisible(true); // BACK TO MAINDASHBOARD
             }
         });
     }
 
-    // Simulate Fetching Notifications (Locally)
+  //FETHCING
     private void loadSampleNotifications() {
-        // Correcting how notifications are added
         notifications.add("\n▶ Time to start your workout! \n" + "▶ Drink water and stay hydrated. \n"  + "▶ Don’t forget to stretch after today’s session.");
         DateTimeFormatter format = DateTimeFormatter.ofPattern("MMM dd, yyyy - HH:mm");
 
@@ -57,7 +57,6 @@ public class notif extends JFrame {
         }
     }
 
-    // Main Method
   public static void main(String[] args) {
     new notif();
  }

@@ -22,6 +22,7 @@ public class fitnessGoals extends JFrame implements ActionListener {
     private static final String PASS = "admin123";  // Change this to your MySQL password
 
     fitnessGoals() {
+        
         setSize(800, 800);
         setLayout(null);
         setLocationRelativeTo(null);
@@ -45,25 +46,25 @@ public class fitnessGoals extends JFrame implements ActionListener {
         txtFldWeightUnits.setBounds(80, 200, 280, 50);
         txtFldWeightUnits.setFont(new Font("Courier", Font.PLAIN, 20));
         add(txtFldWeightUnits);
-
-        cmbWeightUnits = new JComboBox<>(weightUnits);
-        cmbWeightUnits.setBounds(390, 200, 200, 50);
-        add(cmbWeightUnits);
-
+        
         txtFldHeightUnits = new JTextField();
         txtFldHeightUnits.setBounds(80, 280, 280, 50);
         txtFldHeightUnits.setFont(new Font("Courier", Font.PLAIN, 20));
         add(txtFldHeightUnits);
-
-        cmbHeightUnits = new JComboBox<>(heightUnits);
-        cmbHeightUnits.setBounds(390, 280, 200, 50);
-        add(cmbHeightUnits);
-
+        
         txtAreaWeight = new JTextArea();
         txtAreaWeight.setBounds(80, 360, 510, 200);
         txtAreaWeight.setFont(new Font("Courier", Font.PLAIN, 20));
         txtAreaWeight.setEditable(false);
         add(txtAreaWeight);
+
+        cmbWeightUnits = new JComboBox<>(weightUnits);
+        cmbWeightUnits.setBounds(390, 200, 200, 50);
+        add(cmbWeightUnits);
+
+        cmbHeightUnits = new JComboBox<>(heightUnits);
+        cmbHeightUnits.setBounds(390, 280, 200, 50);
+        add(cmbHeightUnits);
 
         // Buttons
         btnConfirm = new JButton("Confirm Input");
@@ -79,22 +80,22 @@ public class fitnessGoals extends JFrame implements ActionListener {
 
         setVisible(true);
     }
-
+    //FUNCTION FOR GETTING THE INPUT
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnConfirm) {
+        if (e.getSource() == btnConfirm) { //TO GET THE TEXT OF WEIGHT AND HEIGHT
             String weight = txtFldWeightUnits.getText();
             String height = txtFldHeightUnits.getText();
 
-            try {
+            try { //DECLARATION OF DOUBLE
                 double doubleWeight = Double.parseDouble(weight);
                 double doubleHeight = Double.parseDouble(height);
 
-                if (doubleWeight > 0 && doubleHeight > 0) {
+                if (doubleWeight > 0 && doubleHeight > 0) { //TO GET BMI
                     double doubleSqrdHeight = doubleHeight * doubleHeight;
                     double doubleBmi = doubleWeight / doubleSqrdHeight;
 
-                    String category = bmiCategory(doubleBmi);
+                    String category = bmiCategory(doubleBmi); //DISPLAY THE CALCULATED BMI
                     txtAreaWeight.setText(doubleWeight + " " + cmbWeightUnits.getSelectedItem() + "\n" +
                             doubleHeight + " " + cmbHeightUnits.getSelectedItem() + "\n" +
                             "Your BMI is: " + Math.round(doubleBmi) + "\n" +
@@ -105,32 +106,32 @@ public class fitnessGoals extends JFrame implements ActionListener {
                     txtFldWeightUnits.setText("");
                     txtFldHeightUnits.setText("");
                 } else {
-                    JOptionPane.showMessageDialog(this, "Invalid input", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "invalid information", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Invalid input", "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "invalid information", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         }
-        if (e.getSource() == btnNext) {
+            if (e.getSource() == btnNext) {
             new mainDashboard();
-            setVisible(true);
-            this.dispose();
-        }
-    }
+            setVisible(true); 
+            dispose();
+            }
+    }   
 
-    // Save BMI Data to Database
+    // INPUT TO DATA BASE
     private void saveToDatabase(double weight, double height, double bmi, String category) {
         try (Connection con = DriverManager.getConnection(DB_URL, USER, PASS);
-             PreparedStatement stmt = con.prepareStatement(
+             PreparedStatement stmtBMI = con.prepareStatement(
                      "INSERT INTO bmi_data (weight, height, bmi, bmi_category) VALUES (?, ?, ?, ?)");) {
-            stmt.setDouble(1, weight);
-            stmt.setDouble(2, height);
-            stmt.setDouble(3, bmi);
-            stmt.setString(4, category);
-            stmt.executeUpdate();
-            JOptionPane.showMessageDialog(this, "Success! Info Stored", "Success!", JOptionPane.INFORMATION_MESSAGE);
+            stmtBMI.setDouble(1, weight); 
+            stmtBMI.setDouble(2, height);
+            stmtBMI.setDouble(3, bmi);
+            stmtBMI.setString(4, category);
+            stmtBMI.executeUpdate(); //UPDATES INFO
+            JOptionPane.showMessageDialog(this, "Successful!", "Success!", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Database error!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error!", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
 
