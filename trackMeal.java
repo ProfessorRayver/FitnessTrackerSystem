@@ -29,6 +29,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Collections;
 
 /**
  *
@@ -45,25 +46,29 @@ public class trackMeal extends JFrame implements ActionListener{
     private JTextField txtInput;
     private String[] meals = {"Breakfast", "Lunch", "Dinner", "Snacks(Optional)"};
     private JComboBox <String> cmbMeals;
-    private JButton btnClear, btnAdd, btnBack, btnAddNew;
+    private JButton btnClear, btnAdd, btnBack, btnAddNew, btnSearch;
     //private JTextArea txaSummary;
     private JScrollPane scroll;
     private Queue<String> Qname;
     private DefaultListModel<String> listModel;
     private JList<String> list;
+    private ArrayList<String> mealList;
+
     
 
     
     trackMeal(){
         Qname = new LinkedList<>();
         listModel = new DefaultListModel<>();
+        mealList = new ArrayList<>();
+        loadMealList();
     //frame
         setTitle("Meal Tracker");
         setSize(610, 600);
         setLayout(null);
-        getContentPane().setBackground(Color.LIGHT_GRAY);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        getContentPane().setBackground(new Color(173, 216, 230)); 
         
     //components
 
@@ -110,6 +115,10 @@ public class trackMeal extends JFrame implements ActionListener{
     btnBack = new JButton("Back");
     btnBack.setBounds(493, 450, 85, 30);
     add(btnBack);
+    
+    btnSearch = new JButton("Search");
+    btnSearch.setBounds(435, 150, 85, 30);
+    add(btnSearch);
   
   
     //add ActionListener
@@ -117,10 +126,51 @@ public class trackMeal extends JFrame implements ActionListener{
     btnAdd.addActionListener(this);
     btnClear.addActionListener(this);
     btnBack.addActionListener(this);
+    btnSearch.addActionListener(this);
+    
     }
     private Connection connectToDatabase() throws SQLException{
         return DriverManager.getConnection(url, user, pass);
     }
+    
+    private void loadMealList() {
+        try (Connection conn = connectToDatabase()) {
+            String query = "SELECT mealname FROM mealtbl";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+
+            mealList.clear();
+            while (rs.next()) {
+                mealList.add(rs.getString("mealname"));
+            }
+
+            
+            Collections.sort(mealList);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error Loading Meals: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private int binarySearch(String target) {
+        int low = 0;
+        int high = mealList.size() - 1;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            String midMeal = mealList.get(mid);
+
+            if (midMeal.equalsIgnoreCase(target)) {
+                return mid; // meal found
+            } else if (midMeal.compareToIgnoreCase(target) < 0) {
+                low = mid + 1; 
+            } else {
+                high = mid - 1; 
+            }
+        }
+
+        return -1; // meal not found
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -129,6 +179,9 @@ public class trackMeal extends JFrame implements ActionListener{
             String mealTime = cmbMeals.getSelectedItem().toString();
 
             if (!input.isEmpty()) {
+                int index = binarySearch(input);
+
+                if (index != -1) {
                 try (Connection conn = connectToDatabase()) {
                     String query = "SELECT * FROM mealtbl WHERE mealname = ?";
                     PreparedStatement stmt = conn.prepareStatement(query);
@@ -136,7 +189,7 @@ public class trackMeal extends JFrame implements ActionListener{
                     ResultSet rs = stmt.executeQuery();
 
                     if (rs.next()) {
-                        // If meal exists
+                        // if meal exists
                         double carbs = rs.getDouble("carbohydrates");
                         double fat = rs.getDouble("fat");
                         double protein = rs.getDouble("protein");
@@ -183,6 +236,10 @@ public class trackMeal extends JFrame implements ActionListener{
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
+                } else {
+                    // meal not found
+                    JOptionPane.showMessageDialog(this, "Meal not found! Please add it using 'Add New'.", "Not Found", JOptionPane.WARNING_MESSAGE);
+                }
 
                 txtInput.setText("");
             } else {
@@ -216,6 +273,9 @@ public class trackMeal extends JFrame implements ActionListener{
                         stmt.setDouble(3, Double.parseDouble(fat));
                         stmt.setDouble(4, Double.parseDouble(protein));
                         stmt.executeUpdate();
+                        
+                        loadMealList(); 
+                        
                         JOptionPane.showMessageDialog(this, "New Meal Added: " + newMeal);
                     } catch (SQLException ex) {
                         JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -232,6 +292,18 @@ public class trackMeal extends JFrame implements ActionListener{
 
            
         }
+         else if (e.getSource() == btnSearch) {
+            String searchMeal = JOptionPane.showInputDialog(this, "Enter Meal to Search:", "Search Meal", JOptionPane.QUESTION_MESSAGE);
+            if (searchMeal != null && !searchMeal.trim().isEmpty()) {
+                int index = binarySearch(searchMeal);
+
+                if (index != -1) {
+                    JOptionPane.showMessageDialog(this, "Meal Found: " + mealList.get(index), "Search Result", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Meal Not Found!", "Search Result", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+    }
     }
     
         //main
