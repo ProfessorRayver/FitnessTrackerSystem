@@ -80,7 +80,7 @@ public class signInScreen extends JFrame implements ActionListener {
         signInScreen signInScreen = new signInScreen();
         signInScreen.setVisible(true);
     }
-
+//functions
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == signIn) {

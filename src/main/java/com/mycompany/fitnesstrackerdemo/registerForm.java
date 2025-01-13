@@ -116,6 +116,11 @@ public class registerForm extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
                 return; // WARNING IF THERE IS NO / INCOMPLETE INPUT
             }
+            if (sex.matches(".*\\d.*")) {
+                JOptionPane.showMessageDialog(this, "Invalid sex. Please enter letters only.", "Error", JOptionPane.ERROR_MESSAGE);
+                txtSex.setText("");
+                return;
+            }
 
             int age;
             try {

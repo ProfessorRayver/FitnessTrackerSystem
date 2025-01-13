@@ -122,7 +122,7 @@ public class userProfile extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-
+//functions
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == btnSignOut) {
@@ -140,7 +140,7 @@ public class userProfile extends JFrame implements ActionListener {
                 }
             }
         }
-
+//main
         public static void main(String[] args) {
             new userProfile();
 }

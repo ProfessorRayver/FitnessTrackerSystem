@@ -46,7 +46,7 @@ public class trackMeal extends JFrame implements ActionListener{
     private JTextField txtInput;
     private String[] meals = {"Breakfast", "Lunch", "Dinner", "Snacks(Optional)"};
     private JComboBox <String> cmbMeals;
-    private JButton btnClear, btnAdd, btnBack, btnAddNew, btnSearch;
+    private JButton btnClear, btnAdd, btnBack, btnAddNew, btnSearch, btnViewFoods;
     //private JTextArea txaSummary;
     private JScrollPane scroll;
     private Queue<String> Qname;
@@ -62,7 +62,7 @@ public class trackMeal extends JFrame implements ActionListener{
         listModel = new DefaultListModel<>();
         mealList = new ArrayList<>();
         loadMealList();
-        loadConsumedMeals();
+        ConsumedMeals();
 
     //frame
         setTitle("Meal Tracker");
@@ -98,7 +98,7 @@ public class trackMeal extends JFrame implements ActionListener{
     add(cmbMeals);
     
     btnAddNew = new JButton("Add New");
-    btnAddNew.setBounds(493, 350, 85, 30); 
+    btnAddNew.setBounds(493, 320, 85, 30); 
     add(btnAddNew);
      
     list = new JList<>(listModel);
@@ -121,6 +121,10 @@ public class trackMeal extends JFrame implements ActionListener{
     btnSearch = new JButton("Search");
     btnSearch.setBounds(435, 150, 85, 30);
     add(btnSearch);
+    
+    btnViewFoods = new JButton("FoodList");
+    btnViewFoods.setBounds(493, 380, 85, 30);
+    add(btnViewFoods);
   
   
     //add ActionListener
@@ -129,14 +133,15 @@ public class trackMeal extends JFrame implements ActionListener{
     btnClear.addActionListener(this);
     btnBack.addActionListener(this);
     btnSearch.addActionListener(this);
+    btnViewFoods.addActionListener(this);
     
     }
-    private Connection connectToDatabase() throws SQLException{
+    private Connection Database() throws SQLException{
         return DriverManager.getConnection(url, user, pass);
     }
     
     private void loadMealList() {
-        try (Connection conn = connectToDatabase()) {
+        try (Connection conn = Database()) {
             String query = "SELECT mealname FROM mealtbl";
             PreparedStatement stmt = conn.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
@@ -152,7 +157,7 @@ public class trackMeal extends JFrame implements ActionListener{
             JOptionPane.showMessageDialog(this, "Error Loading Meals: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+    //binary search
     private int binarySearch(String target) {
         int low = 0;
         int high = mealList.size() - 1;
@@ -172,8 +177,8 @@ public class trackMeal extends JFrame implements ActionListener{
 
         return -1; // meal not found
     }
-    private void loadConsumedMeals() {
-        try (Connection conn = connectToDatabase()) {
+    private void ConsumedMeals() {
+        try (Connection conn = Database()) {
             String query = "SELECT * FROM consumedtbl ORDER BY date DESC";
             PreparedStatement stmt = conn.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
@@ -204,7 +209,7 @@ public class trackMeal extends JFrame implements ActionListener{
             int index = binarySearch(input);
 
         if (index != -1) {
-            try (Connection conn = connectToDatabase()) {
+            try (Connection conn = Database()) {
                 String query = "SELECT * FROM mealtbl WHERE mealname = ?";
                 PreparedStatement stmt = conn.prepareStatement(query);
                 stmt.setString(1, input);
@@ -253,7 +258,7 @@ public class trackMeal extends JFrame implements ActionListener{
             setVisible(true);
             this.dispose();       
 
-            // new
+            //add new meal btn
         }else if(e.getSource() == btnAddNew){
             String newMeal = JOptionPane.showInputDialog(this, "Enter New Meal", "New Meal", JOptionPane.INFORMATION_MESSAGE);
             if (newMeal != null && !newMeal.trim().isEmpty()) {
@@ -262,7 +267,7 @@ public class trackMeal extends JFrame implements ActionListener{
                 String protein = JOptionPane.showInputDialog(this, "Enter Protein (g):", "Meal Nutrients", JOptionPane.INFORMATION_MESSAGE);
 
                 if (carbs != null && fat != null && protein != null && !carbs.trim().isEmpty() && !fat.trim().isEmpty() && !protein.trim().isEmpty()) {
-                    try (Connection conn = connectToDatabase()) {
+                    try (Connection conn = Database()) {
                         String insertQuery = "INSERT INTO mealtbl (mealname, carbohydrates, fat, protein) VALUES (?, ?, ?, ?)";
                         PreparedStatement stmt = conn.prepareStatement(insertQuery);
                         stmt.setString(1, newMeal);
@@ -287,7 +292,12 @@ public class trackMeal extends JFrame implements ActionListener{
             }
 
 
-           
+           //search btn
+        }
+        else if(e.getSource() == btnViewFoods){
+            new viewFood();
+            setVisible(true);
+            this.dispose();
         }
          else if (e.getSource() == btnSearch) {
             String searchMeal = JOptionPane.showInputDialog(this, "Enter Meal to Search:", "Search Meal", JOptionPane.QUESTION_MESSAGE);
@@ -311,4 +321,5 @@ public class trackMeal extends JFrame implements ActionListener{
     }
     
 }
-    
+    //Arby Barnuevo
+
