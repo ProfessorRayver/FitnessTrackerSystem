@@ -37,7 +37,7 @@ public class notif extends JFrame {
         add(notificationLog);
 
         //BUTTONS FOR BACK
-        btnBack = new JButton("Back");
+        btnBack = new JButton("Sign out");
         btnBack.setBounds(120, 175, 200, 40);
         add(btnBack);
 
@@ -45,7 +45,7 @@ public class notif extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new mainDashboard().setVisible(true); // BACK TO MAINDASHBOARD
+                new signInScreen().setVisible(true); // BACK TO MAINDASHBOARD
             }
         });
     }

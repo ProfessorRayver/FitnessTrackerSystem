@@ -16,7 +16,7 @@ import javax.swing.SwingConstants;
 public class mainDashboard extends JFrame implements ActionListener {
     
    private JLabel lblDashBoard, imgLbl;
-   private JButton btnWorkout, btnNewPlan, btnMeals, btnProgress, btnReminders, btnProfile, btnWorkoutPlan;
+   private JButton btnWorkout, btnNewPlan, btnMeals, btnProgress,  btnProfile, btnWorkoutPlan;
 
 
     mainDashboard() {
@@ -55,20 +55,15 @@ public class mainDashboard extends JFrame implements ActionListener {
         btnNewPlan.setBounds(350, 500, 140, 40);
         add(btnNewPlan);
         
-        btnReminders = new JButton("Reminders");
-        btnReminders.setBounds(350, 550, 140, 40);
-        add(btnReminders);
+        btnWorkoutPlan = new JButton("View Workout Plan");
+        btnWorkoutPlan.setBounds(350, 550, 140, 40);
+        add(btnWorkoutPlan);
         
-        btnProgress = new JButton("View Progress");
+        btnProgress = new JButton("Workout Progress");
         btnProgress.setBounds(350, 600, 140, 40);
         add(btnProgress);
         
-        
-        btnWorkoutPlan = new JButton("View Workout Plan");
-        btnWorkoutPlan.setBounds(350, 650, 140, 40);
-        add(btnWorkoutPlan);
-        
-        
+       
         setVisible(true);
         
         revalidate();
@@ -79,7 +74,6 @@ public class mainDashboard extends JFrame implements ActionListener {
                 btnWorkout.addActionListener(this);
                 btnMeals.addActionListener(this);
                 btnProgress.addActionListener(this);
-                btnReminders.addActionListener(this);
                 btnWorkoutPlan.addActionListener(this);
                 btnProfile.addActionListener(this);
                 btnNewPlan.addActionListener(this);
@@ -101,10 +95,6 @@ public class mainDashboard extends JFrame implements ActionListener {
         } else if (e.getSource() == btnWorkoutPlan) { //TO ACCESS USERS WORKOUT PLAN
             dispose();
             new viewWorkoutPlan().setVisible(true);
-        
-        } else if (e.getSource() == btnReminders) { //TO GET NOTIFICATION OF WHAT TO DO
-            dispose();
-            new notif().setVisible(true);
         
         } else if (e.getSource() == btnNewPlan) { //TO GET NOTIFICATION OF WHAT TO DO
             dispose();
