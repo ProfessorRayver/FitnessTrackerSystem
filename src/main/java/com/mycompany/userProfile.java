@@ -1,4 +1,4 @@
-package com.mycompany;
+package com.mycompany.fitnesstrackapp;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -59,18 +59,22 @@ public class userProfile extends JFrame implements ActionListener {
         lbBMIcat.setBounds(50, 320, 200, 30);
         add(lbBMIcat);
 
+        // BUTTON FOR SIGN OUT
         btnSignOut = new JButton("Sign Out");
         btnSignOut.setBounds(400, 100, 120, 30);
         add(btnSignOut);
 
+        // BUTTON FOR BACK
         btnBack = new JButton("Back");
         btnBack.setBounds(400, 150, 120, 30);
         add(btnBack);
 
+        // BUTTON FOR VIEW
         btnView = new JButton("View");
         btnView.setBounds(400, 200, 120, 30);
         add(btnView);
         
+        // BUTTON FOR ACTIVE PLAN
         btnWorkoutPlan = new JButton("Active Plan");
         btnWorkoutPlan.setBounds(400, 250, 120, 30);
         add(btnWorkoutPlan);
@@ -101,6 +105,7 @@ public class userProfile extends JFrame implements ActionListener {
         tfBMIcat.setBounds(170, 320, 100, 30);
         add(tfBMIcat);
 
+        // ACTION LISTENER
         btnSignOut.addActionListener(this);
         btnBack.addActionListener(this);
         btnView.addActionListener(this);
@@ -129,7 +134,7 @@ public class userProfile extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-        //functions
+        //FUNCTIONS
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == btnSignOut) {
@@ -150,7 +155,7 @@ public class userProfile extends JFrame implements ActionListener {
                 }
             }
         }
-//main
+//MAIN METHOD
         public static void main(String[] args) {
             new userProfile();
     }
