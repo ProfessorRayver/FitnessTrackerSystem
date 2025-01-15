@@ -1,4 +1,4 @@
-package com.mycompany;
+package com.mycompany.fitnesstrackapp;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 
 public class viewProgress extends JFrame implements ActionListener {
+    // COMPONENTS
     JLabel lblTitle, lblDateTime;
     JScrollPane scPane;
     JTable tblWorkout;
@@ -37,7 +38,7 @@ public class viewProgress extends JFrame implements ActionListener {
         lblDateTime.setFont(new Font("Arial", Font.PLAIN, 14));
         add(lblDateTime);
 
-        // Timer to update the date and time
+        // TIMER TO UPDATE THE DATE AND TIME EVERY SECOND
         timer = new Timer(1000, e -> updateDateTime());
         timer.start();
 
@@ -49,7 +50,8 @@ public class viewProgress extends JFrame implements ActionListener {
                 return false; // All cells are not editable
             }
         };
-
+        
+        // CREATE JTABLE
         tblWorkout = new JTable(model);
         scPane = new JScrollPane(tblWorkout);
         scPane.setBounds(30, 140, 600, 350);
@@ -65,6 +67,7 @@ public class viewProgress extends JFrame implements ActionListener {
         btnClear.setBounds(350, 520, 120, 30); // Positioning it near the "Back" button
         add(btnClear);
 
+        // ACTION LISTENER
         btnBack.addActionListener(this);
         btnClear.addActionListener(this);
 
@@ -72,13 +75,12 @@ public class viewProgress extends JFrame implements ActionListener {
 
         setVisible(true);
     }
-
     private void updateDateTime() {
         // Get current date and time
         String currentDateTime = new SimpleDateFormat("EEEE, MMMM dd, yyyy HH:mm:ss").format(new Date());
         lblDateTime.setText("Current Date & Time: " + currentDateTime);
     }
-
+    // USER AND PASS TO OPEN THE DATABASE   
     private void loadDataFromDatabase() {
         String url = "jdbc:mysql://localhost:3306/fitnesstrackerdb";
         String dbUsername = "root";
