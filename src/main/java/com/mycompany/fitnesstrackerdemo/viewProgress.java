@@ -1,5 +1,6 @@
 package com.mycompany;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +22,7 @@ public class viewProgress extends JFrame implements ActionListener {
         setSize(680, 700); // Increased height to accommodate the time and day label
         setLayout(null);
         setLocationRelativeTo(null);
+        getContentPane().setBackground(new Color(173, 216, 230)); 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         // TITLE LABEL

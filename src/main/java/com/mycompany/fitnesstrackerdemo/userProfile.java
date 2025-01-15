@@ -1,5 +1,6 @@
 package com.mycompany;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -8,7 +9,7 @@ import java.sql.*;
 public class userProfile extends JFrame implements ActionListener {
 
         private JButton btnSignOut, btnBack, btnView;
-        private JLabel UserProfile, lbName, lbBmi, lbWeight, lbHeight, lbBMIcat;
+        private JLabel UserProfile, lbBmi, lbWeight, lbHeight, lbBMIcat;
         private JTextField tfName, tfHeight, tfWeight, tfAge, tfBMIcat;
         // DATABASE CON
         private static final String DB_URL = "jdbc:mysql://localhost:3306/fitnesstrackerdb";
@@ -19,6 +20,7 @@ public class userProfile extends JFrame implements ActionListener {
         public userProfile() {
         setTitle("User Profile");
         setSize(600, 500);
+        getContentPane().setBackground(new Color(173, 216,230));
         setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,9 +38,6 @@ public class userProfile extends JFrame implements ActionListener {
         tfUserId.setBounds(140, 70, 190, 30);
         add(tfUserId);
 
-        lbName = new JLabel("ID:");
-        lbName.setBounds(50, 120, 200, 30);
-        add(lbName);
 
         lbWeight = new JLabel("Height (Meteresultdata):");
         lbWeight.setBounds(50, 170, 200, 30);
@@ -69,10 +68,7 @@ public class userProfile extends JFrame implements ActionListener {
         add(btnView);
 
         // JTextFields for displaying user data
-        tfName = new JTextField();
-        tfName.setEditable(false);
-        tfName.setBounds(140, 120, 190, 30);
-        add(tfName);
+        
 
         tfHeight = new JTextField();
         tfHeight.setEditable(false);
@@ -101,12 +97,12 @@ public class userProfile extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-        private void loadUserData(int userId) {
+        private void loadUserData(int user_id) {
             String query = "SELECT * FROM bmi_data WHERE user_id = ?";
             try (Connection con = DriverManager.getConnection(DB_URL, USER, PASS);
                  PreparedStatement pstmt = con.prepareStatement(query)) {
 
-                pstmt.setInt(1, userId); 
+                pstmt.setInt(1, user_id); 
                 try (ResultSet resultdata = pstmt.executeQuery()) {
                     if (resultdata.next()) {
                         tfName.setText(resultdata.getString("user_id"));
@@ -115,7 +111,7 @@ public class userProfile extends JFrame implements ActionListener {
                         tfAge.setText(String.valueOf(resultdata.getDouble("bmi"))); 
                         tfBMIcat.setText(resultdata.getString("bmi_category"));
                     } else {
-                        JOptionPane.showMessageDialog(this, "No data found for User ID: " + userId, "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "No data found for User ID: " + user_id, "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             } catch (SQLException ex) {

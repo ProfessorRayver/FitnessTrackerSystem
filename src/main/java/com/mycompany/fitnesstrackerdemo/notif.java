@@ -1,5 +1,7 @@
+
 package com.mycompany;
 
+import java.awt.Color;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,6 +27,8 @@ public class notif extends JFrame {
         setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getContentPane().setBackground(new Color(173, 216, 230));
+        
 
         //TEXT AREA FOR NOTIFICATION
         notificationLog = new JTextArea();
@@ -33,7 +37,7 @@ public class notif extends JFrame {
         add(notificationLog);
 
         //BUTTONS FOR BACK
-        btnBack = new JButton("Back");
+        btnBack = new JButton("Sign out");
         btnBack.setBounds(120, 175, 200, 40);
         add(btnBack);
 
@@ -41,7 +45,7 @@ public class notif extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new mainDashboard().setVisible(true); // BACK TO MAINDASHBOARD
+                new signInScreen().setVisible(true); // BACK TO MAINDASHBOARD
             }
         });
     }

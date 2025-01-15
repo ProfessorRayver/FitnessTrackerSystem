@@ -1,21 +1,18 @@
 package com.mycompany;
 
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class viewFood extends JFrame implements ActionListener {
     JLabel lblTitle;
     JScrollPane scPane;
     JTable tblFoods;
-    JButton btnBack, btnSortCarbs, btnSortFat, btnSortProtein;
+    JButton btnBack, btnSortCarbs, btnSortFat, btnSortProtein, btnClear;
     DefaultTableModel model;
 
     viewFood() {
@@ -24,10 +21,13 @@ public class viewFood extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        // Set background color
+        getContentPane().setBackground(new Color(173, 216, 230)); // Light blue
+
         // TITLE LABEL
-        lblTitle = new JLabel("View Food List", SwingConstants.CENTER );
+        lblTitle = new JLabel("View Food List", SwingConstants.CENTER);
         lblTitle.setBounds(0, 20, 680, 35);
-        lblTitle.setFont(new Font("Courier", Font.PLAIN, 30));
+        lblTitle.setFont(new Font("Arial", Font.BOLD, 30));
         add(lblTitle);
 
         // TABLE SETUP
@@ -45,30 +45,44 @@ public class viewFood extends JFrame implements ActionListener {
         add(scPane);
 
         // SORT BUTTONS
-        btnSortCarbs = new JButton("Sort by Carbs");
-        btnSortCarbs.setBounds(50, 500, 150, 30);
-        btnSortCarbs.addActionListener(this);
-        add(btnSortCarbs);
+        btnSortCarbs = createButton("Sort by Carbs", 50, 500);
+        btnSortFat = createButton("Sort by Fat", 250, 500);
+        btnSortProtein = createButton("Sort by Protein", 450, 500);
 
-        btnSortFat = new JButton("Sort by Fat");
-        btnSortFat.setBounds(250, 500, 150, 30);
-        btnSortFat.addActionListener(this);
-        add(btnSortFat);
-
-        btnSortProtein = new JButton("Sort by Protein");
-        btnSortProtein.setBounds(450, 500, 150, 30);
-        btnSortProtein.addActionListener(this);
-        add(btnSortProtein);
+        // CLEAR BUTTON
+        btnClear = createButton("Clear", 50, 600);
 
         // BACK BUTTON
-        btnBack = new JButton("Back");
-        btnBack.setBounds(500, 600, 120, 30);
-        btnBack.addActionListener(this);
-        add(btnBack);
+        btnBack = createButton("Back", 500, 600);
 
         loadDataFromDatabase();
 
         setVisible(true);
+    }
+
+    private JButton createButton(String text, int x, int y) {
+        JButton button = new JButton(text);
+        button.setBounds(x, y, 150, 30);
+        button.setFont(new Font("Arial", Font.BOLD, 14)); // Button font
+        button.setBackground(new Color(200, 200, 200)); // Light gray
+        button.setForeground(Color.DARK_GRAY); // Dark gray text
+        button.setFocusPainted(false); // Remove focus outline
+        button.setBorder(BorderFactory.createLineBorder(Color.GRAY)); // Subtle border
+        button.addActionListener(this);
+
+        // Optional hover effect
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                button.setBackground(new Color(180, 180, 180)); // Slightly darker gray on hover
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                button.setBackground(new Color(200, 200, 200)); // Revert to original gray
+            }
+        });
+
+        add(button);
+        return button;
     }
 
     private void loadDataFromDatabase() {
@@ -97,6 +111,27 @@ public class viewFood extends JFrame implements ActionListener {
         }
     }
 
+    private void clearTableData() {
+        String url = "jdbc:mysql://localhost:3306/fitnesstrackerdb";
+        String dbUsername = "root";
+        String dbPassword = "admin123";
+
+        try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+             Statement stmt = conn.createStatement()) {
+
+            // DELETE ALL RECORDS FROM TABLE
+            int rowsAffected = stmt.executeUpdate("DELETE FROM mealtbl");
+
+            // CLEAR DATA FROM GUI TABLE
+            model.setRowCount(0);
+
+            JOptionPane.showMessageDialog(this, rowsAffected + " records deleted successfully.");
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error clearing data: " + ex.getMessage());
+        }
+    }
+
     private void sortTable(int columnIndex) {
         ArrayList<Object[]> rows = new ArrayList<>();
 
@@ -110,13 +145,10 @@ public class viewFood extends JFrame implements ActionListener {
         }
 
         // SORT ROWS BASED ON COLUMN INDEX
-        Collections.sort(rows, new Comparator<Object[]>() {
-            @Override
-            public int compare(Object[] row1, Object[] row2) {
-                Double value1 = Double.parseDouble(row1[columnIndex].toString());
-                Double value2 = Double.parseDouble(row2[columnIndex].toString());
-                return value1.compareTo(value2);
-            }
+        rows.sort((row1, row2) -> {
+            Double value1 = Double.parseDouble(row1[columnIndex].toString());
+            Double value2 = Double.parseDouble(row2[columnIndex].toString());
+            return value1.compareTo(value2);
         });
 
         // CLEAR AND REPOPULATE THE TABLE
@@ -141,6 +173,8 @@ public class viewFood extends JFrame implements ActionListener {
             sortTable(2); // Sort by Fat
         } else if (e.getSource() == btnSortProtein) {
             sortTable(3); // Sort by Protein
+        } else if (e.getSource() == btnClear) {
+            clearTableData();
         }
     }
 }

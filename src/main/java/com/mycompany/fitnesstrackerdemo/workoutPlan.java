@@ -1,8 +1,5 @@
 package com.mycompany;
-import java.awt.Font;
 import javax.swing.*; 
-import java.awt.*;
-import static java.awt.SystemColor.text;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;

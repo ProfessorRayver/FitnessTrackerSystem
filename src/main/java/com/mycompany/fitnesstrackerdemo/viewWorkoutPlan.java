@@ -8,6 +8,7 @@
  */
 package com.mycompany;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,6 +33,7 @@ public class viewWorkoutPlan extends JFrame implements ActionListener {
         setSize(600, 800);
         setLayout(null);
         setLocationRelativeTo(null);
+        getContentPane().setBackground(new Color(173, 216, 230)); 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         // ADDING COMPONENTS

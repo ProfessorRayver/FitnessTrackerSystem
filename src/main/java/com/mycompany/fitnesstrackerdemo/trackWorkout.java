@@ -5,6 +5,7 @@ package com.mycompany;
  * @author rromp
  */
 
+import java.awt.Color;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -71,6 +72,7 @@ public class trackWorkout extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        getContentPane().setBackground(new Color(173, 216,230));
         revalidate();
         repaint();
 
@@ -96,11 +98,11 @@ public class trackWorkout extends JFrame implements ActionListener {
         add(btnChoose);
 
         btnClear = new JButton("Clear");
-        btnClear.setBounds(50, 450, 100, 30);
+        btnClear.setBounds(250, 500, 100, 30);
         add(btnClear);
 
         btnEnter = new JButton("Select");
-        btnEnter.setBounds(250, 500, 100, 30);
+        btnEnter.setBounds(50, 450, 100, 30);
         add(btnEnter);
         
         btnCalculate = new JButton("Calculate");
@@ -180,7 +182,7 @@ public class trackWorkout extends JFrame implements ActionListener {
         else if (categoryIndex == 3) exercises = armEx;
         else exercises = cardioEx;
 
-        for (String ex : exercises) listModel.addElement(ex); // POPULATES THE LIST
+        for (String ex : exercises) listModel.addElement(ex);
     }
 
     private void selectExercise() {
