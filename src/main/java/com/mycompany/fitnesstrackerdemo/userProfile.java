@@ -8,8 +8,8 @@ import java.sql.*;
 
 public class userProfile extends JFrame implements ActionListener {
 
-        private JButton btnSignOut, btnBack, btnView;
-        private JLabel UserProfile, lbBmi, lbWeight, lbHeight, lbBMIcat;
+        private JButton btnSignOut, btnBack, btnView, btnWorkoutPlan;
+        private JLabel UserProfile, lbName, lbBmi, lbWeight, lbHeight, lbBMIcat;
         private JTextField tfName, tfHeight, tfWeight, tfAge, tfBMIcat;
         // DATABASE CON
         private static final String DB_URL = "jdbc:mysql://localhost:3306/fitnesstrackerdb";
@@ -28,6 +28,7 @@ public class userProfile extends JFrame implements ActionListener {
         UserProfile = new JLabel("User Profile");
         UserProfile.setBounds(150, 20, 200, 30);
         add(UserProfile);
+        
 
         // User ID input
         JLabel lbUserId = new JLabel("Enter User ID:");
@@ -35,11 +36,14 @@ public class userProfile extends JFrame implements ActionListener {
         add(lbUserId);
 
         tfUserId = new JTextField();
-        tfUserId.setBounds(140, 70, 190, 30);
+        tfUserId.setBounds(170, 70, 100, 30);
         add(tfUserId);
 
+        lbName = new JLabel("ID:");
+        lbName.setBounds(50, 120, 200, 30);
+        add(lbName);
 
-        lbWeight = new JLabel("Height (Meteresultdata):");
+        lbWeight = new JLabel("Height:");
         lbWeight.setBounds(50, 170, 200, 30);
         add(lbWeight);
 
@@ -55,7 +59,7 @@ public class userProfile extends JFrame implements ActionListener {
         lbBMIcat.setBounds(50, 320, 200, 30);
         add(lbBMIcat);
 
-        btnSignOut = new JButton("SignOut");
+        btnSignOut = new JButton("Sign Out");
         btnSignOut.setBounds(400, 100, 120, 30);
         add(btnSignOut);
 
@@ -66,43 +70,50 @@ public class userProfile extends JFrame implements ActionListener {
         btnView = new JButton("View");
         btnView.setBounds(400, 200, 120, 30);
         add(btnView);
+        
+        btnWorkoutPlan = new JButton("Active Plan");
+        btnWorkoutPlan.setBounds(400, 250, 120, 30);
+        add(btnWorkoutPlan);
 
         // JTextFields for displaying user data
-        
+        tfName = new JTextField();
+        tfName.setEditable(false);
+        tfName.setBounds(170, 120, 100, 30);
+        add(tfName);
 
         tfHeight = new JTextField();
         tfHeight.setEditable(false);
-        tfHeight.setBounds(140, 170, 190, 30);
+        tfHeight.setBounds(170, 170, 100, 30);
         add(tfHeight);
 
         tfWeight = new JTextField();
         tfWeight.setEditable(false);
-        tfWeight.setBounds(140, 220, 190, 30);
+        tfWeight.setBounds(170, 220, 100, 30);
         add(tfWeight);
 
         tfAge = new JTextField();
         tfAge.setEditable(false);
-        tfAge.setBounds(140, 270, 190, 30);
+        tfAge.setBounds(170, 270, 100, 30);
         add(tfAge);
 
         tfBMIcat = new JTextField();
         tfBMIcat.setEditable(false);
-        tfBMIcat.setBounds(140, 320, 190, 30);
+        tfBMIcat.setBounds(170, 320, 100, 30);
         add(tfBMIcat);
 
         btnSignOut.addActionListener(this);
         btnBack.addActionListener(this);
         btnView.addActionListener(this);
-
+        btnWorkoutPlan.addActionListener(this);
         setVisible(true);
     }
 
-        private void loadUserData(int user_id) {
+        private void loadUserData(int userId) {
             String query = "SELECT * FROM bmi_data WHERE user_id = ?";
             try (Connection con = DriverManager.getConnection(DB_URL, USER, PASS);
                  PreparedStatement pstmt = con.prepareStatement(query)) {
 
-                pstmt.setInt(1, user_id); 
+                pstmt.setInt(1, userId); 
                 try (ResultSet resultdata = pstmt.executeQuery()) {
                     if (resultdata.next()) {
                         tfName.setText(resultdata.getString("user_id"));
@@ -111,7 +122,7 @@ public class userProfile extends JFrame implements ActionListener {
                         tfAge.setText(String.valueOf(resultdata.getDouble("bmi"))); 
                         tfBMIcat.setText(resultdata.getString("bmi_category"));
                     } else {
-                        JOptionPane.showMessageDialog(this, "No data found for User ID: " + user_id, "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "No data found for User ID: " + userId, "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             } catch (SQLException ex) {
@@ -127,7 +138,10 @@ public class userProfile extends JFrame implements ActionListener {
             } else if (e.getSource() == btnBack) {
                 new mainDashboard().setVisible(true);
                 dispose();
-            } else if (e.getSource() == btnView) {
+            } else if (e.getSource() == btnWorkoutPlan) {
+                new viewWorkoutPlan().setVisible(true);
+                dispose();
+            }else if (e.getSource() == btnView) {
                 try {
                     int userId = Integer.parseInt(tfUserId.getText());
                     loadUserData(userId);
