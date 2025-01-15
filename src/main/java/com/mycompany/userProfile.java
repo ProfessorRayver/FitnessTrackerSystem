@@ -31,7 +31,7 @@ public class userProfile extends JFrame implements ActionListener {
         
 
         // User ID input
-        JLabel lbUserId = new JLabel("Enter User ID:");
+        JLabel lbUserId = new JLabel("Enter Username:");
         lbUserId.setBounds(50, 70, 200, 30);
         add(lbUserId);
 
@@ -108,21 +108,21 @@ public class userProfile extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-        private void loadUserData(int userId) {
-            String query = "SELECT * FROM bmi_data WHERE user_id = ?";
+        private void loadUserData(String username) {
+            String query = "SELECT * FROM bmi_data WHERE username = ?";
             try (Connection con = DriverManager.getConnection(DB_URL, USER, PASS);
                  PreparedStatement pstmt = con.prepareStatement(query)) {
 
-                pstmt.setInt(1, userId); 
+                pstmt.setString(1, username); 
                 try (ResultSet resultdata = pstmt.executeQuery()) {
                     if (resultdata.next()) {
-                        tfName.setText(resultdata.getString("user_id"));
+                        tfName.setText(resultdata.getString("username"));
                         tfHeight.setText(String.valueOf(resultdata.getDouble("height")));
                         tfWeight.setText(String.valueOf(resultdata.getDouble("weight")));
                         tfAge.setText(String.valueOf(resultdata.getDouble("bmi"))); 
                         tfBMIcat.setText(resultdata.getString("bmi_category"));
                     } else {
-                        JOptionPane.showMessageDialog(this, "No data found for User ID: " + userId, "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "No data found for Username: " + username, "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             } catch (SQLException ex) {
@@ -143,10 +143,10 @@ public class userProfile extends JFrame implements ActionListener {
                 dispose();
             }else if (e.getSource() == btnView) {
                 try {
-                    int userId = Integer.parseInt(tfUserId.getText());
-                    loadUserData(userId);
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(this, "Please enter a valid User ID.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                    String username = tfUserId.getText();
+                    loadUserData(username);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Please enter a valid Username.", "Input Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
