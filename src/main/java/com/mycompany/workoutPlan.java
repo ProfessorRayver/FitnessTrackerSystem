@@ -67,7 +67,7 @@ import java.util.logging.Logger;
       
 //     adding components
 
-      head = new JLabel("Welcome to FITNESS TRACKER",SwingConstants.CENTER);
+      head = new JLabel("STUD-FIT TRACKER",SwingConstants.CENTER);
       head.setBounds(0,50 , 600, 20);
       add(head);
       

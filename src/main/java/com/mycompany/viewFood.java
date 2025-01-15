@@ -8,12 +8,11 @@ import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.util.ArrayList;
 
-
 public class viewFood extends JFrame implements ActionListener {
     JLabel lblTitle;
     JScrollPane scPane;
     JTable tblFoods;
-    JButton btnBack, btnSortCarbs, btnSortFat, btnSortProtein;
+    JButton btnBack, btnSortCarbs, btnSortFat, btnSortProtein, btnClear;
     DefaultTableModel model;
 
     viewFood() {
@@ -49,6 +48,9 @@ public class viewFood extends JFrame implements ActionListener {
         btnSortCarbs = createButton("Sort by Carbs", 50, 500);
         btnSortFat = createButton("Sort by Fat", 250, 500);
         btnSortProtein = createButton("Sort by Protein", 450, 500);
+
+        // CLEAR BUTTON
+        btnClear = createButton("Clear", 60, 600);
 
         // BACK BUTTON
         btnBack = createButton("Back", 500, 600);
@@ -109,6 +111,27 @@ public class viewFood extends JFrame implements ActionListener {
         }
     }
 
+    private void clearTableData() {
+        String url = "jdbc:mysql://localhost:3306/fitnesstrackerdb";
+        String dbUsername = "root";
+        String dbPassword = "admin123";
+
+        try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+             Statement stmt = conn.createStatement()) {
+
+            // DELETE ALL RECORDS FROM TABLE
+            int rowsAffected = stmt.executeUpdate("DELETE FROM mealtbl");
+
+            // CLEAR DATA FROM GUI TABLE
+            model.setRowCount(0);
+
+            JOptionPane.showMessageDialog(this, rowsAffected + " records deleted successfully.");
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error clearing data: " + ex.getMessage());
+        }
+    }
+
     private void sortTable(int columnIndex) {
         ArrayList<Object[]> rows = new ArrayList<>();
 
@@ -150,6 +173,8 @@ public class viewFood extends JFrame implements ActionListener {
             sortTable(2); // Sort by Fat
         } else if (e.getSource() == btnSortProtein) {
             sortTable(3); // Sort by Protein
+        } else if (e.getSource() == btnClear) {
+            clearTableData();
         }
     }
 }

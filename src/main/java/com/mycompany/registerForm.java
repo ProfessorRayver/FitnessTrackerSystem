@@ -70,7 +70,7 @@ public class registerForm extends JFrame implements ActionListener {
         add(txtUsername);
 
         lblPass = new JLabel("Create Password:");
-        lblPass.setBounds(100, 250, 150, 30);
+        lblPass.setBounds(100, 250, 170, 30);
         lblPass.setFont(new Font("Verdana", Font.BOLD, 15));
         add(lblPass);
 

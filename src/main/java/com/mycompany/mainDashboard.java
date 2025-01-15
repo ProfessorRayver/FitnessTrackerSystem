@@ -16,10 +16,15 @@ import javax.swing.SwingConstants;
 public class mainDashboard extends JFrame implements ActionListener {
     
    private JLabel lblDashBoard, imgLbl;
-   private JButton btnWorkout, btnNewPlan, btnMeals, btnProgress,  btnProfile, btnWorkoutPlan;
+   private JButton btnWorkout, btnNutri, btnMeals, btnProgress,  btnProfile, btnWorkoutPlan;
+        
+        
 
 
+   
     mainDashboard() {
+        
+        
 
        // INITIALIZATION OF JFRAME
         setSize(800, 800);
@@ -29,7 +34,7 @@ public class mainDashboard extends JFrame implements ActionListener {
 
         
         // ADDING JFRAME COMPONENTS
-        lblDashBoard = new JLabel("WELCOME TO WORKOUT PLAN!", SwingConstants.CENTER);
+        lblDashBoard = new JLabel("WELCOME TO STUD-FIT TRACKER!", SwingConstants.CENTER);
         lblDashBoard.setBounds(0, 360, 800, 30);
         lblDashBoard.setFont(new Font("Tahoma", Font.BOLD, 20));
         add(lblDashBoard);
@@ -51,9 +56,9 @@ public class mainDashboard extends JFrame implements ActionListener {
         btnMeals.setBounds(350, 450, 140, 40);
         add(btnMeals);
         
-        btnNewPlan = new JButton("Create New Plan");
-        btnNewPlan.setBounds(350, 500, 140, 40);
-        add(btnNewPlan);
+        btnNutri = new JButton("Nutri Contents");
+        btnNutri.setBounds(350, 500, 140, 40);
+        add(btnNutri);
         
         btnWorkoutPlan = new JButton("View Workout Plan");
         btnWorkoutPlan.setBounds(350, 550, 140, 40);
@@ -76,7 +81,7 @@ public class mainDashboard extends JFrame implements ActionListener {
                 btnProgress.addActionListener(this);
                 btnWorkoutPlan.addActionListener(this);
                 btnProfile.addActionListener(this);
-                btnNewPlan.addActionListener(this);
+                btnNutri.addActionListener(this);
     }
     @Override
         public void actionPerformed(ActionEvent e) {
@@ -94,11 +99,11 @@ public class mainDashboard extends JFrame implements ActionListener {
 
         } else if (e.getSource() == btnWorkoutPlan) { //TO ACCESS USERS WORKOUT PLAN
             dispose();
-            new viewWorkoutPlan().setVisible(true);
+            new workoutPlan().setVisible(true);
         
-        } else if (e.getSource() == btnNewPlan) { //TO GET NOTIFICATION OF WHAT TO DO
+        } else if (e.getSource() == btnNutri) { //TO GET NOTIFICATION OF WHAT TO DO
             dispose();
-            new workoutPlan().setVisible(true);   
+            new viewFood().setVisible(true);   
             
         } else if (e.getSource() == btnProgress) { //TO ACCESS THE OVERALL PROGRESS OF THE USER
             dispose();
@@ -107,6 +112,7 @@ public class mainDashboard extends JFrame implements ActionListener {
          } 
         }
 
+                
     public static void main(String[] args) {
         mainDashboard mainDashboard = new mainDashboard();
         mainDashboard.setVisible(true);

@@ -14,7 +14,7 @@ public class viewProgress extends JFrame implements ActionListener {
     JLabel lblTitle, lblDateTime;
     JScrollPane scPane;
     JTable tblWorkout;
-    JButton btnBack;
+    JButton btnBack, btnClear;
     DefaultTableModel model;
     Timer timer;
 
@@ -60,7 +60,13 @@ public class viewProgress extends JFrame implements ActionListener {
         btnBack.setBounds(500, 520, 120, 30);
         add(btnBack);
 
+        // CLEAR BUTTON
+        btnClear = new JButton("Clear All");
+        btnClear.setBounds(350, 520, 120, 30); // Positioning it near the "Back" button
+        add(btnClear);
+
         btnBack.addActionListener(this);
+        btnClear.addActionListener(this);
 
         loadDataFromDatabase();
 
@@ -98,6 +104,29 @@ public class viewProgress extends JFrame implements ActionListener {
         }
     }
 
+    private void clearAllDataFromDatabase() {
+        String url = "jdbc:mysql://localhost:3306/fitnesstrackerdb";
+        String dbUsername = "root";
+        String dbPassword = "admin123";
+        String deleteQuery = "DELETE FROM workout_log"; // Query to delete all rows
+
+        try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+             PreparedStatement pstmt = conn.prepareStatement(deleteQuery)) {
+
+            // Execute the delete query
+            int rowsAffected = pstmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(this, "All data has been cleared successfully.");
+            } else {
+                JOptionPane.showMessageDialog(this, "No data to clear.");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage());
+        }
+    }
+
     public static void main(String[] args) {
         new viewProgress();
     }
@@ -107,6 +136,12 @@ public class viewProgress extends JFrame implements ActionListener {
         if (e.getSource() == btnBack) {
             this.dispose();
             new mainDashboard();
+        } else if (e.getSource() == btnClear) {
+            int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to clear all workout data?", "Confirm Clear", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                clearAllDataFromDatabase();
+                model.setRowCount(0); // Clear the table
+            }
         }
     }
 }

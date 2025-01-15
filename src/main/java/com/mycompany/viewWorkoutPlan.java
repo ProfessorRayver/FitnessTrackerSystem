@@ -30,7 +30,7 @@ public class viewWorkoutPlan extends JFrame implements ActionListener {
 
     viewWorkoutPlan() {
         
-        setSize(600, 800);
+        setSize(450, 800);
         setLayout(null);
         setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(173, 216, 230)); 
@@ -55,7 +55,7 @@ public class viewWorkoutPlan extends JFrame implements ActionListener {
         add(scPane);
        
         btnBack = new JButton("Back");
-        btnBack.setBounds(410, 620, 120, 30);
+        btnBack.setBounds(200, 700, 120, 30);
         add(btnBack);
 
         btnBack.addActionListener(this);

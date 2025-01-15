@@ -35,21 +35,21 @@ public class signInScreen extends JFrame implements ActionListener {
         lblWelcome = new JLabel("WELCOME", SwingConstants.CENTER);
         lblWelcome.setBounds(0, 50, 800, 50);
         lblWelcome.setFont(new Font("Impact", Font.BOLD, 50));
-        lblWelcome.setForeground(Color.WHITE);
+        lblWelcome.setForeground(Color.BLACK);
         add(lblWelcome);
 
         // Username label
-        lblUser = new JLabel("User/Account Name:");
+        lblUser = new JLabel("User Account:");
         lblUser.setBounds(50, 200, 800, 50);
         lblUser.setFont(new Font("Arial", Font.BOLD, 20));
-        lblUser.setForeground(Color.WHITE);
+        lblUser.setForeground(Color.BLACK);
         add(lblUser);
 
         // Password label
         lblPassword = new JLabel("Password:");
         lblPassword.setBounds(50, 300, 800, 50);
         lblPassword.setFont(new Font("Arial", Font.BOLD, 20));
-        lblPassword.setForeground(Color.WHITE);
+        lblPassword.setForeground(Color.BLACK);
         add(lblPassword);
 
         // Username text field
@@ -107,8 +107,8 @@ public class signInScreen extends JFrame implements ActionListener {
             if (!userID.isEmpty() || !pass.isEmpty()) {
                 if (validateLogin(userID, pass)) {
                     JOptionPane.showMessageDialog(this, "Login Successfully!", "Success!", JOptionPane.INFORMATION_MESSAGE);
-                    new mainDashboard();       
-                    setVisible(false);
+                    mainDashboard dashboard = new mainDashboard();       
+                    dashboard.setVisible(true);
                     dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, "Wrong Username or Password!", "Failed!", JOptionPane.ERROR_MESSAGE);
@@ -135,7 +135,9 @@ public class signInScreen extends JFrame implements ActionListener {
             PreparedStatement pst = con.prepareStatement("SELECT * FROM users WHERE idusers = ? AND idpass = ?");
             pst.setString(1, username);
             pst.setString(2, password);
-
+            
+            
+            //get the idusers then input the idusers to the next frame
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 isValid = true;
