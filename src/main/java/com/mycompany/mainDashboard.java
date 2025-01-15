@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany;
+package com.mycompany.fitnesstrackapp;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -112,7 +112,7 @@ public class mainDashboard extends JFrame implements ActionListener {
          } 
         }
 
-                
+                //main
     public static void main(String[] args) {
         mainDashboard mainDashboard = new mainDashboard();
         mainDashboard.setVisible(true);

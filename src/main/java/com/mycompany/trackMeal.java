@@ -1,4 +1,4 @@
-package com.mycompany;
+package com.mycompany.fitnesstrackapp;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -119,13 +119,13 @@ public class trackMeal extends JFrame implements ActionListener {
                 mealList.add(rs.getString("mealname"));
             }
 
-            Collections.sort(mealList); // Sort meals for binary search
+            Collections.sort(mealList); // sort meals for binary search
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error Loading Meals: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    // Binary search for meals
+    // binary search for meals
     private int binarySearch(String target) {
         int low = 0;
         int high = mealList.size() - 1;
@@ -145,7 +145,7 @@ public class trackMeal extends JFrame implements ActionListener {
         return -1; // Meal not found
     }
 
-    // Load consumed meals
+    // load consumed meals
     private void ConsumedMeals() {
         try (Connection conn = Database()) {
             String query = "SELECT * FROM consumedtbl ORDER BY date DESC";
@@ -166,7 +166,7 @@ public class trackMeal extends JFrame implements ActionListener {
         }
     }
 
-    // Action Listener
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnAdd) {
@@ -207,7 +207,7 @@ public class trackMeal extends JFrame implements ActionListener {
                         double fat = rs.getDouble("fat");
                         double protein = rs.getDouble("protein");
 
-                        // Insert into consumed meals
+                        // insert into consumed meals
                         String insertQuery = "INSERT INTO consumedtbl (mealname, mealtime, carbohydrates, fat, protein, date) VALUES (?, ?, ?, ?, ?, NOW())";
                         PreparedStatement insertStmt = conn.prepareStatement(insertQuery);
                         insertStmt.setString(1, input);

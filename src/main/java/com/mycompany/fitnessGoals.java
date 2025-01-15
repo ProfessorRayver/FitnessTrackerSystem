@@ -1,4 +1,4 @@
-package com.mycompany;
+package com.mycompany.fitnesstrackapp;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -84,6 +84,8 @@ public class fitnessGoals extends JFrame implements ActionListener {
         btnNext = new JButton("Next");
         btnNext.setBounds(480, 600, 200, 40);
         add(btnNext);
+        
+        //ADD ACTION LISTENER
 
         btnConfirm.addActionListener(this);
         btnNext.addActionListener(this);
