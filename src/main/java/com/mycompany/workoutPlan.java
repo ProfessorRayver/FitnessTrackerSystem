@@ -1,4 +1,5 @@
-package com.mycompany;
+package com.mycompany.fitnesstrackapp;
+
 import javax.swing.*; 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -54,7 +55,7 @@ import java.util.logging.Logger;
                         "Chest: Bench Press - 4 sets, 15 reps", "Incline Bench Press - 4 sets, 12 reps", "Chest Flys - 4 sets, 15 reps", "Decline Bench Press - 4 sets, 12 reps",
                         "Arms: Skull Crushers - 4 sets, 15 reps", "Overhead Tricep Extension - 4 sets, 12 reps", "Preacher Curls - 4 sets, 12 reps", "Tricep Dips - 4 sets, 12 reps"};
     
-
+// CONSTRUCTOR
   workoutPlan(){
       workoutplancon(); 
       
@@ -78,20 +79,23 @@ import java.util.logging.Logger;
       otp1.setBounds(20, 100,300 , 250);
       add(otp1);
       
+      // BUTTONS FOR LOW INTENSITY
       lowintensity = new JButton("LOW INTENSITY" );
       lowintensity.setBounds(350, 100, 200, 40);
       add(lowintensity);
       
+      // BUTTONS FOR MEDIUM INTENSITY
       midintensity =  new JButton("MID INTENSITY" );
       midintensity.setBounds(350, 150, 200, 40);
       add(midintensity);
       
+      // BUTTONS FOR HIGH INTENSITY
       highintensity =  new JButton("HIGH INTESNITY" );
       highintensity.setBounds(350, 200, 200, 40);
       add(highintensity);
       
 
-      
+      // CONFIRM BUTTON TO SAVE SELECTED PLAN
       confirm = new JButton("Confirm");
       confirm.setBounds(350, 310, 125, 40);
       add(confirm);

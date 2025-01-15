@@ -6,7 +6,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany;
+package com.mycompany.fitnesstrackapp;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -54,6 +54,7 @@ public class viewWorkoutPlan extends JFrame implements ActionListener {
         scPane.setBounds(30, 150,350 , 500);
         add(scPane);
        
+        // CONFIGURE BACK BUTTON
         btnBack = new JButton("Back");
         btnBack.setBounds(200, 700, 120, 30);
         add(btnBack);
@@ -75,9 +76,11 @@ public class viewWorkoutPlan extends JFrame implements ActionListener {
         }
     
     }
+    // MAIN METHOD
     public static void main(String args[]){
             new viewWorkoutPlan();
     }
+    // USER AND PASS TO OPEN THE DATABASE   
     public void workoutplancon(){
         String url = "jdbc:mysql://localhost:3306/fitnesstrackerdb";
         String username = "root";
@@ -112,4 +115,3 @@ public class viewWorkoutPlan extends JFrame implements ActionListener {
         }
 }
  
-
