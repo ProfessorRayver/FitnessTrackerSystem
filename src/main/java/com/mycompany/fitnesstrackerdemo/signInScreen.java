@@ -39,7 +39,7 @@ public class signInScreen extends JFrame implements ActionListener {
         add(lblWelcome);
 
         // Username label
-        lblUser = new JLabel("User/Account Name:");
+        lblUser = new JLabel("User Account:");
         lblUser.setBounds(50, 200, 800, 50);
         lblUser.setFont(new Font("Arial", Font.BOLD, 20));
         lblUser.setForeground(Color.BLACK);
@@ -132,7 +132,7 @@ public class signInScreen extends JFrame implements ActionListener {
 
         try {
             Connection con = DriverManager.getConnection(url, dbUsername, dbPassword);
-            PreparedStatement pst = con.prepareStatement("SELECT * FROM users WHERE user_id = ? AND idpass = ?");
+            PreparedStatement pst = con.prepareStatement("SELECT * FROM users WHERE idusers = ? AND idpass = ?");
             pst.setString(1, username);
             pst.setString(2, password);
 
