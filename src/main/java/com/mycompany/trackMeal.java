@@ -1,4 +1,5 @@
-package com.mycompany.fitnesstrackapp;
+package com.mycompany;
+
 
 import java.awt.Color;
 import java.awt.Font;
@@ -236,7 +237,7 @@ public class trackMeal extends JFrame implements ActionListener {
 
     private void handleClearMeals() {
         int confirmation = JOptionPane.showConfirmDialog(this,
-                "Are you sure you want to clear all consumed meals from the list and the database?",
+                "Do you want to clear history?",
                 "Confirm Clear",
                 JOptionPane.YES_NO_OPTION);
 
@@ -247,7 +248,7 @@ public class trackMeal extends JFrame implements ActionListener {
                 stmt.executeUpdate();
 
                 listModel.clear();
-                JOptionPane.showMessageDialog(this, "All consumed meals have been cleared!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "All consumed meals are now cleared!", "Success", JOptionPane.INFORMATION_MESSAGE);
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }

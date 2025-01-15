@@ -153,7 +153,6 @@ import java.util.logging.Logger;
         }
         
     }
-        //database
          public void workoutplancon(){
         String url = "jdbc:mysql://localhost:3306/fitnesstrackerdb";
         String username = "root";

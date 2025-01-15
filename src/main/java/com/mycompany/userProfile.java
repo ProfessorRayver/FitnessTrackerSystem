@@ -1,4 +1,4 @@
-package com.mycompany.fitnesstrackapp;
+package com.mycompany;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -43,7 +43,7 @@ public class userProfile extends JFrame implements ActionListener {
         lbName.setBounds(50, 120, 200, 30);
         add(lbName);
 
-        lbWeight = new JLabel("Height:");
+        lbWeight = new JLabel("Height(Meters):");
         lbWeight.setBounds(50, 170, 200, 30);
         add(lbWeight);
 
@@ -61,22 +61,22 @@ public class userProfile extends JFrame implements ActionListener {
 
         // BUTTON FOR SIGN OUT
         btnSignOut = new JButton("Sign Out");
-        btnSignOut.setBounds(400, 100, 120, 30);
+        btnSignOut.setBounds(400, 200, 120, 30);
         add(btnSignOut);
 
         // BUTTON FOR BACK
         btnBack = new JButton("Back");
-        btnBack.setBounds(400, 150, 120, 30);
+        btnBack.setBounds(400, 250, 120, 30);
         add(btnBack);
 
         // BUTTON FOR VIEW
-        btnView = new JButton("View");
-        btnView.setBounds(400, 200, 120, 30);
+        btnView = new JButton("Search");
+        btnView.setBounds(400, 100, 120, 30);
         add(btnView);
         
         // BUTTON FOR ACTIVE PLAN
         btnWorkoutPlan = new JButton("Active Plan");
-        btnWorkoutPlan.setBounds(400, 250, 120, 30);
+        btnWorkoutPlan.setBounds(400, 150, 120, 30);
         add(btnWorkoutPlan);
 
         // JTextFields for displaying user data

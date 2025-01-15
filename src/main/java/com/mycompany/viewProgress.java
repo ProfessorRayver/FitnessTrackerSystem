@@ -1,4 +1,4 @@
-package com.mycompany.fitnesstrackapp;
+package com.mycompany;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -20,7 +20,7 @@ public class viewProgress extends JFrame implements ActionListener {
     Timer timer;
 
     viewProgress() {
-        setSize(680, 700); // Increased height to accommodate the time and day label
+        setSize(680, 700);
         setLayout(null);
         setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(173, 216, 230)); 
@@ -97,7 +97,7 @@ public class viewProgress extends JFrame implements ActionListener {
             while (rs.next()) {
                 String workout = rs.getString("selected");
                 int calories = rs.getInt("calories_burned");
-                String logDate = rs.getString("logdate"); // Fetching the logdate column
+                String logDate = rs.getString("logdate"); //DATE
                 model.addRow(new Object[]{workout, calories, logDate});
             }
 
@@ -110,7 +110,7 @@ public class viewProgress extends JFrame implements ActionListener {
         String url = "jdbc:mysql://localhost:3306/fitnesstrackerdb";
         String dbUsername = "root";
         String dbPassword = "admin123";
-        String deleteQuery = "DELETE FROM workout_log"; // Query to delete all rows
+        String deleteQuery = "DELETE FROM workout_log";
 
         try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword);
              PreparedStatement pstmt = conn.prepareStatement(deleteQuery)) {
@@ -119,7 +119,7 @@ public class viewProgress extends JFrame implements ActionListener {
             int rowsAffected = pstmt.executeUpdate();
 
             if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(this, "All data has been cleared successfully.");
+                JOptionPane.showMessageDialog(this, "History deleted successfully.");
             } else {
                 JOptionPane.showMessageDialog(this, "No data to clear.");
             }
@@ -139,7 +139,7 @@ public class viewProgress extends JFrame implements ActionListener {
             this.dispose();
             new mainDashboard();
         } else if (e.getSource() == btnClear) {
-            int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to clear all workout data?", "Confirm Clear", JOptionPane.YES_NO_OPTION);
+            int confirm = JOptionPane.showConfirmDialog(this, "Do you want to clear the data?", "Confirm Clear", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
                 clearAllDataFromDatabase();
                 model.setRowCount(0); // Clear the table

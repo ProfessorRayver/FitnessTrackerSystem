@@ -108,10 +108,10 @@ public class registerForm extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnBack) { // Redirect to SignIn Page
+        if (e.getSource() == btnBack) { // REDIRECT TO SIGNIN PAGE
             new signInScreen();
             dispose();
-        } else if (e.getSource() == btnCreate) { // Get and store the input
+        } else if (e.getSource() == btnCreate) { // GET AND STORE DATA
             String user = txtUsername.getText();
             String pass = new String(txtPass.getPassword());
             String confirmPass = new String(txtConfirmPass.getPassword());
@@ -121,7 +121,7 @@ public class registerForm extends JFrame implements ActionListener {
 
             if (user.isEmpty() || pass.isEmpty() || confirmPass.isEmpty() || name.isEmpty() || ageText.isEmpty() || sex.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
-                return; // Warning if there is no OR incomplete input
+                return; // WARNING IF THERE IS NO INPUT
             }
             if (sex.matches(".*\\d.*")) {
                 JOptionPane.showMessageDialog(this, "Invalid sex. Please enter letters only.", "Error", JOptionPane.ERROR_MESSAGE);

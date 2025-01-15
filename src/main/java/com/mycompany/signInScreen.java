@@ -136,8 +136,6 @@ public class signInScreen extends JFrame implements ActionListener {
             pst.setString(1, username);
             pst.setString(2, password);
             
-            
-            //get the idusers then input the idusers to the next frame
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 isValid = true;

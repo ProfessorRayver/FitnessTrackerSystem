@@ -1,4 +1,3 @@
-
 package com.mycompany;
 
 import java.awt.Color;
@@ -20,10 +19,9 @@ public class notif extends JFrame {
         setVisible(true);
     }
 
-    // GUI Setup
     private void initializeWindow() {
         setTitle("User Notifications");
-        setSize(450, 275);
+        setSize(500, 280);
         setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,7 +30,7 @@ public class notif extends JFrame {
 
         //TEXT AREA FOR NOTIFICATION
         notificationLog = new JTextArea();
-        notificationLog.setBounds(30, 40, 370, 100);
+        notificationLog.setBounds(30, 40, 400, 100);
         notificationLog.setEditable(false);
         add(notificationLog);
 

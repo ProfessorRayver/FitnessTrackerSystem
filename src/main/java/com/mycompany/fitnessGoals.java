@@ -1,4 +1,4 @@
-package com.mycompany.fitnesstrackapp;
+package com.mycompany;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -19,7 +19,7 @@ public class fitnessGoals extends JFrame implements ActionListener {
     // Database connection details
     private static final String DB_URL = "jdbc:mysql://localhost:3306/fitnesstrackerdb";
     private static final String USER = "root";
-    private static final String PASS = "admin123";  // Change this to your MySQL password
+    private static final String PASS = "admin123";
 
     fitnessGoals() {
         

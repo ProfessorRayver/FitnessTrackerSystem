@@ -1,8 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.mycompany.fitnesstrackapp;
+package com.mycompany;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -17,14 +13,8 @@ public class mainDashboard extends JFrame implements ActionListener {
     
    private JLabel lblDashBoard, imgLbl;
    private JButton btnWorkout, btnNutri, btnMeals, btnProgress,  btnProfile, btnWorkoutPlan;
-        
-        
-
-
-   
+    
     mainDashboard() {
-        
-        
 
        // INITIALIZATION OF JFRAME
         setSize(800, 800);

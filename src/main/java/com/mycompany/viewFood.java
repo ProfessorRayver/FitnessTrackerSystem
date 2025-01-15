@@ -1,80 +1,90 @@
-package com.mycompany.fitnesstrackapp;
+package com.mycompany;
 
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class viewFood extends JFrame implements ActionListener {
-     // COMPONENTS
-    JLabel lblTitle, lblDateTime;
+    JLabel lblTitle;
     JScrollPane scPane;
-    JTable tblWorkout;
-    JButton btnBack;
+    JTable tblFoods;
+    JButton btnBack, btnSortCarbs, btnSortFat, btnSortProtein, btnClear;
     DefaultTableModel model;
-    Timer timer;
 
     viewFood() {
-        setSize(680, 700); // Increased height to accommodate the time and day label
+        setSize(680, 750);
         setLayout(null);
         setLocationRelativeTo(null);
-        getContentPane().setBackground(new Color(173, 216, 230)); 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        // Set background color
+        getContentPane().setBackground(new Color(173, 216, 230)); // Light blue
+
         // TITLE LABEL
-        lblTitle = new JLabel("View Workout Progress");
-        lblTitle.setBounds(150, 60, 800, 35);
-        lblTitle.setFont(new Font("Courier", Font.PLAIN, 30));
+        lblTitle = new JLabel("View Food List", SwingConstants.CENTER);
+        lblTitle.setBounds(0, 20, 680, 35);
+        lblTitle.setFont(new Font("Arial", Font.BOLD, 30));
         add(lblTitle);
 
-        // DATE AND TIME LABEL
-        lblDateTime = new JLabel();
-        lblDateTime.setBounds(30, 10, 300, 20); // Position at the top-left corner
-        lblDateTime.setFont(new Font("Arial", Font.PLAIN, 14));
-        add(lblDateTime);
-
-        // Timer to update the date and time
-        timer = new Timer(1000, e -> updateDateTime());
-        timer.start();
-
         // TABLE SETUP
-        String[] workoutColumn = {"Workout", "Calories Burned", "Date Logged"};
-        model = new DefaultTableModel(workoutColumn, 0) {
+        String[] foodColumns = {"Food Name", "Carbohydrates (g)", "Fat (g)", "Protein (g)"};
+        model = new DefaultTableModel(foodColumns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false; // All cells are not editable
             }
         };
 
-        tblWorkout = new JTable(model);
-        scPane = new JScrollPane(tblWorkout);
-        scPane.setBounds(30, 140, 600, 350);
+        tblFoods = new JTable(model);
+        scPane = new JScrollPane(tblFoods);
+        scPane.setBounds(30, 80, 600, 400);
         add(scPane);
 
+        // SORT BUTTONS
+        btnSortCarbs = createButton("Sort by Carbs", 50, 500);
+        btnSortFat = createButton("Sort by Fat", 250, 500);
+        btnSortProtein = createButton("Sort by Protein", 450, 500);
+
+        // CLEAR BUTTON
+        btnClear = createButton("Clear", 60, 600);
+
         // BACK BUTTON
-        btnBack = new JButton("Back");
-        btnBack.setBounds(500, 520, 120, 30);
-        add(btnBack);
-        
-        // ACTION LISTENER
-        btnBack.addActionListener(this);
+        btnBack = createButton("Back", 500, 600);
 
         loadDataFromDatabase();
 
         setVisible(true);
     }
 
-    private void updateDateTime() {
-        // Get current date and time
-        String currentDateTime = new SimpleDateFormat("EEEE, MMMM dd, yyyy HH:mm:ss").format(new Date());
-        lblDateTime.setText("Current Date & Time: " + currentDateTime);
+    private JButton createButton(String text, int x, int y) {
+        JButton button = new JButton(text);
+        button.setBounds(x, y, 150, 30);
+        button.setFont(new Font("Arial", Font.BOLD, 14)); // Button font
+        button.setBackground(new Color(200, 200, 200)); // Light gray
+        button.setForeground(Color.DARK_GRAY); // Dark gray text
+        button.setFocusPainted(false); // Remove focus outline
+        button.setBorder(BorderFactory.createLineBorder(Color.GRAY)); // Subtle border
+        button.addActionListener(this);
+
+        // Optional hover effect
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                button.setBackground(new Color(180, 180, 180)); // Slightly darker gray on hover
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                button.setBackground(new Color(200, 200, 200)); // Revert to original gray
+            }
+        });
+
+        add(button);
+        return button;
     }
-    // USER AND PASS TO OPEN THE DATABASE   
+
     private void loadDataFromDatabase() {
         String url = "jdbc:mysql://localhost:3306/fitnesstrackerdb";
         String dbUsername = "root";
@@ -82,17 +92,18 @@ public class viewFood extends JFrame implements ActionListener {
 
         try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword);
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT selected, calories_burned, logdate FROM workout_log")) {
+             ResultSet rs = stmt.executeQuery("SELECT mealname, carbohydrates, fat, protein FROM mealtbl")) {
 
             // CLEAR TABLE FOR NEW ROWS
             model.setRowCount(0);
 
             // LOOP ADD ROWS TO THE TABLE
             while (rs.next()) {
-                String workout = rs.getString("selected");
-                int calories = rs.getInt("calories_burned");
-                String logDate = rs.getString("logdate"); // Fetching the logdate column
-                model.addRow(new Object[]{workout, calories, logDate});
+                String foodName = rs.getString("mealname");
+                double carbohydrates = rs.getDouble("carbohydrates");
+                double fat = rs.getDouble("fat");
+                double protein = rs.getDouble("protein");
+                model.addRow(new Object[]{foodName, carbohydrates, fat, protein});
             }
 
         } catch (SQLException ex) {
@@ -100,8 +111,55 @@ public class viewFood extends JFrame implements ActionListener {
         }
     }
 
+    private void clearTableData() {
+        String url = "jdbc:mysql://localhost:3306/fitnesstrackerdb";
+        String dbUsername = "root";
+        String dbPassword = "admin123";
+
+        try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+             Statement stmt = conn.createStatement()) {
+
+            // DELETE ALL RECORDS FROM TABLE
+            int rowsAffected = stmt.executeUpdate("DELETE FROM mealtbl");
+
+            // CLEAR DATA FROM GUI TABLE
+            model.setRowCount(0);
+
+            JOptionPane.showMessageDialog(this, rowsAffected + " History deleted successfully.");
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error clearing data: " + ex.getMessage());
+        }
+    }
+
+    private void sortTable(int columnIndex) {
+        ArrayList<Object[]> rows = new ArrayList<>();
+
+        // EXTRACT ROW DATA
+        for (int i = 0; i < model.getRowCount(); i++) {
+            Object[] row = new Object[model.getColumnCount()];
+            for (int j = 0; j < model.getColumnCount(); j++) {
+                row[j] = model.getValueAt(i, j);
+            }
+            rows.add(row);
+        }
+
+        // SORT ROWS BASED ON COLUMN INDEX
+        rows.sort((row1, row2) -> {
+            Double value1 = Double.parseDouble(row1[columnIndex].toString());
+            Double value2 = Double.parseDouble(row2[columnIndex].toString());
+            return value1.compareTo(value2);
+        });
+
+        // CLEAR AND REPOPULATE THE TABLE
+        model.setRowCount(0);
+        for (Object[] row : rows) {
+            model.addRow(row);
+        }
+    }
+
     public static void main(String[] args) {
-        new viewProgress();
+        new viewFood();
     }
 
     @Override
@@ -109,6 +167,14 @@ public class viewFood extends JFrame implements ActionListener {
         if (e.getSource() == btnBack) {
             this.dispose();
             new mainDashboard();
+        } else if (e.getSource() == btnSortCarbs) {
+            sortTable(1); // SORT BY CARBS
+        } else if (e.getSource() == btnSortFat) {
+            sortTable(2); // SORT BY FATS
+        } else if (e.getSource() == btnSortProtein) {
+            sortTable(3); // SORT BY PROTEIN
+        } else if (e.getSource() == btnClear) {
+            clearTableData();
         }
     }
 }
